@@ -1,0 +1,1088 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ADX201 모의고사 | Salesforce Administrator Mock Exam</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}html,body{min-height:100%}</style>
+</head>
+<body>
+<style>
+  :root{
+    --bg:#EEF0F2; --surface:#FFFFFF; --surface-2:#F5F6F8;
+    --ink:#1C2531; --ink-soft:#5B6472; --ink-faint:#88919C;
+    --accent:#2E5C55; --accent-ink:#FFFFFF; --accent-soft:#DCE8E5;
+    --border:#D8DCE1;
+    --good:#1F7A4C; --good-soft:#E3F3EA; --good-border:#B7DEC7;
+    --bad:#B3412B; --bad-soft:#FBEAE5; --bad-border:#F0C4B8;
+    --amber:#96650E; --amber-soft:#FBF0DC;
+    --shadow: 0 1px 2px rgba(20,26,34,.06), 0 8px 24px -12px rgba(20,26,34,.18);
+  }
+  :root[data-theme="dark"]{
+    --bg:#12161C; --surface:#1A2029; --surface-2:#212833;
+    --ink:#E7EAEE; --ink-soft:#9AA4B2; --ink-faint:#69707C;
+    --accent:#7BC2B6; --accent-ink:#0B1512; --accent-soft:#1F3330;
+    --border:#2A313C;
+    --good:#4CC98A; --good-soft:#173226; --good-border:#245A41;
+    --bad:#E2725A; --bad-soft:#33201B; --bad-border:#5C3327;
+    --amber:#E3B34C; --amber-soft:#332A15;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.6);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12161C; --surface:#1A2029; --surface-2:#212833;
+      --ink:#E7EAEE; --ink-soft:#9AA4B2; --ink-faint:#69707C;
+      --accent:#7BC2B6; --accent-ink:#0B1512; --accent-soft:#1F3330;
+      --border:#2A313C;
+      --good:#4CC98A; --good-soft:#173226; --good-border:#245A41;
+      --bad:#E2725A; --bad-soft:#33201B; --bad-border:#5C3327;
+      --amber:#E3B34C; --amber-soft:#332A15;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.6);
+    }
+  }
+
+  .adx-root{
+    --font-body: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    min-height: 100%;
+    padding: 32px 16px 80px;
+    box-sizing: border-box;
+  }
+  .adx-root *{ box-sizing: border-box; }
+  .adx-shell{ max-width: 760px; margin: 0 auto; }
+
+  .adx-masthead{
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+    margin-bottom: 22px; flex-wrap: wrap;
+  }
+  .adx-brand{ display:flex; flex-direction:column; gap:2px; }
+  .adx-brand .code{
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em;
+    color: var(--accent); font-weight: 700; text-transform: uppercase;
+  }
+  .adx-brand h1{ margin:0; font-size: 22px; font-weight: 800; letter-spacing: -.01em; }
+  .adx-brand .sub{ font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
+
+  .adx-timer{
+    font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+    font-size: 20px; font-weight: 700; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 8px 14px; border-radius: 10px; box-shadow: var(--shadow);
+    display:flex; align-items:center; gap:8px;
+  }
+  .adx-timer.warn{ color: var(--bad); border-color: var(--bad-border); }
+  .adx-timer .dot{ width:7px; height:7px; border-radius:50%; background: var(--good); }
+  .adx-timer.warn .dot{ background: var(--bad); }
+
+  .adx-lang-btn{
+    font-family: var(--font-mono); font-weight:800; font-size:13px; letter-spacing:.05em;
+    padding: 9px 14px; border-radius:10px; border:1px solid var(--border);
+    background: var(--surface); color: var(--accent); cursor:pointer; box-shadow: var(--shadow);
+  }
+  .adx-lang-btn:hover{ border-color: var(--accent); }
+  .adx-lang-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .adx-card{
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; box-shadow: var(--shadow);
+    padding: 28px;
+  }
+
+  /* ---- START SCREEN ---- */
+  .adx-intro p{ line-height:1.7; color: var(--ink-soft); font-size: 14.5px; margin: 0 0 14px; }
+  .adx-facts{
+    display:grid; grid-template-columns: repeat(3,1fr); gap:10px; margin: 18px 0 22px;
+  }
+  .adx-fact{
+    background: var(--surface-2); border:1px solid var(--border); border-radius:12px;
+    padding: 12px 14px;
+  }
+  .adx-fact .n{ font-family: var(--font-mono); font-size: 20px; font-weight:800; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .adx-fact .l{ font-size: 11.5px; color: var(--ink-soft); margin-top:2px; }
+
+  .adx-modes{ display:grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+  @media (max-width: 560px){ .adx-modes{ grid-template-columns: 1fr; } .adx-facts{ grid-template-columns: repeat(3,1fr);} }
+
+  .adx-mode-btn{
+    text-align:left; cursor:pointer; border-radius: 14px; padding: 18px;
+    border: 1px solid var(--border); background: var(--surface-2);
+    transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    font-family: inherit; color: var(--ink);
+  }
+  .adx-mode-btn:hover{ border-color: var(--accent); transform: translateY(-1px); }
+  .adx-mode-btn:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+  .adx-mode-btn .m-title{ font-weight: 800; font-size: 15px; margin-bottom: 4px; }
+  .adx-mode-btn .m-desc{ font-size: 12.5px; color: var(--ink-soft); line-height:1.55; }
+  .adx-mode-btn.primary{ background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .adx-mode-btn.primary .m-desc{ color: var(--accent-ink); opacity:.85; }
+  .adx-mode-btn.advanced{ background: var(--amber-soft); border-color: var(--amber); }
+  .adx-mode-btn.advanced:hover{ border-color: var(--amber); }
+  .adx-mode-btn.advanced .m-title{ color: var(--amber); }
+
+  .adx-lesson-picker{ display:none; margin-top: 16px; }
+  .adx-lesson-picker.show{ display:block; }
+  .adx-lesson-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-top:10px; }
+  @media (max-width:560px){ .adx-lesson-grid{ grid-template-columns: repeat(3,1fr);} }
+  .adx-lesson-chip{
+    font-family: var(--font-mono); font-size: 12.5px; text-align:center; padding: 10px 4px;
+    border-radius: 10px; border: 1px solid var(--border); background: var(--surface);
+    cursor:pointer; color: var(--ink-soft); font-weight:700;
+  }
+  .adx-lesson-chip:hover{ border-color: var(--accent); color: var(--ink); }
+  .adx-lesson-chip.active{ background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .adx-go-btn{
+    margin-top:14px; width:100%; padding: 13px; border-radius: 12px; border: none;
+    background: var(--accent); color: var(--accent-ink); font-family: inherit;
+    font-weight: 800; font-size: 14.5px; cursor:pointer;
+  }
+  .adx-go-btn:disabled{ opacity:.4; cursor:not-allowed; }
+
+  /* ---- QUIZ SCREEN ---- */
+  .adx-progress-row{ display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+  .adx-progress-track{
+    flex:1; height:6px; background: var(--surface-2); border-radius: 999px; overflow:hidden;
+    border: 1px solid var(--border);
+  }
+  .adx-progress-fill{ height:100%; background: var(--accent); border-radius:999px; transition: width .25s ease; }
+  .adx-progress-label{ font-family: var(--font-mono); font-size:12.5px; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space:nowrap; }
+
+  .adx-tag{
+    display:inline-block; font-family: var(--font-mono); font-size: 11px; font-weight:700;
+    letter-spacing:.04em; padding: 4px 10px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent); margin-bottom: 14px;
+  }
+  .adx-qtext{ font-size: 17px; font-weight: 700; line-height:1.55; margin: 0 0 20px; text-wrap: balance; }
+
+  .adx-options{ display:flex; flex-direction:column; gap:10px; }
+  .adx-option{
+    display:flex; align-items:flex-start; gap:12px; text-align:left;
+    border: 1px solid var(--border); background: var(--surface-2);
+    border-radius: 12px; padding: 13px 15px; cursor:pointer; font-family: inherit;
+    color: var(--ink); font-size: 14px; line-height:1.5; transition: border-color .12s, background .12s;
+  }
+  .adx-option:hover:not(:disabled){ border-color: var(--accent); }
+  .adx-option:focus-visible{ outline: 2px solid var(--accent); outline-offset:2px; }
+  .adx-option .letter{
+    font-family: var(--font-mono); font-weight: 800; font-size:12.5px; color: var(--ink-faint);
+    border: 1px solid var(--border); border-radius:6px; width:22px; height:22px; flex:none;
+    display:flex; align-items:center; justify-content:center; margin-top:1px;
+  }
+  .adx-option.selected{ border-color: var(--accent); background: var(--accent-soft); }
+  .adx-option.correct{ border-color: var(--good-border); background: var(--good-soft); }
+  .adx-option.correct .letter{ background: var(--good); color:#fff; border-color: var(--good); }
+  .adx-option.incorrect{ border-color: var(--bad-border); background: var(--bad-soft); }
+  .adx-option.incorrect .letter{ background: var(--bad); color:#fff; border-color: var(--bad); }
+  .adx-option:disabled{ cursor: default; }
+
+  .adx-explain{
+    margin-top: 16px; padding: 14px 16px; border-radius: 12px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    font-size: 13.5px; line-height: 1.65; color: var(--ink-soft); display:none;
+  }
+  .adx-explain.show{ display:block; }
+  .adx-explain b{ color: var(--ink); }
+
+  .adx-nav-row{ display:flex; justify-content:flex-end; margin-top: 22px; gap:10px; }
+  .adx-btn{
+    font-family: inherit; font-weight: 800; font-size: 14px; padding: 11px 22px;
+    border-radius: 10px; border: 1px solid var(--border); background: var(--surface);
+    color: var(--ink); cursor:pointer;
+  }
+  .adx-btn.primary{ background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .adx-btn:disabled{ opacity:.35; cursor:not-allowed; }
+
+  /* ---- RESULTS ---- */
+  .adx-score-hero{ text-align:center; padding: 10px 0 26px; }
+  .adx-score-hero .big{
+    font-family: var(--font-mono); font-size: 56px; font-weight: 800; color: var(--accent);
+    font-variant-numeric: tabular-nums; line-height:1;
+  }
+  .adx-score-hero .of{ font-size: 14px; color: var(--ink-soft); margin-top: 6px; }
+  .adx-score-hero .verdict{
+    display:inline-block; margin-top:14px; padding: 6px 16px; border-radius:999px;
+    font-weight:800; font-size: 13px; font-family: var(--font-mono);
+  }
+  .adx-score-hero .verdict.pass{ background: var(--good-soft); color: var(--good); border:1px solid var(--good-border); }
+  .adx-score-hero .verdict.fail{ background: var(--bad-soft); color: var(--bad); border:1px solid var(--bad-border); }
+
+  .adx-breakdown{ display:flex; flex-direction:column; gap:9px; margin: 6px 0 24px; }
+  .adx-bd-row{ display:grid; grid-template-columns: 150px 1fr 46px; align-items:center; gap:10px; }
+  .adx-bd-label{ font-size:12.5px; color: var(--ink-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .adx-bd-track{ height:8px; background: var(--surface-2); border:1px solid var(--border); border-radius:999px; overflow:hidden; }
+  .adx-bd-fill{ height:100%; background: var(--accent); }
+  .adx-bd-fill.weak{ background: var(--bad); }
+  .adx-bd-pct{ font-family: var(--font-mono); font-size:12px; text-align:right; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+  .adx-review-item{
+    border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px;
+    background: var(--surface-2);
+  }
+  .adx-review-item .rq{ font-size: 13.5px; font-weight:700; margin-bottom:8px; line-height:1.5; }
+  .adx-review-item .ra{ font-size: 12.5px; line-height:1.6; color: var(--ink-soft); }
+  .adx-review-item .ra b.wrong{ color: var(--bad); }
+  .adx-review-item .ra b.right{ color: var(--good); }
+
+  .adx-section-title{ font-size: 13px; font-weight: 800; text-transform:uppercase; letter-spacing:.05em; color: var(--ink-faint); margin: 26px 0 12px; }
+
+  .adx-hidden{ display:none !important; }
+  .adx-footer-actions{ display:flex; gap:10px; margin-top: 10px; }
+</style>
+
+<div class="adx-root">
+  <div class="adx-shell">
+    <div class="adx-masthead">
+      <div class="adx-brand">
+        <span class="code">ADX201 · Mock Exam</span>
+        <h1>모의고사</h1>
+        <span class="sub">Essentials for New Lightning Experience Administrators</span>
+      </div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button class="adx-lang-btn" id="langBtn" title="문제/보기 언어 전환 (한국어 ↔ English)">EN</button>
+        <div class="adx-timer adx-hidden" id="timerBox"><span class="dot"></span><span id="timerText">105:00</span></div>
+      </div>
+    </div>
+
+    <!-- START SCREEN -->
+    <div class="adx-card" id="startScreen">
+      <div class="adx-intro">
+        <p>원본 교재(ADX201, 380페이지 · 12개 레슨)를 기반으로 새로 작성한 보완 모의고사입니다. <b>기본 은행 135문항 + 심화 은행 54문항</b>으로 구성되며, 실전·심화 모드 모두 응시할 때마다 문항을 무작위로 뽑아 출제하므로 여러 번 반복해서 볼 수 있습니다. 원본 교재에 실린 레슨별 복습 문제와는 겹치지 않습니다.</p>
+      </div>
+      <div class="adx-facts">
+        <div class="adx-fact"><div class="n">135</div><div class="l">기본 문제 은행</div></div>
+        <div class="adx-fact"><div class="n">54</div><div class="l">심화 문제 은행</div></div>
+        <div class="adx-fact"><div class="n">105<span style="font-size:12px">분</span></div><div class="l">실전 모드 제한시간</div></div>
+      </div>
+      <div class="adx-modes">
+        <button class="adx-mode-btn primary" id="startExamBtn">
+          <div class="m-title">전체 모의고사 (실전 모드)</div>
+          <div class="m-desc">문제 은행 135문항 중 65문항 무작위 출제 · 105분 타이머 · 정답은 제출 후 한번에 확인합니다. 볼 때마다 문제 구성이 달라집니다.</div>
+        </button>
+        <button class="adx-mode-btn" id="startPracticeBtn">
+          <div class="m-title">레슨별 연습 모드</div>
+          <div class="m-desc">원하는 레슨을 선택해 풀어보세요. 문제마다 즉시 정답과 해설을 확인할 수 있습니다. (기본+심화 문항 모두 포함)</div>
+        </button>
+        <button class="adx-mode-btn advanced" id="startAdvancedBtn" style="grid-column:1/-1;">
+          <div class="m-title">심화 모의고사 (고난도)</div>
+          <div class="m-desc">시나리오·함정·엣지케이스 중심의 심화 은행 54문항 중 40문항 무작위 출제 · 65분 타이머 · 정답은 제출 후 확인. 기본 실전 모드에서 80% 이상 득점했다면 도전해 보세요.</div>
+        </button>
+      </div>
+      <div class="adx-lesson-picker" id="lessonPicker">
+        <div class="adx-section-title" style="margin-top:4px;">레슨 선택 (복수 선택 가능)</div>
+        <div class="adx-lesson-grid" id="lessonGrid"></div>
+        <button class="adx-go-btn" id="goPracticeBtn" disabled>선택한 레슨으로 시작</button>
+      </div>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div class="adx-card adx-hidden" id="quizScreen">
+      <div class="adx-progress-row">
+        <div class="adx-progress-track"><div class="adx-progress-fill" id="progressFill" style="width:0%"></div></div>
+        <div class="adx-progress-label" id="progressLabel">1 / 65</div>
+      </div>
+      <div class="adx-tag" id="lessonTag">LESSON 1</div>
+      <p class="adx-qtext" id="qText"></p>
+      <div class="adx-options" id="optionsBox"></div>
+      <div class="adx-explain" id="explainBox"></div>
+      <div class="adx-nav-row">
+        <button class="adx-btn adx-hidden" id="revealBtn" style="margin-right:auto;">정답·해설 보기</button>
+        <button class="adx-btn" id="skipBtn">건너뛰기</button>
+        <button class="adx-btn primary" id="nextBtn" disabled>다음</button>
+      </div>
+    </div>
+
+    <!-- RESULTS SCREEN -->
+    <div class="adx-card adx-hidden" id="resultsScreen">
+      <div class="adx-score-hero">
+        <div class="big" id="scoreBig">0%</div>
+        <div class="of" id="scoreOf">0 / 0 정답</div>
+        <div class="verdict" id="scoreVerdict">-</div>
+      </div>
+      <div class="adx-section-title">레슨별 정답률</div>
+      <div class="adx-breakdown" id="breakdownBox"></div>
+      <div class="adx-section-title">오답 노트</div>
+      <div id="reviewBox"></div>
+      <div class="adx-footer-actions">
+        <button class="adx-btn primary" id="restartBtn" style="flex:1">다시 풀기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const LESSON_NAMES = {
+    1:"Salesforce Fundamentals", 2:"The Big Picture: All Users", 3:"Feature & Object Access",
+    4:"Salesforce Record Access", 5:"Customize Standard Functionality", 6:"Customize the UI",
+    7:"Data Management", 8:"Declarative Automation", 9:"The Future of Automation: Flow",
+    10:"Create New with Clicks", 11:"Analytics", 12:"The Agentic Enterprise"
+  };
+
+  const QUESTIONS = [
+    {lesson:1, q:"멀티테넌트(Multi-tenant) 구조에서 세일즈포스가 모든 고객사에게 동시에 신기능을 배포할 수 있는 이유는 무엇인가?", choices:["각 고객사가 독립된 전용 서버를 별도로 운영하기 때문","단일 소프트웨어/DB 인스턴스를 여러 테넌트가 공유하되 데이터만 격리되기 때문","고객사마다 소스코드를 다르게 컴파일하기 때문","고객사가 직접 업데이트 시점을 선택하기 때문"], correct:1, explain:"멀티테넌트는 하나의 인스턴스를 여러 고객이 공유하면서 데이터만 논리적으로 격리하는 구조입니다. 이 덕분에 전체 고객에게 새 기능을 동시에 배포할 수 있습니다."},
+    {lesson:1, q:"오브젝트를 스프레드시트에 비유했을 때, '레코드'에 해당하는 것은?", choices:["시트(탭) 하나 전체","시트의 열(컬럼) 하나","시트의 행(row) 하나, 즉 실제 데이터 한 건","여러 시트가 담긴 파일 전체"], correct:2, explain:"오브젝트=시트, 필드=열, 레코드=행 입니다. 레코드는 실제 데이터 한 건을 의미합니다."},
+    {lesson:1, q:"관리자가 오브젝트 간 관계를 시각적 다이어그램으로 확인하면서, 동시에 그 화면에서 바로 새 커스텀 오브젝트/필드를 생성할 수 있는 도구는?", choices:["App Launcher","Setup Audit Trail","Schema Builder","Report Builder"], correct:2, explain:"Schema Builder는 오브젝트 관계를 시각적으로 보여주는 동시에, 같은 화면에서 새 오브젝트와 필드를 생성할 수 있는 도구입니다."},
+    {lesson:1, q:"NTO가 대규모 부하 테스트와 스테이징을 위해 운영 조직과 동일한 데이터 용량을 가진 샌드박스가 필요하다고 요청했다. 어떤 샌드박스 유형이 적절한가?", choices:["Developer","Developer Pro","Partial Copy","Full Copy"], correct:3, explain:"Full Copy 샌드박스는 운영 조직과 동일한 데이터/용량을 복제하며, 성능·부하 테스트나 스테이징에 적합합니다."},
+    {lesson:2, q:"다중 통화(Multi-Currency)를 처음 사용하려는 관리자에 대한 설명으로 옳은 것은?", choices:["다중 통화를 먼저 활성화해야 새 통화를 추가할 수 있다","조직당 통화는 최대 3개까지만 추가할 수 있다","통화를 추가하면 기존 레코드의 통화가 자동으로 모두 변경된다","다중 통화 활성화는 언제든 자유롭게 되돌릴 수 있다"], correct:0, explain:"세일즈포스 조직은 기본 단일 통화이며, Company Information에서 다중 통화를 먼저 활성화해야 새 통화를 추가할 수 있습니다."},
+    {lesson:2, q:"커스텀 회계연도를 활성화한 뒤, 회사 정책이 바뀌어 표준 회계연도로 되돌리고 싶다. 가능한가?", choices:["가능하다, Setup에서 토글만 끄면 된다","불가능하다, 한번 활성화하면 다시 비활성화할 수 없다","Salesforce Support에 요청하면 언제든 가능하다","새 회계연도를 만들면 자동으로 표준으로 전환된다"], correct:1, explain:"커스텀 회계연도는 한번 활성화하면 되돌릴 수 없는 설정이므로 신중하게 결정해야 합니다."},
+    {lesson:2, q:"개인 로케일을 프랑스(불어)로 설정한 사용자가 새 레코드를 생성할 때, 그 레코드에 기본으로 적용되는 통화는?", choices:["항상 회사 기본 통화","해당 사용자의 개인 통화","항상 미국 달러","레코드 생성 시마다 관리자가 수동 지정"], correct:1, explain:"새 레코드는 그것을 만든 사용자의 개인 통화(Personal Currency)를 상속하며, 이후 다른 활성 통화로 변경할 수 있습니다."},
+    {lesson:2, q:"Lightning Experience에서 사용자가 자신의 '할 일'과 '캘린더 일정'을 각각 확인하려면?", choices:["Activities 탭 하나로 모두 확인한다","Tasks 탭과 Calendar 탭을 각각 확인한다","Chatter 탭에서 확인한다","Setup의 Activity Manager에서 확인한다"], correct:1, explain:"Lightning에는 별도의 'Activities' 탭이 없습니다. 대신 Tasks 탭과 Calendar 탭이 각각 존재합니다."},
+    {lesson:2, q:"관리자가 신뢰 IP 범위 밖에서 접속하는 모든 사용자에게 반드시 다단계 인증을 요구하고 싶다. 가장 적절한 설정은?", choices:["Trusted IP Range만 설정한다","MFA 정책을 로그인 시 요구하도록 설정한다","비밀번호 정책만 강화한다","Health Check 점수만 확인한다"], correct:1, explain:"다단계 인증(MFA)을 로그인 시 요구하도록 정책을 설정하는 것이 가장 직접적인 방법입니다."},
+    {lesson:3, q:"HR 인턴들은 이미 'HR User' 권한 세트 그룹에 속해 삭제 권한을 포함한 여러 권한을 받고 있다. 삭제 권한만 제거하고 싶다면?", choices:["인턴 전용 새 프로필을 처음부터 만든다","권한 세트 그룹에 뮤팅 권한 세트를 추가해 삭제 권한만 음소거한다","HR User 권한 세트 자체를 수정해 삭제 권한을 제거한다","인턴의 프로필에서 Modify All Data를 해제한다"], correct:1, explain:"뮤팅 권한 세트는 권한 세트 그룹에 층층이 적용되어 그룹 내 특정 권한만 선택적으로 제거(음소거)할 수 있습니다."},
+    {lesson:3, q:"다음 중 반드시 '프로필'에서만 설정할 수 있고 권한 세트로는 설정할 수 없는 것은?", choices:["오브젝트 CRED 권한","필드 수준 보안","레코드 타입 및 앱의 기본값(Default) 지정","로그인 시간 제한"], correct:2, explain:"레코드 타입/앱의 기본값(Default) 지정과 페이지 레이아웃 할당은 프로필에서만 관리합니다. 나머지는 권한 세트로도 관리 가능합니다."},
+    {lesson:3, q:"페이지 레이아웃에서는 필드가 '필수'로 설정되어 있지만, FLS에서는 '읽기 전용'으로 설정되어 있다. 사용자는 그 필드를 수정할 수 있는가?", choices:["예, 페이지 레이아웃 설정이 우선이다","아니오, FLS가 더 제한적이므로 수정 불가하다","관리자만 예외적으로 수정 가능하다","필드 자체가 화면에서 사라진다"], correct:1, explain:"FLS와 페이지 레이아웃이 충돌하면 항상 더 제한적인 설정이 우선합니다."},
+    {lesson:3, q:"새로 채용된 관리자가 최소 권한 원칙(Least Privilege)을 적용하려 한다. 가장 적합한 출발점 표준 프로필은?", choices:["System Administrator","Standard User","Minimum Access - Salesforce","Solution Manager"], correct:2, explain:"Minimum Access - Salesforce는 최소한의 권한만 가진 프로필로, 여기에 권한 세트를 하나씩 추가하는 최소 권한 원칙의 출발점으로 활용됩니다."},
+    {lesson:3, q:"모든 영업 사용자(Sales User)에게 공통적으로 Opportunity의 생성·수정 권한을 부여하는 가장 효율적인 방법은?", choices:["개별 권한 세트를 사용자마다 할당한다","Sales User 프로필 자체를 수정한다","뮤팅 권한 세트를 사용한다","매번 수동 공유로 부여한다"], correct:1, explain:"조직 전체 공통 권한은 프로필에서 관리하는 것이 효율적입니다. 권한 세트는 특정 직무/개인 대상 예외에 적합합니다."},
+    {lesson:4, q:"Opportunity의 OWD가 Private인 조직에서, 영업 매니저가 자신의 팀원이 소유한 영업기회를 모두 볼 수 있게 하려면?", choices:["매 영업기회마다 수동 공유를 건다","역할 계층에서 매니저를 팀원보다 상위 역할에 배치한다","OWD를 Public Read/Write로 변경한다","Opportunity Team에 매니저를 매번 추가한다"], correct:1, explain:"역할 계층은 상위 역할이 하위 역할이 소유한 레코드에 자동으로 전체 접근 권한을 상속받게 합니다."},
+    {lesson:4, q:"서로 다른 역할 계층에 있는 EMEA와 AMER 영업팀이 서로의 레코드를 수평적으로 공유해야 한다. 역할 계층만으로 해결 가능한가?", choices:["가능하다, 역할을 같은 레벨에 두면 된다","불가능하다, 공유 규칙이나 팀이 필요하다","가능하다, OWD만 조정하면 된다","불가능하다, 반드시 재직 계층을 재설계해야 한다"], correct:1, explain:"역할 계층은 수직적(상위→하위) 접근만 열어줍니다. 수평적 공유가 필요하면 공유 규칙이나 팀이 필요합니다."},
+    {lesson:4, q:"Case의 OWD가 Private인 상태에서, 특정 케이스 1건에 대해 재무팀 담당자 한 명에게만 임시로 읽기 권한을 주고 싶다. 가장 적합한 방법은?", choices:["공유 규칙 생성","수동 공유(Manual Sharing)","OWD를 Public으로 변경","역할 계층 재조정"], correct:1, explain:"개별 레코드 1건에 대한 일회성 공유에는 수동 공유(Manual Sharing)가 적합합니다."},
+    {lesson:4, q:"Account를 소유하지 않은 사용자가 그 Account에 연결된 Contact를 하나 소유하고 있다. 이 사용자가 해당 Account에 대해 자동으로 갖는 최소 접근 수준은?", choices:["접근 없음","읽기(Read)","읽기/쓰기","전체 접근(Full Access)"], correct:1, explain:"자식 레코드(Contact)를 소유한 사용자는 항상 그 부모 Account에 대해 최소 읽기 권한을 자동으로 갖습니다. 이는 끌 수 없는 고정 규칙입니다."},
+    {lesson:4, q:"HR 인턴들이 '마감(Closed)'된 Position 레코드만 볼 수 있도록 제한하고 싶다. 인턴들은 이미 프로필/권한 세트로 Position 읽기 권한을 갖고 있다. 가장 적합한 도구는?", choices:["OWD를 더 낮춘다","제한 규칙(Restriction Rule)","역할 계층 재조정","필드 수준 보안"], correct:1, explain:"제한 규칙은 이미 부여된 접근 권한을 특정 레코드 범위로 필터링(축소)하는 유일한 도구입니다."},
+    {lesson:4, q:"역할 계층에 대한 설명으로 옳은 것은?", choices:["반드시 회사 조직도와 동일해야 한다","하위 역할이 상위 역할의 레코드에 자동으로 접근할 수 있게 한다","커스텀 오브젝트는 역할 계층 상속 여부를 오브젝트별로 선택할 수 있다","OWD가 Public Read/Write일 때 가장 중요하게 작동한다"], correct:2, explain:"커스텀 오브젝트는 역할 계층으로부터의 접근 상속을 오브젝트별로 켜거나 끌 수 있습니다. 역할 계층은 조직도와 다르며, 상위→하위 방향으로 접근을 열어줍니다."},
+    {lesson:4, q:"공유 규칙(Sharing Rule)을 만들 때 공유 대상(공유받는 쪽)으로 직접 지정할 수 없는 것은?", choices:["공개 그룹(Public Group)","역할(Role)","역할과 하위(Roles and Subordinates)","개별 사용자 1명"], correct:3, explain:"공유 규칙의 공유 대상은 공개 그룹/역할/역할과 하위로만 지정 가능하며, 개별 사용자를 직접 지정할 수는 없습니다."},
+    {lesson:5, q:"Case 오브젝트에 User를 참조하는 'Backup Agent' Lookup 필드를 추가하되, Support User 프로필을 가진 사용자만 선택 가능하도록 제한하려면?", choices:["Lookup 필드 + 관계(Lookup) 필터","Master-Detail 필드","텍스트 필드 + 검증 규칙","교차 오브젝트 수식 필드"], correct:0, explain:"Lookup 관계 필터를 사용하면 선택 가능한 대상 레코드를 프로필 등 조건으로 제한할 수 있습니다."},
+    {lesson:5, q:"'Interview Review' 커스텀 오브젝트가 Position과 Applicant 양쪽에 강하게 종속된(부모 삭제 시 함께 삭제) 다대다 관계를 표현해야 한다면?", choices:["두 개의 Lookup 필드를 사용한다","Master-Detail 관계 2개로 정션 오브젝트를 구성한다","교차 오브젝트 수식 필드를 사용한다","두 오브젝트를 하나로 병합한다"], correct:1, explain:"Master-Detail 관계 2개를 조합하면 정션 오브젝트를 만들어 다대다 관계를 구현할 수 있습니다."},
+    {lesson:5, q:"커스텀 수식 필드가 참조할 수 없는 필드 유형은?", choices:["같은 오브젝트의 숫자 필드","부모 오브젝트의 필드","암호화된(Encrypted) 텍스트 필드","체크박스 필드"], correct:2, explain:"수식 필드는 암호화된 필드, Description 필드, 긴 텍스트 영역을 참조할 수 없습니다."},
+    {lesson:5, q:"종속 피크리스트에서 '통제 필드(Controlling Field)'로 사용할 수 없는 필드 유형은?", choices:["표준 피크리스트","커스텀 피크리스트","커스텀 다중 선택 피크리스트","커스텀 체크박스"], correct:2, explain:"커스텀 다중 선택 피크리스트는 종속 필드로만 사용 가능하며, 통제 필드는 될 수 없습니다."},
+    {lesson:5, q:"실수로 커스텀 필드를 삭제한 지 20일이 지났다. Object Manager의 Deleted Fields에서 복구할 수 있는가?", choices:["가능하다, 필드는 영구 보관된다","불가능하다, 보관 기한(15일)이 지나 영구 삭제되었다","관리자 승인만 받으면 언제든 가능하다","Salesforce Support에만 요청하면 항상 가능하다"], correct:1, explain:"삭제된 필드는 최대 15일간만 보관되며, 이후에는 영구 삭제되어 복구할 수 없습니다."},
+    {lesson:5, q:"Roll-Up Summary 필드를 사용하려면 반드시 어떤 관계가 필요한가?", choices:["Lookup 관계","Master-Detail 관계","교차 오브젝트 수식","관계가 필요 없다"], correct:1, explain:"Roll-Up Summary 필드는 Master-Detail 관계에서만 사용할 수 있습니다."},
+    {lesson:5, q:"Account의 Region 필드 값이 바뀌면 관련된 모든 Opportunity에서도 실시간으로 자동 반영되어야 한다. 가장 적합한 방법은?", choices:["Opportunity에 Account를 참조하는 Lookup 필드를 추가한다","Opportunity에 Account의 Region을 참조하는 교차 오브젝트 수식 필드를 추가한다","Account에 Roll-Up Summary 필드를 추가한다","Workflow로 매번 필드를 복사한다"], correct:1, explain:"교차 오브젝트 수식 필드는 부모 오브젝트의 값을 참조해 자식 레코드에서 실시간으로 계산·표시합니다."},
+    {lesson:6, q:"한 프로필에 대해 Account의 페이지 레이아웃을 '유통업체용'과 '공급업체용' 두 가지로 다르게 보여주고 싶다. 무엇이 필요한가?", choices:["페이지 레이아웃만 2개 만들면 자동으로 분기된다","레코드 타입을 만들어 각각 다른 레이아웃을 연결한다","Dynamic Forms만으로 충분하다","불가능하다, 프로필당 레이아웃은 항상 1개다"], correct:1, explain:"레코드 타입을 만들면 한 프로필에서도 레코드 타입별로 서로 다른 페이지 레이아웃을 보여줄 수 있습니다."},
+    {lesson:6, q:"'지원자가 이전 직책 경력이 있는 경우에만' 특정 필드를 보여주고 싶은 요구사항에 가장 적합한 기능은?", choices:["페이지 레이아웃의 필수 필드 설정","Dynamic Forms의 컴포넌트 표시 조건(Visibility Rule)","검증 규칙","역할 계층"], correct:1, explain:"Dynamic Forms는 특정 조건에서만 필드/섹션을 보여주는 표시 조건을 지원합니다."},
+    {lesson:6, q:"Cloud Kicks가 NTO와 다른 영업 프로세스(Sales Process)를 사용하도록 설정하려 한다. 올바른 순서는?", choices:["레코드 타입을 먼저 만들고 비즈니스 프로세스를 나중에 연결한다","비즈니스 프로세스를 먼저 만들고 그 다음 레코드 타입을 생성한다","Path를 먼저 만든다","순서는 상관없다"], correct:1, explain:"비즈니스 프로세스가 레코드 타입 생성의 전제조건입니다. 반드시 먼저 만들어야 합니다."},
+    {lesson:6, q:"비즈니스 프로세스를 사용할 수 없는 오브젝트는?", choices:["Opportunity","Case","Account","Lead"], correct:2, explain:"비즈니스 프로세스는 Opportunity, Case, Lead, Solution 네 오브젝트에서만 사용됩니다. Account에는 없습니다."},
+    {lesson:6, q:"Lightning App Builder와 Page Layout Editor의 차이로 옳은 것은?", choices:["App Builder는 개별 필드 배치, Page Layout Editor는 관련 목록 같은 큰 블록 배치를 담당한다","App Builder는 컴포넌트(관련 목록, Path 등) 배치, Page Layout Editor는 필드/섹션/버튼 배치를 담당한다","두 도구는 완전히 동일한 기능을 한다","Page Layout Editor는 Lightning에서 더 이상 사용되지 않는다"], correct:1, explain:"App Builder는 페이지 컴포넌트(큰 블록) 배치, Page Layout Editor는 필드/섹션/버튼 등 세부 요소를 다룹니다."},
+    {lesson:6, q:"Web-to-Case로 접수된 케이스는 어떤 레코드 타입으로 생성되는가?", choices:["항상 Master 레코드 타입","기본 케이스 소유자(Default Case Owner)의 기본 레코드 타입","관리자가 매번 수동 지정","무작위로 배정"], correct:1, explain:"Web-to-Case/Web-to-Lead 레코드는 기본 소유자의 기본 레코드 타입으로 생성됩니다."},
+    {lesson:7, q:"NTO가 12만 건의 Opportunity 레코드를 외부 시스템에서 가져와 반영하려 한다. 가장 적합한 도구는?", choices:["Data Import Wizard","Data Loader","Mass Transfer","Report Export"], correct:1, explain:"Data Import Wizard는 5만 건 미만만 지원합니다. 12만 건 규모와 Opportunity 오브젝트는 Data Loader가 적합합니다."},
+    {lesson:7, q:"대량의 리드 레코드를 삭제하기 전, 관리자가 반드시 먼저 해야 할 모범 사례는?", choices:["검증 규칙 비활성화","데이터 백업","역할 계층 재조정","필드 이력 추적 비활성화"], correct:1, explain:"Mass Delete 실행 전에는 반드시 데이터를 먼저 백업하는 것이 모범 사례입니다."},
+    {lesson:7, q:"삭제된 레코드가 Recycle Bin에서 자동으로 영구 삭제되기까지 걸리는 기간은?", choices:["7일","15일","30일","90일"], correct:1, explain:"Recycle Bin의 레코드는 최대 15일간 보관 후 자동으로 영구 삭제됩니다."},
+    {lesson:7, q:"동일 회사의 Lead가 반복적으로 중복 생성되는 원인으로 가장 거리가 먼 것은?", choices:["Web-to-Lead를 통한 유입","Lead의 기본 내부 접근이 Private으로 설정되어 담당자들이 서로의 리드를 못 봄","담당자가 신규 생성 전 검색을 생략함","필드 수준 보안이 너무 엄격해서"], correct:3, explain:"필드 수준 보안은 필드의 노출/편집 여부와 관련된 것으로 리드 중복 발생 원인이 아닙니다."},
+    {lesson:7, q:"중복 관리(Duplicate Management)에서 '무엇을 기준으로 중복 여부를 판단할지' 정의하는 요소는?", choices:["중복 규칙(Duplicate Rule)","매칭 규칙(Matching Rule)","검증 규칙","배정 규칙"], correct:1, explain:"매칭 규칙이 판단 기준(무엇을 같은 개체로 볼지)을 정의하고, 중복 규칙은 매칭 시 취할 조치(경고/차단)를 정의합니다."},
+    {lesson:8, q:"영업 담당자가 Opportunity 할인율에 30%를 입력해 저장을 시도했으나 오류가 발생했다. 최대 허용 할인율이 20%라면, 이 제한은 무엇으로 구현되었을 가능성이 가장 높은가?", choices:["시스템 데이터 검증","커스텀 검증 규칙","배정 규칙","승인 프로세스의 반려 액션"], correct:1, explain:"20%처럼 비즈니스 특화된 조건은 커스텀 검증 규칙(Validation Rule)으로 구현합니다."},
+    {lesson:8, q:"레코드가 저장될 때 가장 먼저 실행되는 것은?", choices:["커스텀 검증 규칙","워크플로우 규칙","시스템 데이터 검증","승인 프로세스"], correct:2, explain:"저장 순서상 시스템 데이터 검증이 커스텀 검증 규칙보다 먼저 실행됩니다."},
+    {lesson:8, q:"Web-to-Lead로 접수된 리드에는 자동 응답 이메일이 발송되지만, 영업사원이 수기로 입력한 리드에는 발송되지 않는다. 그 이유는?", choices:["자동 응답 규칙은 웹 제출 레코드에만 적용되도록 설계되었기 때문","수기 입력 시 이메일 필드가 항상 비어있기 때문","자동 응답 규칙이 비활성화되어 있기 때문","영업사원 프로필에 권한이 없기 때문"], correct:0, explain:"자동 응답 규칙(Auto-Response Rule)은 웹으로 제출된 리드/케이스에만 적용되며, 내부 사용자가 만든 레코드에는 적용되지 않습니다."},
+    {lesson:8, q:"워크플로우 규칙이 생성할 수 있는 유일한 레코드 유형은?", choices:["Case","Task","Event","Opportunity"], correct:1, explain:"워크플로우 규칙은 Task만 생성할 수 있습니다."},
+    {lesson:8, q:"Process Builder에서 외부 시스템으로 직접 메시지를 보내는 Outbound Message 액션을 사용하고 싶다면?", choices:["Process Builder에서 바로 지원되므로 그대로 사용한다","Apex 호출(Call Apex)로 우회해야 한다","워크플로우로 전환해야만 가능하다","불가능하다"], correct:1, explain:"Process Builder는 Outbound Message를 직접 지원하지 않아 Apex 호출로 우회해야 합니다."},
+    {lesson:8, q:"승인 프로세스에만 존재하고 워크플로우 규칙에는 없는 고유한 액션은?", choices:["필드 업데이트","이메일 알림","레코드 잠금/잠금해제(Lock/Unlock Record)","작업(Task) 생성"], correct:2, explain:"레코드 잠금/잠금해제는 승인 프로세스에서만 사용할 수 있는 고유 액션입니다."},
+    {lesson:8, q:"Case 에스컬레이션 규칙이 정상적으로 작동하려면 Support Settings에서 활성화하는 것이 권장되는 옵션은?", choices:["Automated Case User만 설정","Early Triggers","Notify Default Case Owner만 설정","설정이 필요 없다"], correct:1, explain:"에스컬레이션 규칙이 정확한 타이밍에 작동하려면 Support Settings의 Early Triggers를 활성화하는 것이 권장됩니다."},
+    {lesson:9, q:"지원 상담원이 전화 응대 중 최소한의 정보만 빠르게 입력해 케이스를 생성해야 한다. 가장 적합한 Flow 유형은?", choices:["Record-Triggered Flow","Screen Flow","Schedule-Triggered Flow","Platform Event-Triggered Flow"], correct:1, explain:"사용자가 화면을 보며 정보를 입력하는 대화형 시나리오에는 Screen Flow가 적합합니다."},
+    {lesson:9, q:"레코드가 저장되기 직전, 그 레코드 자신의 필드 값만 빠르게 계산해 채우고 싶다. 가장 성능이 좋은 방법은?", choices:["After-Save(Actions and Related Records)","Before-Save(Fast Field Update)","Schedule-Triggered Flow","Screen Flow"], correct:1, explain:"Before-Save(Fast Field Update)는 저장 직전 해당 레코드 자신의 필드만 업데이트하여 성능이 가장 빠릅니다."},
+    {lesson:9, q:"다른 레코드(예: 관련 Task)를 생성해야 하는 자동화라면 어떤 실행 시점의 Record-Triggered Flow를 사용해야 하는가?", choices:["Before-Save","After-Save","둘 다 상관없다","Flow로는 불가능하다"], correct:1, explain:"다른 레코드를 다루려면 저장 이후 실행되는 After-Save(Actions and Related Records) 방식이 필요합니다."},
+    {lesson:9, q:"Flow의 진입 조건(Entry Conditions)을 좁게 설정하는 주된 이유는?", choices:["화면 디자인을 예쁘게 하기 위해","불필요한 실행을 줄여 조직의 리소스(거버너 한도)를 아끼기 위해","권한을 강화하기 위해","버전 관리를 쉽게 하기 위해"], correct:1, explain:"진입 조건을 좁히면 실제로 관련 있는 변경에만 Flow가 실행되어 리소스를 아낄 수 있습니다."},
+    {lesson:9, q:"Flow를 실행(Run)만 할 수 있고 수정은 할 수 없어야 하는 일반 사용자에게 필요한 권한은?", choices:["Manage Flow","Run Flows","Modify All Data","View Setup and Configuration"], correct:1, explain:"'Run Flows' 권한은 Flow 실행에, 'Manage Flow' 권한은 열람/수정에 필요합니다."},
+    {lesson:9, q:"Process Builder와 비교했을 때 Flow가 가진 명확한 장점 중 하나는?", choices:["Outbound Message를 직접 지원한다","버전을 무제한으로 만들 수 있다","승인 프로세스를 대체한다","프로필 설정을 변경할 수 있다"], correct:0, explain:"Flow는 Process Builder와 달리 Outbound Message를 직접 지원합니다."},
+    {lesson:9, q:"계정 소유자가 Account 페이지를 벗어나지 않고 몇 개의 필수 필드만 입력해 새 Opportunity를 빠르게 만들 수 있게 하는 Screen Flow를 만들었다. 다음으로 해야 할 일은?", choices:["Flow를 비활성 상태로 둔다","Flow를 활성화하고 Lightning 컴포넌트로 Account 레코드 페이지에 추가한다","워크플로우로 다시 만든다","승인 프로세스에 연결한다"], correct:1, explain:"Flow를 사용자에게 노출하려면 활성화한 뒤 Lightning 컴포넌트로 레코드 페이지에 추가해야 합니다."},
+    {lesson:10, q:"새로 만든 커스텀 오브젝트의 조직 전체 기본값(OWD) 초기값은?", choices:["Private","Public Read Only","Public Read/Write","기본값이 없어 매번 수동 지정해야 한다"], correct:2, explain:"커스텀 오브젝트를 새로 만들면 OWD 기본값은 Public Read/Write이며, 필요시 관리자가 좁혀야 합니다."},
+    {lesson:10, q:"체인지 셋을 샌드박스에서 운영 조직으로 배포하기 위한 첫 번째 단계는?", choices:["Inbound Change Set 생성","소스(샌드박스)에서 변경사항 구성 및 테스트","운영 조직에서 즉시 Deploy","Setup Audit Trail 확인"], correct:1, explain:"모든 메타데이터 배포의 출발점은 소스 환경에서 변경사항을 구성하고 테스트하는 것입니다."},
+    {lesson:10, q:"Inbound Change Set을 실제로 배포(Deploy)하기 직전에 반드시 수행해야 하는 단계는?", choices:["Validate(검증)","삭제(Delete)","재업로드","프로필 재생성"], correct:0, explain:"배포 직전에는 반드시 Validate(검증)를 먼저 수행해야 합니다."},
+    {lesson:10, q:"체인지 셋에 대한 설명으로 옳지 않은 것은?", choices:["타겟 조직의 기존 메타데이터를 자동으로 병합한다(덮어쓰지 않는다)","타겟 조직의 메타데이터를 삭제할 수 없다","업로드된 체인지 셋의 구성 요소는 잠겨서 수정할 수 없다","이름이 변경된 컴포넌트는 타겟에서 새 항목으로 인식된다"], correct:0, explain:"체인지 셋은 병합이 아니라 '덮어쓰기(overwrite)' 방식으로 배포됩니다. 이 설명이 옳지 않은 설명입니다."},
+    {lesson:11, q:"NTO는 파트너가 없는 거래처도 포함해서 Account와 Partner의 관계를 리포트로 보고 싶다. 어떤 리포트 유형이 필요한가?", choices:["표준 리포트 유형","커스텀 리포트 유형('with or without' 관계로 정의)","Tabular 리포트","Joined 리포트만 가능"], correct:1, explain:"'with or without'(외부 조인) 관계는 커스텀 리포트 유형에서만 정의할 수 있습니다."},
+    {lesson:11, q:"행과 열 양쪽 기준으로 데이터를 교차 그룹화해서 비교하고 싶을 때 사용하는 리포트 포맷은?", choices:["Tabular","Summary","Matrix","Joined"], correct:2, explain:"Matrix 리포트는 행과 열 양쪽 기준으로 그룹화하는 교차표 형식입니다."},
+    {lesson:11, q:"Opportunity가 Private인 조직에서, 영업사원이 VP를 실행 사용자로 설정한 대시보드를 보다가 컴포넌트를 클릭해 원본 리포트로 드릴다운했다. 이때 영업사원이 보게 되는 데이터의 기준은?", choices:["VP의 접근 권한 기준","영업사원 자신의 접근 권한 기준","조직의 모든 레코드","아무것도 보이지 않는다"], correct:1, explain:"드릴다운 시에는 실행 사용자가 아닌, 실제로 클릭한 사용자 본인의 접근 권한이 적용됩니다."},
+    {lesson:11, q:"Dynamic(The Dashboard Viewer)을 실행 사용자로 설정한 대시보드의 제약사항은?", choices:["조건부 서식을 사용할 수 없다","예약된 자동 새로고침을 설정할 수 없다(수동 새로고침만 가능)","차트를 추가할 수 없다","구독할 수 없다"], correct:1, explain:"Dynamic 실행 사용자를 사용하는 대시보드는 예약 새로고침이 불가능하며 수동으로만 새로고침할 수 있습니다."},
+    {lesson:11, q:"요약 수식(Summary Formula)에 대한 설명으로 옳은 것은?", choices:["다른 요약 수식을 참조할 수 있다","레코드(행)마다 값이 표시된다","그룹 합계/부분합 줄에만 표시되며 다른 요약 수식은 참조할 수 없다","Tabular 리포트에서만 사용 가능하다"], correct:2, explain:"요약 수식은 그룹 합계 줄에만 표시되고, 다른 요약 수식을 참조할 수 없습니다(수식 필드는 참조 가능)."},
+    {lesson:12, q:"에이전트가 '하면 안 되는 일'을 정의하는 속성은?", choices:["Role","Data","Guardrails","Channel"], correct:2, explain:"Guardrails(가드레일)은 에이전트가 하지 말아야 할 일을 정의하는 속성입니다."},
+    {lesson:12, q:"여러 오브젝트를 근거로 하며, 어떤 비즈니스 프로세스에서도 호출 가능한 액션으로 사용할 수 있는 프롬프트 템플릿 유형은?", choices:["Sales Email","Field Generation","Record Summary","Flex"], correct:3, explain:"Flex 템플릿은 여러 오브젝트를 근거로 하며, 어떤 비즈니스 프로세스에서도 호출 가능한 액션으로 사용될 수 있습니다."},
+    {lesson:12, q:"영업(Sales) 팀에서 Agentforce의 대표적인 활용 사례로 가장 적절한 것은?", choices:["온보딩 가이드 초안 작성","리드를 검증해 파이프라인 확대","버그 리포트 분석 및 코드 수정 제안","지식 문서 색인으로 케이스 분류 지원"], correct:1, explain:"리드 검증을 통한 파이프라인 확대는 영업팀의 대표적인 Agentforce 활용 사례입니다. (온보딩=HR, 버그분석=엔지니어링, 케이스분류=서비스)"},
+
+    {lesson:1, q:"마케팅팀이 리드와 담당자를 캠페인에 연결하려 한다. 연결할 때 자동으로 생성되는 레코드는?", choices:["Campaign Influence","Campaign Member","Opportunity Contact Role","Marketing Touchpoint"], correct:1, explain:"Campaign은 Lead/Contact와 직접 관계가 없으며, 연결 시 Campaign Member라는 중간 레코드가 자동 생성됩니다."},
+    {lesson:1, q:"세일즈포스 관리자가 하루 업무 시간의 대부분을 보내는 영역은?", choices:["App Launcher","Chatter","Setup(설정)","Home 페이지"], correct:2, explain:"관리자는 대부분의 시간을 백엔드인 Setup에서 보냅니다."},
+    {lesson:1, q:"Developer 샌드박스와 Developer Pro 샌드박스의 가장 중요한 차이는?", choices:["Pro는 실제 운영 데이터를 포함한다","저장 용량이 다르다 (200MB vs 1GB)","Pro만 메타데이터를 복사한다","Developer는 코드 개발이 불가능하다"], correct:1, explain:"둘 다 메타데이터만 복사하며, 차이는 저장 용량(Developer 200MB, Developer Pro 1GB)뿐입니다."},
+    {lesson:1, q:"사용자 수용 테스트(UAT)와 통합 테스트를 위해 운영 데이터의 '샘플'이 포함된 샌드박스가 필요하다. 어떤 유형인가?", choices:["Developer","Developer Pro","Partial Copy","Full Copy"], correct:2, explain:"Partial Copy는 메타데이터 + 샘플 데이터(5GB)를 포함하며 UAT/통합 테스트/교육에 적합합니다."},
+    {lesson:1, q:"표준 오브젝트 Case가 조회(lookup)하는 오브젝트로 올바르게 짝지어진 것은?", choices:["Account만","Contact만","Account와 Contact","Campaign과 Lead"], correct:2, explain:"Case는 Account를 조회하며, 추가로 Contact도 조회합니다."},
+
+    {lesson:2, q:"다음 중 Experience Cloud 사용자 라이선스에 속하는 것은?", choices:["Salesforce","Lightning Platform","Partner Community","Chatter Free"], correct:2, explain:"Experience Cloud 라이선스에는 Customer Community, Customer Community Plus, Partner Community 등이 속합니다."},
+    {lesson:2, q:"13주 단위 분기(4-4-5 등)를 사용하는 회사가 선택해야 하는 회계연도 방식은?", choices:["표준 회계연도","커스텀 회계연도","달력 연도","별도 설정 불필요"], correct:1, explain:"13개월 회계연도, 13주 분기, 월 시작일이 아닌 시작일은 커스텀 회계연도가 필요한 3가지 경우입니다."},
+    {lesson:2, q:"Chatter 이메일 알림의 수신 여부를 최종적으로 제어하는 주체는?", choices:["시스템 관리자만","각 사용자의 개인 설정","프로필 설정","조직 전체 설정만"], correct:1, explain:"이메일 알림 수신 여부는 사용자가 자신의 개인 설정에서 제어합니다."},
+    {lesson:2, q:"세일즈포스 모바일 앱에 자동으로 반영되는 커스터마이징은?", choices:["커스텀 필드","레코드 타입","페이지 레이아웃과 커스텀 오브젝트","위 항목 모두"], correct:3, explain:"커스텀 필드, 레코드 타입, 페이지 레이아웃, 커스텀 오브젝트 등 대부분의 커스터마이징이 모바일 앱에 자동 반영됩니다."},
+    {lesson:2, q:"Health Check에서 보안 설정을 더 느슨하게(덜 제한적으로) 변경하면 점수는 어떻게 되는가?", choices:["올라간다","내려간다","변화 없다","점수와 무관하다"], correct:1, explain:"설정이 덜 제한적일수록 Salesforce 권장 기준과 멀어지므로 Health Check 점수는 내려갑니다."},
+    {lesson:2, q:"영업팀이 업무량을 분담할 수 있도록 Task를 개인이 아닌 그룹 단위로 배정하고 싶다. 가능한 방법은?", choices:["Task는 개인에게만 배정 가능하다","큐(Queue)에 Task를 배정한다","Chatter 그룹에 배정한다","공개 그룹에 직접 배정한다"], correct:1, explain:"Task는 큐에 배정할 수 있어 팀원들이 업무량을 나눌 수 있습니다."},
+
+    {lesson:3, q:"표준 프로필(Standard Profile)에 대해 관리자가 할 수 없는 것은?", choices:["복제(Clone)하여 커스텀 프로필 생성","사용자에게 할당","삭제","프로필 내용 확인"], correct:2, explain:"표준 프로필은 삭제할 수 없고 대부분의 권한 편집도 제한됩니다. 커스텀이 필요하면 복제해서 만듭니다."},
+    {lesson:3, q:"영업팀 중 특정 3명에게만 리포트 생성 권한을 추가로 부여하려 한다. 가장 적절한 방법은?", choices:["Sales User 프로필 수정","해당 3명에게 권한 세트 할당","새 역할 생성","OWD 변경"], correct:1, explain:"특정 개인 몇 명에게만 추가 권한이 필요하면 권한 세트가 정답입니다. 프로필 수정은 프로필을 쓰는 전원에게 영향을 줍니다."},
+    {lesson:3, q:"권한 세트와 권한 세트 그룹의 할당·회수를 자동화하는 기능은?", choices:["User Access Policies","Login Flows","Session Settings","Delegated Administration"], correct:0, explain:"User Access Policies는 권한 세트/권한 세트 그룹의 할당과 회수를 자동으로 처리해주는 기능입니다."},
+    {lesson:3, q:"FLS로 숨김 처리된 필드는 리포트와 검색 결과에서 어떻게 표시되는가?", choices:["리포트에서만 보인다","검색에서만 보인다","리포트/검색/목록보기 어디에서도 보이지 않는다","관리자에게 문의하면 보인다"], correct:2, explain:"FLS는 상세/편집 화면뿐 아니라 관련 목록, 검색 결과, 리포트, 목록 보기에 모두 동일하게 적용됩니다."},
+    {lesson:3, q:"사용자 로그인 시 접근 검증이 이루어지는 순서로 올바른 것은?", choices:["조직 신뢰 IP → 프로필 로그인 시간 → 프로필 IP","프로필 로그인 시간 → 프로필 로그인 IP → 조직 신뢰 IP 확인 후 인증","인증 → 프로필 시간 → IP","순서는 무작위다"], correct:1, explain:"로그인 흐름은 프로필 로그인 시간 → 프로필 로그인 IP → 조직 전체 신뢰 IP 순으로 확인 후 인증 절차로 넘어갑니다."},
+    {lesson:3, q:"한 사용자의 최종 오브젝트 접근 권한을 올바르게 표현한 것은?", choices:["프로필 권한만","권한 세트 권한만","프로필 권한 + 할당된 모든 권한 세트 권한의 합","가장 최근에 할당된 권한 하나"], correct:2, explain:"최종 권한 = 프로필 권한 + 할당된 모든 권한 세트의 합입니다."},
+
+    {lesson:4, q:"Lead와 Case 오브젝트에만 존재하는 OWD 옵션은?", choices:["Private","Public Read Only","Public Read/Write","Public Read/Write/Transfer"], correct:3, explain:"Public Read/Write/Transfer는 Lead와 Case에서만 선택할 수 있는 OWD 옵션입니다."},
+    {lesson:4, q:"큐(Queue)가 소유한 레코드에 대해 큐 멤버들이 갖는 접근 수준은?", choices:["읽기 전용","읽기/쓰기","전체 접근(Full Access)","접근 없음"], correct:2, explain:"레코드를 큐에 배정하면 모든 큐 멤버가 그 레코드에 전체 접근 권한을 갖습니다."},
+    {lesson:4, q:"레코드에 대한 '전체 접근(Full Access)'에 포함되지 않는 것은?", choices:["레코드 삭제","소유권 이전","레코드 공유","오브젝트에 새 필드 생성"], correct:3, explain:"전체 접근은 보기/수정/삭제/이전/공유/레코드타입 변경을 포함합니다. 필드 생성은 레코드 접근이 아니라 오브젝트 설정(관리자) 권한입니다."},
+    {lesson:4, q:"제한 규칙(Restriction Rule)을 적용할 수 없는 오브젝트는?", choices:["커스텀 오브젝트","Contract","Task","Account"], correct:3, explain:"제한 규칙은 커스텀 오브젝트, Contract, Task, Event만 지원합니다. Account에는 사용할 수 없습니다."},
+    {lesson:4, q:"특정 사용자가 특정 레코드에 '왜' 접근할 수 있는지 원인을 추적하는 도구는?", choices:["Setup Audit Trail","Sharing Hierarchy 버튼","Login History","Field History"], correct:1, explain:"Sharing Hierarchy 버튼으로 특정 사용자의 특정 레코드 접근 경로(원인)를 확인할 수 있습니다."},
+    {lesson:4, q:"수동 공유(Manual Sharing) 버튼을 사용할 수 없는 사람은?", choices:["레코드 소유자","역할 계층상 소유자의 상위 사용자","시스템 관리자","레코드와 무관한 동료 사용자"], correct:3, explain:"수동 공유는 레코드 소유자, 역할 계층상 그 상위 사용자, 관리자만 사용할 수 있습니다."},
+    {lesson:4, q:"Account Team의 팀원에게 부여할 수 있는 접근 범위로 옳은 것은?", choices:["Account에만 접근 부여 가능","Account와 관련 Contact/Opportunity/Case에 Read 또는 Read/Write 부여 가능","Opportunity에만 접근 부여 가능","항상 Full Access만 부여된다"], correct:1, explain:"Account Team은 계정과 그에 연관된 담당자/영업기회/케이스에 대해 Read 또는 Read/Write 접근을 부여할 수 있습니다."},
+
+    {lesson:5, q:"표준 오브젝트의 탭 이름과 라벨(단수/복수)을 조직의 용어에 맞게 바꾸는 기능은?", choices:["Object Manager에서 오브젝트 삭제 후 재생성","Rename Tabs and Labels","Translation Workbench로만 가능","표준 라벨은 변경 불가"], correct:1, explain:"Setup > User Interface의 Rename Tabs and Labels에서 표준 오브젝트/탭의 단수·복수 라벨을 변경할 수 있습니다."},
+    {lesson:5, q:"여러 오브젝트의 여러 피크리스트 필드가 동일한 값 목록을 공유해야 한다. 가장 효율적인 방법은?", choices:["각 필드에 값을 복사해 입력","Global Picklist Value Set 사용","종속 피크리스트 사용","수식 필드 사용"], correct:1, explain:"Global Picklist Value Set을 사용하면 여러 오브젝트/필드가 하나의 값 목록을 공유하며, 값은 글로벌 설정에서만 편집됩니다."},
+    {lesson:5, q:"커스텀 수식 필드의 값에 대한 설명으로 옳은 것은?", choices:["사용자가 직접 수정할 수 있다","읽기 전용이며 자동 계산된다","API로만 수정 가능하다","관리자만 수정할 수 있다"], correct:1, explain:"수식 필드는 항상 읽기 전용이며 참조하는 필드 값에 따라 자동 계산됩니다."},
+    {lesson:5, q:"새 커스텀 필드 생성 마법사의 4단계 순서로 옳은 것은?", choices:["FLS 설정 → 타입 선택 → 상세 입력 → 레이아웃 추가","타입 선택 → 상세 입력 → FLS 설정 → 페이지 레이아웃 추가","레이아웃 추가 → 상세 입력 → 타입 선택 → FLS 설정","상세 입력 → 타입 선택 → 레이아웃 추가 → FLS 설정"], correct:1, explain:"1) 데이터 타입 선택 → 2) 상세 정보 입력 → 3) 필드 수준 보안 설정 → 4) 페이지 레이아웃 추가 순서입니다."},
+    {lesson:5, q:"Lookup 관계에서 부모(조회 대상) 레코드가 삭제될 때 선택할 수 있는 동작이 아닌 것은?", choices:["자식 레코드의 조회 필드 값을 비운다","조회 대상 레코드의 삭제를 막는다","자식 레코드도 함께 삭제한다","자식 레코드의 소유자를 자동 변경한다"], correct:3, explain:"Lookup 부모 삭제 시 옵션은 ①필드 값 비우기 ②삭제 방지 ③자식도 삭제 세 가지입니다. 소유자 자동 변경은 없습니다."},
+    {lesson:5, q:"Master-Detail 관계에 대한 설명으로 옳지 않은 것은?", choices:["부모 참조는 항상 필수다","표준 오브젝트를 자식(Detail)으로 둘 수 있다","계층은 최대 3단계까지 가능하다","자식의 접근 권한은 부모로부터 상속된다"], correct:1, explain:"Master-Detail에서 표준 오브젝트는 자식(Detail)이 될 수 없습니다. 나머지는 모두 옳은 설명입니다."},
+    {lesson:5, q:"교차 오브젝트 수식이 거슬러 올라갈 수 있는 부모 관계의 최대 단계는?", choices:["3단계","5단계","10단계","무제한"], correct:2, explain:"교차 오브젝트 수식은 최대 10단계까지 부모 관계를 참조할 수 있습니다."},
+
+    {lesson:6, q:"영업기회 목록을 단계(Stage)별 카드 보드 형태로 시각화해 보고 싶다. 목록 보기의 어떤 표시 옵션을 사용해야 하는가?", choices:["Table","Kanban","Split View","Chart"], correct:1, explain:"Kanban 보기는 그룹 기준(예: Stage)별로 레코드를 카드 보드 형태로 시각화합니다."},
+    {lesson:6, q:"Enhanced Related List가 표시할 수 있는 최대 컬럼 수는?", choices:["5개","10개","15개","20개"], correct:1, explain:"Enhanced Related List는 최대 10개 컬럼 표시, 컬럼 크기 조정/정렬, 대량 작업, 텍스트 줄바꿈을 지원합니다."},
+    {lesson:6, q:"Lightning App Builder로 새 홈페이지를 만들어 특정 프로필에 할당했지만 사용자에게 보이지 않는다. 누락되었을 가능성이 가장 높은 단계는?", choices:["페이지 활성화(Activation)","페이지 저장","프로필 생성","컴포넌트 추가"], correct:0, explain:"App Builder에서 페이지를 만들고 할당한 뒤 반드시 Activate(활성화)해야 사용자에게 보입니다."},
+    {lesson:6, q:"Sales 앱 안의 탭 순서를 변경하고 불필요한 탭을 제거하는 데 사용하는 도구는?", choices:["Object Manager","App Manager","Schema Builder","Tab Settings"], correct:1, explain:"App Manager에서 Lightning 앱의 탭 순서 변경/제거 등 앱 구성을 관리합니다."},
+    {lesson:6, q:"여러 레코드 타입이 있는 오브젝트의 피크리스트에 새 값을 추가하면 어떤 일이 일어나는가?", choices:["모든 레코드 타입에 자동 추가된다","어떤 레코드 타입에 이 값을 포함할지 선택하라는 안내가 표시된다","Master 레코드 타입에만 추가된다","새 값은 추가할 수 없다"], correct:1, explain:"레코드 타입이 여러 개인 오브젝트에 피크리스트 값을 추가하면 어느 레코드 타입에 포함할지 관리자가 선택하게 됩니다."},
+    {lesson:6, q:"모든 오브젝트가 기본적으로 갖고 있는 레코드 타입은?", choices:["Default","Master","Standard","Primary"], correct:1, explain:"모든 오브젝트에는 기본 Master 레코드 타입이 존재합니다."},
+
+    {lesson:7, q:"Data Import Wizard가 지원하지 않는 오브젝트는?", choices:["Account","Lead","Opportunity","Campaign Member"], correct:2, explain:"Import Wizard는 Account/Contact/Lead/Solution/Campaign Member/커스텀 오브젝트를 지원하며, Opportunity는 Data Loader가 필요합니다."},
+    {lesson:7, q:"기존 레코드를 일괄 업데이트할 때 매칭 기준으로 가장 확실한 값은?", choices:["레코드 이름","Salesforce 레코드 ID","생성 날짜","소유자 이름"], correct:1, explain:"레코드 ID는 생성 시 자동 부여되는 고유 식별자로, URL이나 내보내기/리포트에서 얻어 매칭에 사용합니다."},
+    {lesson:7, q:"대량 데이터 업데이트 전 확인해야 할 모범 사례가 아닌 것은?", choices:["워크플로우/플로우 등 자동화의 일시 비활성화 검토","소량 배치로 먼저 테스트","업무 시간을 피해서 실행","모든 사용자 계정 비활성화"], correct:3, explain:"자동화 비활성화 검토, 테스트 배치, 업무 시간 회피는 모범 사례지만 사용자 계정 비활성화는 아닙니다."},
+    {lesson:7, q:"필드 이력 추적(Field History Tracking)이 지원하는 오브젝트당 최대 필드 수는?", choices:["10개","20개","30개","제한 없음"], correct:1, explain:"오브젝트당 표준/커스텀 필드 최대 20개까지 이력을 추적할 수 있습니다."},
+    {lesson:7, q:"필드 이력 추적을 사용할 수 없는 필드 유형은?", choices:["숫자","텍스트","다중 선택 피크리스트와 긴 텍스트 영역","날짜"], correct:2, explain:"다중 선택 피크리스트와 긴 텍스트 필드는 이력 추적이 지원되지 않습니다."},
+    {lesson:7, q:"Dataloader.io의 특징으로 옳은 것은?", choices:["설치형 프로그램이다","Salesforce OAuth로 로그인하는 100% 클라우드 방식이며 예약 작업을 지원한다","내보내기를 지원하지 않는다","5만 건까지만 처리 가능하다"], correct:1, explain:"Dataloader.io는 100% 클라우드 솔루션으로 OAuth 로그인과 시간별/일별/주별/월별 예약 작업을 지원합니다."},
+
+    {lesson:8, q:"에스컬레이션된 케이스가 목록 보기/큐에서 표시되는 방식은?", choices:["굵은 글씨","빨간 화살표 표시","노란 배경","자동으로 맨 위 고정"], correct:1, explain:"에스컬레이션된 케이스는 목록/큐에서 빨간 화살표 표시로 구분됩니다."},
+    {lesson:8, q:"Email-to-Case로 케이스가 생성될 때, 발신자의 이메일 주소는 무엇과 연결하는 데 사용되는가?", choices:["Account","Contact","Lead","User"], correct:1, explain:"Email-to-Case는 발신자 이메일을 사용해 Contact를 찾아 케이스에 연결합니다."},
+    {lesson:8, q:"워크플로우 규칙에서 필드 업데이트와 이메일 알림의 실행 순서는?", choices:["이메일 알림이 먼저","필드 업데이트가 먼저","동시에 실행","실행 순서는 무작위"], correct:1, explain:"필드 업데이트는 이메일 알림/작업/외부 메시지보다 먼저 실행됩니다."},
+    {lesson:8, q:"웹 제출 리드에 대한 자동 응답 이메일의 24시간당 발송 한도는?", choices:["100건","500건","5000건","무제한"], correct:1, explain:"리드 자동 응답은 24시간당 최대 500건, 케이스는 5000건입니다."},
+    {lesson:8, q:"승인 프로세스에서 액션을 설정할 수 있는 시점이 아닌 것은?", choices:["최초 제출 시","최종 승인 시","최종 반려 시","레코드 조회 시"], correct:3, explain:"승인 액션은 최초 제출/최종 승인/최종 반려/회수 시점에 설정할 수 있습니다. 조회 시점은 없습니다."},
+    {lesson:8, q:"큐를 생성하면 자동으로 함께 만들어지는 것은?", choices:["공개 그룹","리포트","해당 큐의 목록 보기(List View)","대시보드"], correct:2, explain:"큐를 생성하면 그 큐의 목록 보기가 자동으로 만들어집니다."},
+    {lesson:8, q:"리드 전환 시 커스텀 필드 값이 사라지지 않게 하려면 관리자가 미리 해야 할 일은?", choices:["아무것도 필요 없다 (자동 매핑됨)","같은 데이터 타입의 커스텀 필드로 수동 매핑을 설정한다","필드를 삭제 후 재생성한다","검증 규칙을 추가한다"], correct:1, explain:"표준 필드는 자동 매핑되지만, 커스텀 리드 필드는 같은 타입의 커스텀 필드로 수동 매핑해야 값이 유지됩니다."},
+
+    {lesson:9, q:"매일 새벽 2시에 조건을 만족하는 모든 레코드를 일괄 처리해야 한다. 적합한 Flow 유형은?", choices:["Screen Flow","Record-Triggered Flow","Schedule-Triggered Flow","Autolaunched Flow(No Trigger)"], correct:2, explain:"Schedule-Triggered Flow는 지정한 시각/주기에 배치 단위로 레코드를 처리합니다."},
+    {lesson:9, q:"여러 단계에 걸쳐 여러 사용자가 관여하는 복잡한 프로세스를 구성하는 Flow 유형은?", choices:["Screen Flow","Record-Triggered Orchestration","Platform Event-Triggered Flow","Fast Field Update"], correct:1, explain:"Record-Triggered Orchestration은 다단계·다중 사용자 프로세스를 오케스트레이션합니다."},
+    {lesson:9, q:"Flow 실행 중 오류(Fault)가 발생했을 때 사용자에게 친절한 안내 메시지를 보여주는 방법은?", choices:["오류를 무시하도록 설정한다","Fault 경로에 커스텀 오류 화면(fault screen)을 연결한다","Flow를 삭제한다","오류는 관리자에게만 자동 표시된다"], correct:1, explain:"Fault 경로에 커스텀 fault screen을 연결하면 기본 오류 메시지 대신 친절한 안내를 보여줄 수 있습니다."},
+    {lesson:9, q:"Record-Triggered Flow에서 {!$Record}가 가리키는 것은?", choices:["Flow를 만든 관리자","Flow를 트리거한 바로 그 레코드","조직의 모든 레코드","마지막으로 수정된 아무 레코드"], correct:1, explain:"$Record 전역 변수는 Flow를 트리거한 해당 레코드를 가리킵니다."},
+    {lesson:9, q:"Flow를 활성화하기 전에 각 단계를 테스트하는 데 사용하는 Flow Builder 기능은?", choices:["Debug","Validate","Preview","Simulate"], correct:0, explain:"Flow Builder의 Debug 기능으로 활성화 전 각 단계를 테스트하는 것이 모범 사례입니다."},
+    {lesson:9, q:"하나의 Flow가 가질 수 있는 최대 버전 수와 동시 활성 버전 수는?", choices:["버전 10개 / 활성 1개","버전 50개 / 활성 1개","버전 50개 / 활성 5개","무제한 / 무제한"], correct:1, explain:"Flow는 최대 50개 버전을 가질 수 있고 활성 버전은 항상 1개입니다 (Process Builder와 동일)."},
+
+    {lesson:10, q:"스프레드시트 파일에서 곧바로 커스텀 오브젝트를 생성할 수 있는 도구는?", choices:["Data Import Wizard","Lightning Object Creator","Schema Builder","Data Loader"], correct:1, explain:"Lightning Object Creator를 사용하면 스프레드시트에서 바로 커스텀 오브젝트를 만들 수 있습니다."},
+    {lesson:10, q:"Setup Audit Trail에서 다운로드할 수 있는 변경 이력의 기간은?", choices:["최근 1개월","최근 3개월","최근 6개월","최근 1년"], correct:2, explain:"Setup Audit Trail은 화면에 최근 20건을 보여주며, 최근 6개월치를 CSV로 다운로드할 수 있습니다."},
+    {lesson:10, q:"체인지 셋을 사용하기 위해 프로필에 필요한 권한은?", choices:["Modify All Data만 있으면 된다","'Deploy Change Sets'와 'Create and Upload Change Sets'","Manage Users","API Enabled만 있으면 된다"], correct:1, explain:"체인지 셋 사용에는 'Deploy Change Sets'와 'Create and Upload Change Sets' 프로필 권한이 필요합니다."},
+    {lesson:10, q:"DevOps Center에서 각 변경 작업을 추적하는 데 사용되는 커스텀 오브젝트는?", choices:["Change Request","Work Item","Task","Deployment Log"], correct:1, explain:"DevOps Center는 Work Item이라는 커스텀 오브젝트로 변경 작업을 마이그레이션 전 과정에서 추적합니다."},
+    {lesson:10, q:"모바일 레코드 페이지 상단에 핵심 필드를 요약해 보여주는 레이아웃은?", choices:["페이지 레이아웃","컴팩트 레이아웃(Compact Layout)","미니 레이아웃","검색 레이아웃"], correct:1, explain:"모바일 레코드 페이지는 액션 바 + 컴팩트 레이아웃(핵심 필드) + 관련 목록 + 레코드 상세로 구성됩니다."},
+
+    {lesson:11, q:"리포트/대시보드 폴더에 부여할 수 있는 접근 수준의 조합으로 옳은 것은?", choices:["Read / Write / Delete","Viewer / Editor / Manager","Public / Private / Hidden","User / Admin / Owner"], correct:1, explain:"폴더는 사용자/역할/공개 그룹에 Viewer, Editor, Manager 세 수준으로 공유할 수 있습니다."},
+    {lesson:11, q:"Tabular 리포트를 대시보드에서 활용할 수 있는 유일한 방법은?", choices:["게이지 컴포넌트로 사용","Lightning 테이블 컴포넌트로 사용","파이 차트로 사용","대시보드에서는 아예 사용 불가"], correct:1, explain:"Tabular 리포트는 그룹화가 없어 대시보드에서는 Lightning 테이블 컴포넌트로만 활용 가능합니다."},
+    {lesson:11, q:"Joined 리포트를 대시보드 소스로 사용하기 위한 필수 조건은?", choices:["필터가 없어야 한다","리포트에 차트가 포함되어 있어야 한다","블록이 1개여야 한다","그룹화가 없어야 한다"], correct:1, explain:"Joined 리포트는 대시보드 소스로 쓸 수 있지만 반드시 차트가 포함되어 있어야 합니다."},
+    {lesson:11, q:"리포트를 .xlsx로 내보낼 때 리포트 차트는 어떻게 되는가?", choices:["함께 내보내진다","이미지로 변환된다","차트는 내보내지지 않는다","PDF로만 내보내진다"], correct:2, explain:"리포트 내보내기(.csv/.xlsx/.xls) 시 차트는 포함되지 않습니다."},
+    {lesson:11, q:"파이프라인 총액처럼 단일 핵심 수치 하나만 크게 표시하는 대시보드 컴포넌트는?", choices:["Gauge","Metric","Funnel","Scatter"], correct:1, explain:"Metric 컴포넌트는 단일 핵심 값을 표시합니다."},
+    {lesson:11, q:"목표 범위(최소~최대) 안에서 현재 값이 어디쯤인지 보여주는 대시보드 컴포넌트는?", choices:["Metric","Gauge","Line","Donut"], correct:1, explain:"Gauge는 정해진 범위 내에서 단일 값의 위치를 보여줍니다."},
+
+    {lesson:12, q:"에이전틱 루프(Agentic Loop)에서 트리거 이후 진행되는 단계의 올바른 순서는?", choices:["Action → Plan → Evaluate → Refine","Plan → Evaluate → Refine → Action","Evaluate → Plan → Action → Refine","Refine → Plan → Action → Evaluate"], correct:1, explain:"트리거 → Plan(계획) → Evaluate(평가) → Refine(정제) → Action(행동) 순이며, 전 과정이 Trust Layer 안에서 수행됩니다."},
+    {lesson:12, q:"프롬프트(Prompt)를 구성하는 세 가지 요소는?", choices:["질문, 지시사항, 맥락(Context)","코드, 데이터, 모델","역할, 채널, 데이터","입력, 출력, 로그"], correct:0, explain:"프롬프트는 질문(Question) + 지시사항(Instruction) + 필요한 모든 맥락(Context)을 AI 모델에 제공하는 것입니다."},
+    {lesson:12, q:"서비스(Service) 팀의 대표적인 Agentforce 활용 사례는?", choices:["리드 검증","지식 문서를 색인하여 케이스를 분류(트리아지)","캠페인 최적화","코드 리뷰"], correct:1, explain:"서비스팀은 지식 문서를 색인해 케이스 분류(트리아지)를 지원하는 것이 대표 사례입니다."}
+  ];
+
+  const ADVANCED = [
+    {lesson:1, adv:true, q:"개발자 샌드박스를 새로 고침(Refresh)하면 어떤 일이 일어나는가?", choices:["샌드박스의 변경사항이 운영 조직으로 자동 배포된다","샌드박스가 운영 조직의 최신 메타데이터로 대체되어, 샌드박스에서 작업 중이던 기존 내용은 사라진다","운영 조직의 데이터가 초기화된다","샌드박스와 운영 조직이 실시간 동기화 상태가 된다"], correct:1, explain:"Refresh는 운영 조직 내용으로 샌드박스를 다시 만드는 작업입니다. 아직 배포하지 않은 샌드박스 작업물은 사라지므로, refresh 전에 반드시 배포 여부를 확인해야 합니다."},
+    {lesson:1, adv:true, q:"멀티테넌트 환경에서 NTO가 만든 커스텀 필드와 커스텀 오브젝트는 같은 인스턴스를 쓰는 다른 회사에 어떤 영향을 주는가?", choices:["다른 테넌트의 화면에도 표시될 수 있다","다른 테넌트에 직접적인 성능 저하를 일으킨다","아무 영향이 없다 — 각 테넌트의 데이터와 메타데이터는 완전히 격리된다","세일즈포스의 사전 승인 후에만 생성할 수 있다"], correct:2, explain:"멀티테넌트 구조에서 각 테넌트의 데이터와 커스터마이징(메타데이터)은 완전히 격리되어 서로 보이지 않고 영향을 주지 않습니다."},
+
+    {lesson:2, adv:true, q:"사용자가 조직의 신뢰 IP 범위 '안'에서, 자신의 프로필에 설정된 로그인 허용 시간 '밖'에 로그인을 시도하면?", choices:["신뢰 IP 안이므로 정상 로그인된다","인증 코드 입력 후 로그인된다","로그인이 거부된다 — 프로필 로그인 시간 제한은 IP와 무관하게 적용된다","읽기 전용 모드로 로그인된다"], correct:2, explain:"프로필의 로그인 시간 제한은 신뢰 IP 여부와 무관하게 우선 적용됩니다. 허용 시간 밖에서는 어디서 접속하든 로그인이 거부됩니다."},
+    {lesson:2, adv:true, q:"Advanced Currency Management가 활성화된 조직에서, 이미 성사(Closed Won)된 영업기회의 Close Date를 환율이 다른 분기로 변경하면 환산 금액은?", choices:["최초 성사 시점의 환율이 영구 고정되어 변하지 않는다","새 Close Date에 해당하는 날짜별 환율로 다시 환산된다","항상 오늘 날짜의 환율로 환산된다","환산 금액이 0이 된다"], correct:1, explain:"Advanced Currency Management는 환율을 '날짜별'로 관리하며, 영업기회의 환산은 Close Date 기준입니다. Close Date를 바꾸면 그 날짜에 해당하는 환율이 적용됩니다."},
+    {lesson:2, adv:true, q:"Parenthetical Currency Conversion을 활성화하면 통화 필드는 어떻게 표시되는가?", choices:["항상 회사 기본 통화로만 표시된다","레코드 통화로 표시되고, 괄호 안에 사용자의 개인 통화 환산액이 함께 표시된다","사용자 개인 통화로만 표시된다","두 통화가 별도 컬럼으로 분리된다"], correct:1, explain:"통화 필드는 레코드 통화 기준으로 표시되며, 이 옵션을 켜면 괄호 안에 보는 사용자의 개인 통화로 환산한 금액이 함께 표시됩니다."},
+    {lesson:2, adv:true, q:"다음 중 '표준 회계연도'로 설정 가능한 것은?", choices:["4-4-5 구조의 13주 분기","1년이 13개월인 회계연도","2월 1일에 시작해 다음 해 1월 31일에 끝나는 회계연도","8월 15일에 시작하는 회계연도"], correct:2, explain:"표준 회계연도는 어느 달이든 선택할 수 있지만 반드시 '월의 첫날'에 시작하는 12개월이어야 합니다. 나머지 세 경우는 모두 커스텀 회계연도가 필요합니다."},
+
+    {lesson:3, adv:true, q:"사용자에게 권한 세트 A가 '개별적으로' 직접 할당되어 있고, 동시에 A가 포함된 권한 세트 그룹 G도 할당되어 있다. G의 뮤팅 권한 세트가 A의 Delete 권한을 음소거했다면 이 사용자는 Delete를 할 수 있는가?", choices:["할 수 없다 — 뮤팅이 모든 경로에 적용된다","할 수 있다 — 뮤팅은 그룹 G 내부에서만 적용되고, 개별 할당된 A에는 영향을 주지 않는다","관리자 승인 시에만 가능하다","권한 세트 A가 자동 회수된다"], correct:1, explain:"뮤팅 권한 세트의 효력 범위는 해당 권한 세트 그룹 내부뿐입니다. 같은 권한 세트가 그룹 밖에서 개별 할당되어 있으면 그 경로의 권한은 그대로 유지됩니다."},
+    {lesson:3, adv:true, q:"API를 통한 레코드 저장 시에도 강제되는 필수 입력 설정은?", choices:["페이지 레이아웃에서 설정한 필수 표시","필드 정의 수준의 범용 필수(Universally Required) 설정","컴팩트 레이아웃의 필드 순서","목록 보기의 필터"], correct:1, explain:"필드 정의 자체의 Required는 '하드' 요구사항으로 UI와 API 모두에 적용됩니다. 페이지 레이아웃의 필수 표시는 해당 레이아웃 UI에서만 적용되는 '소프트' 요구사항입니다."},
+    {lesson:3, adv:true, q:"'View All' / 'Modify All' 오브젝트 권한의 효과로 옳은 것은?", choices:["해당 오브젝트의 필드를 모두 삭제할 수 있게 한다","OWD·공유 규칙 등 공유 설정과 무관하게 해당 오브젝트의 모든 레코드에 접근하게 한다","역할 계층의 최상위로 자동 이동시킨다","프로필을 System Administrator로 바꾼다"], correct:1, explain:"View All/Modify All은 공유 모델(OWD, 공유 규칙 등)을 우회하여 해당 오브젝트의 전체 레코드에 접근을 부여하는 강력한 권한입니다."},
+    {lesson:3, adv:true, q:"프로필과 권한 세트의 할당 규칙으로 옳은 것은?", choices:["프로필 여러 개, 권한 세트 1개만 가능","프로필 1개 필수, 권한 세트는 0개 이상 여러 개 할당 가능","둘 다 각각 1개씩만 가능","권한 세트가 있으면 프로필은 불필요"], correct:1, explain:"모든 사용자는 정확히 1개의 프로필을 가져야 하며, 권한 세트는 필요에 따라 0개 이상 여러 개를 할당할 수 있습니다."},
+
+    {lesson:4, adv:true, q:"Opportunity OWD가 Private인 조직. 영업사원 A는 Account X를 소유하지만, X에 연결된 Opportunity O는 다른 역할 계열의 동료 B가 소유한다. A의 역할 정의에서 '소유 계정의 관련 Opportunity 접근'이 View All로 설정되어 있다면 A는 O를 볼 수 있는가?", choices:["볼 수 없다 — OWD가 Private이므로 불가능하다","볼 수 있다 — 계정 소유자의 연관(암묵적) 접근 설정에 따라 자신이 소유한 계정의 관련 영업기회를 볼 수 있다","B가 수동 공유해야만 볼 수 있다","관리자만 볼 수 있다"], correct:1, explain:"역할 정의 시 계정 소유자가 자신의 계정에 연결된 (본인 소유가 아닌) Contact/Opportunity/Case에 가질 접근 수준(No Access/View All/Edit All)을 설정할 수 있습니다. View All이면 볼 수 있습니다."},
+    {lesson:4, adv:true, q:"수동 공유(Manual Sharing)가 시스템에 의해 '자동으로 영구 삭제'되는 경우는?", choices:["레코드가 수정될 때마다","레코드 소유자가 변경되거나 소유자가 비활성화될 때","공유받은 사용자가 로그아웃할 때","OWD가 변경될 때"], correct:1, explain:"수동 공유는 레코드 소유권이 바뀌거나 소유자가 비활성화되면 영구 삭제되며 자동으로 복원되지 않습니다."},
+    {lesson:4, adv:true, q:"공유 규칙(Sharing Rule)으로 부여할 수 있는 '최대' 접근 수준은?", choices:["Read Only","Read/Write","Full Access (삭제 포함)","Transfer 권한 포함 전체"], correct:1, explain:"공유 규칙은 Read Only 또는 Read/Write까지만 부여할 수 있습니다. 삭제를 포함한 Full Access는 소유자/상위 역할/관리자 수준에서만 가능합니다."},
+    {lesson:4, adv:true, q:"Case Team에 대한 설명으로 옳은 것을 모두 고른 것은? (a) 케이스 하나에 최대 3개의 팀을 둘 수 있다 (b) 사전 정의된(Predefined) 케이스 팀을 만들 수 있다 (c) 배정 규칙으로 케이스 팀을 자동 추가할 수 있다", choices:["a만","a와 b만","b와 c만","a, b, c 모두"], correct:3, explain:"세 가지 모두 옳습니다. 케이스당 최대 3개 팀, 사전 정의 팀 구성, 배정 규칙을 통한 자동 추가가 모두 지원됩니다."},
+    {lesson:4, adv:true, q:"OWD 수준을 결정할 때 관리자가 가장 먼저 던져야 할 질문은?", choices:["어떤 프로필이 가장 많이 쓰이는가","이 오브젝트에서 특정 사용자가 절대 봐서는 안 되는 레코드가 하나라도 있는가","리포트를 몇 명이 보는가","레코드 수가 얼마나 되는가"], correct:1, explain:"'절대 봐서는 안 되는 레코드가 있는가?'가 Yes면 Private로 시작합니다. OWD는 가장 제한적인 수준을 기본으로 놓고 필요 시 넓히는 것이 원칙입니다."},
+    {lesson:4, adv:true, q:"커스텀 오브젝트에서 'Grant Access Using Hierarchies' 체크박스를 해제하면?", choices:["OWD가 Private로 바뀐다","상위 역할이 하위 역할 소유 레코드에 자동 접근하지 못하게 된다","공유 규칙이 모두 비활성화된다","표준 오브젝트에도 동일하게 적용할 수 있다"], correct:1, explain:"커스텀 오브젝트는 역할 계층을 통한 접근 상속을 선택적으로 끌 수 있습니다(표준 오브젝트는 불가). 해제하면 상위 역할의 자동 접근이 사라집니다."},
+    {lesson:4, adv:true, q:"4개 역할이 서로의 레코드를 조회해야 한다. 공개 그룹을 활용하면 얻는 가장 큰 이점은?", choices:["레코드 소유권이 자동 이전된다","필요한 공유 규칙의 수가 크게 줄어든다 (다수의 개별 규칙 → 그룹 기반 규칙 1개)","OWD를 바꿀 필요가 없어진다","역할 계층이 필요 없어진다"], correct:1, explain:"교재 예시 기준, 그룹 없이 역할 간 상호 공유를 구현하면 16개의 규칙이 필요하지만, 4개 역할을 하나의 공개 그룹으로 묶으면 규칙 1개로 해결됩니다."},
+
+    {lesson:5, adv:true, q:"정션 오브젝트(Master-Detail 2개)의 두 부모 중 하나가 삭제되면 정션 레코드는?", choices:["남은 부모 쪽으로 재연결된다","함께 삭제된다","Lookup으로 자동 전환된다","소유자에게 이전된다"], correct:1, explain:"Master-Detail 관계에서 부모가 삭제되면 자식(정션 레코드 포함)도 함께 삭제됩니다."},
+    {lesson:5, adv:true, q:"Roll-Up Summary 필드가 지원하는 집계 유형의 조합으로 옳은 것은?", choices:["COUNT, SUM, MIN, MAX","AVG, MEDIAN, MODE","CONCAT, JOIN","FIRST, LAST"], correct:0, explain:"Roll-Up Summary는 자식 레코드의 COUNT(개수), SUM(합계), MIN(최소), MAX(최대)를 부모에 집계합니다. 평균(AVG)은 직접 지원되지 않습니다."},
+    {lesson:5, adv:true, q:"데이터가 이미 들어있는 커스텀 필드의 데이터 타입을 변경할 때 발생할 수 있는 일은?", choices:["기존 데이터 손실","그 필드를 기준으로 만든 목록 보기 삭제","배정 규칙·에스컬레이션 규칙에 영향","위 항목 모두"], correct:3, explain:"타입 변경은 대부분 데이터 손실 위험이 있고, 그 필드 기반 목록 보기가 삭제될 수 있으며, 배정/에스컬레이션 규칙에도 영향을 줄 수 있습니다. 그래서 새 필드 추가가 더 안전한 경우가 많습니다."},
+    {lesson:5, adv:true, q:"수식 필드는 전역 검색(Global Search)의 검색 대상인가?", choices:["예, 모든 수식 필드가 검색된다","아니오, 수식 필드는 검색되지 않는다","숫자 수식만 검색된다","관리자가 설정하면 검색된다"], correct:1, explain:"수식 필드는 검색 대상이 아니며, 리드 전환이나 주간 내보내기에도 사용되지 않습니다."},
+    {lesson:5, adv:true, q:"Lookup 관계 필터의 조건으로 참조할 수 없는 것은?", choices:["원본 레코드의 필드","대상 오브젝트의 필드","현재 사용자의 프로필/역할","대상 레코드에 첨부된 파일의 본문 내용"], correct:3, explain:"관계 필터는 원본 레코드 필드, 대상 오브젝트 필드, 사용자/프로필/역할 필드, 대상과 직접 연관된 레코드의 필드를 참조할 수 있습니다. 첨부 파일 내용은 불가합니다."},
+    {lesson:5, adv:true, q:"하나의 자식 오브젝트가 가질 수 있는 Master-Detail 부모와 Lookup 부모의 최대 수는?", choices:["M-D 1개 / Lookup 10개","M-D 2개 / Lookup 40개","M-D 3개 / Lookup 20개","제한 없음"], correct:1, explain:"Master-Detail 부모는 최대 2개(그래서 정션 오브젝트가 가능), Lookup 부모는 최대 40개까지 가능합니다."},
+
+    {lesson:6, adv:true, q:"Account에 레코드 타입 2개(NTO/CK)와 프로필 3개가 있다. 페이지 레이아웃 할당은 어떤 단위로 결정되는가?", choices:["프로필당 1개씩 총 3개만 지정","레코드 타입당 1개씩 총 2개만 지정","프로필 × 레코드 타입 조합(총 6칸)마다 각각 지정","조직 전체에 1개만 지정"], correct:2, explain:"페이지 레이아웃 할당은 '프로필 × 레코드 타입' 매트릭스로 관리됩니다. 3개 프로필 × 2개 레코드 타입 = 6개 조합 각각에 레이아웃을 지정합니다."},
+    {lesson:6, adv:true, q:"Web-to-Lead로 생성된 리드에 적용되는 레코드 타입은?", choices:["항상 Master 레코드 타입","기본 리드 소유자(Default Lead Owner)의 기본 레코드 타입","제출자가 폼에서 선택한 레코드 타입","가장 최근에 만든 레코드 타입"], correct:1, explain:"Web-to-Lead/Web-to-Case 레코드는 기본 리드/케이스 소유자의 기본 레코드 타입으로 생성됩니다."},
+    {lesson:6, adv:true, q:"Dynamic Forms로 마이그레이션한 후, 개별 필드는 어디에서 관리되는가?", choices:["여전히 페이지 레이아웃 에디터에서만","Lightning App Builder의 Fields 탭에서 독립 컴포넌트로","Object Manager의 Compact Layouts에서","Setup의 Global Actions에서"], correct:1, explain:"Dynamic Forms는 페이지 레이아웃의 필드/섹션을 App Builder의 Fields 탭에 있는 독립 컴포넌트로 옮겨, 자유 배치와 표시 조건 설정이 가능하게 합니다."},
+    {lesson:6, adv:true, q:"레코드 타입이 여러 개인 오브젝트에서, 특정 사용자가 레코드 생성 시 매번 뜨는 '레코드 타입 선택' 화면을 건너뛰게 할 수 있는가?", choices:["불가능하다","가능하다 — 개인 설정에서 자기 프로필의 기본 레코드 타입을 자동 사용하도록 지정할 수 있다","관리자 프로필만 가능하다","레코드 타입을 삭제해야만 가능하다"], correct:1, explain:"사용자는 프로필의 기본 레코드 타입을 항상 사용하도록 개인 설정을 지정해, 선택 화면 없이 바로 레코드를 만들 수 있습니다."},
+
+    {lesson:7, adv:true, q:"영업팀이 4만 건의 Opportunity를 CSV로 가져와 달라고 요청했다. Data Import Wizard로 처리할 수 있는가?", choices:["가능하다 — 5만 건 미만이므로","불가능하다 — 건수와 무관하게 Import Wizard는 Opportunity 오브젝트를 지원하지 않는다","가능하다 — 관리자 권한만 있으면 된다","불가능하다 — CSV 형식은 지원되지 않는다"], correct:1, explain:"건수(4만)는 한도 안이지만, Import Wizard는 Account/Contact/Lead/Solution/Campaign Member/커스텀 오브젝트만 지원합니다. Opportunity는 Data Loader를 사용해야 합니다."},
+    {lesson:7, adv:true, q:"Data Export Service에 대한 설명으로 옳은 것은? (a) 조직 전체 데이터를 CSV 압축본으로 만든다 (b) 정기 예약이 가능하다 (c) 파일이 준비되면 이메일로 알려준다", choices:["a만","a와 b만","b와 c만","a, b, c 모두"], correct:3, explain:"Data Export Service는 전체 데이터의 zip(CSV) 생성, 예약 실행, 준비 완료 이메일 통지를 모두 지원하는 인앱 백업 기능입니다."},
+    {lesson:7, adv:true, q:"사용자가 중복 가능성이 있는 레코드를 저장하려 할 때 '경고는 표시하되 저장은 허용'하고 싶다. 중복 규칙(Duplicate Rule)에서 선택할 액션은?", choices:["Block","Alert","Delete","Merge"], correct:1, explain:"중복 규칙의 액션은 Alert(경고 후 저장 허용) 또는 Block(저장 차단) 중 선택합니다. 경고만 원하면 Alert입니다."},
+    {lesson:7, adv:true, q:"Mass Transfer 도구로 계정을 이전할 때 '불가능한' 것은?", choices:["미결(open) 영업기회의 함께 이전 여부 선택","미결 케이스의 함께 이전 여부 선택","조건에 맞는 여러 계정을 한 번에 이전","레코드마다 서로 다른 새 소유자를 각각 지정"], correct:3, explain:"Mass Transfer는 조건에 맞는 여러 레코드를 '한 명의 새 소유자'에게 일괄 이전하는 도구입니다. 레코드별로 다른 소유자를 지정하려면 다른 방법(Data Loader 업데이트 등)이 필요합니다."},
+
+    {lesson:8, adv:true, q:"레코드 저장 시 실행 순서로 옳은 것은?", choices:["커스텀 검증 → 시스템 검증 → 저장 전 Flow → 커밋","시스템 검증 → 커스텀 검증 → 저장 전(Before-Save) Flow → 저장 후(After-Save) 자동화 → 커밋","저장 전 Flow → 시스템 검증 → 커스텀 검증 → 커밋","실행 순서는 관리자가 자유롭게 바꿀 수 있다"], correct:1, explain:"Order of Execution: 시스템 데이터 검증 → 커스텀 검증 규칙 → Before-Save Flow → After-Save Flow/워크플로우 등 → 최종 커밋 순입니다."},
+    {lesson:8, adv:true, q:"리드 배정 규칙의 여러 항목(Entry) 조건을 새 리드가 동시에 2개 이상 만족하면?", choices:["일치하는 모든 항목이 순서대로 실행된다","항목 순서상 첫 번째로 일치하는 항목 하나만 적용된다","오류가 발생해 리드가 생성되지 않는다","관리자에게 수동 배정 요청이 간다"], correct:1, explain:"규칙 항목은 지정된 순서대로 평가되며, 첫 번째로 조건이 일치하는 항목 하나만 적용됩니다. 항목 순서 설계가 중요한 이유입니다."},
+    {lesson:8, adv:true, q:"워크플로우 규칙으로 '여러 사용자가 속한 역할'에 Task를 할당하면 실제로 누구에게 할당되는가?", choices:["역할 내 모든 사용자에게 복사 할당","역할 내 무작위 1명","레코드 소유자에게 할당된다","할당이 실패하고 오류가 난다"], correct:2, explain:"워크플로우 Task는 한 명에게만 할당 가능합니다. 여러 명이 속한 역할을 지정하면 레코드 소유자에게 할당됩니다."},
+    {lesson:8, adv:true, q:"에스컬레이션 규칙을 적용할 수 있는 오브젝트는?", choices:["Lead와 Case","Case만","Opportunity와 Case","모든 표준 오브젝트"], correct:1, explain:"에스컬레이션 규칙은 Case 전용입니다. (배정 규칙은 Lead와 Case, 자동 응답 규칙도 Lead와 Case에서 사용됩니다.)"},
+    {lesson:8, adv:true, q:"승인 프로세스의 표준 액션(필드 업데이트, 이메일, Task, 외부 메시지)만으로는 부족한 복잡한 후속 처리가 필요하다. 교재가 제시하는 확장 방법은?", choices:["Apex 트리거를 반드시 작성한다","승인 프로세스의 최종 필드 업데이트를 트리거로 삼아 Flow를 실행한다","승인 프로세스를 두 개 만든다","수동 처리로 전환한다"], correct:1, explain:"승인 프로세스의 최종 필드 업데이트가 레코드를 변경하면 이를 트리거로 Flow가 실행되게 연계하여, 표준 승인 액션을 넘어서는 복잡한 로직을 처리할 수 있습니다."},
+    {lesson:8, adv:true, q:"자동 응답 규칙에 대한 설명으로 옳은 것은? (a) 내부 사용자가 수기로 만든 레코드에는 발송되지 않는다 (b) 동시에 활성화할 수 있는 규칙은 1개다 (c) 하나의 규칙에 여러 항목(Entry)을 둘 수 있다", choices:["a만","a와 c만","b와 c만","a, b, c 모두"], correct:3, explain:"세 가지 모두 옳습니다. 자동 응답은 웹 제출 레코드 전용이고, 활성 규칙은 1개, 규칙 내 항목은 여러 개 가능합니다."},
+
+    {lesson:9, adv:true, q:"Before-Save(Fast Field Update) Flow에서 '할 수 없는' 작업은?", choices:["트리거 레코드의 필드 값 계산","트리거 레코드의 필드 업데이트","이메일 발송이나 다른 레코드 생성","트리거 레코드의 값 참조"], correct:2, explain:"Before-Save Flow는 저장 직전 트리거 레코드 자신의 필드 업데이트만 가능합니다. 이메일 발송, 다른 레코드 생성/수정은 After-Save Flow가 필요합니다."},
+    {lesson:9, adv:true, q:"활성화(Active)된 Flow의 로직을 수정해야 한다. 올바른 절차는?", choices:["활성 버전을 직접 열어 수정 후 저장","새 버전을 만들어 수정하고, 완료 후 그 버전을 활성화한다","Flow를 삭제하고 처음부터 다시 만든다","활성 상태에서는 어떤 방법으로도 수정할 수 없다"], correct:1, explain:"활성 버전은 직접 수정할 수 없습니다. 새 버전(최대 50개)을 만들어 수정한 뒤 활성화하면 기존 버전은 자동 비활성화됩니다."},
+    {lesson:9, adv:true, q:"Workflow, Process Builder, Flow 중 Outbound Message를 '직접' 지원하는 조합은?", choices:["세 가지 모두","Workflow와 Flow (Process Builder는 미지원)","Process Builder만","Flow만"], correct:1, explain:"Workflow와 Flow는 Outbound Message를 직접 지원하지만, Process Builder는 지원하지 않아 Apex 호출로 우회해야 합니다."},
+    {lesson:9, adv:true, q:"레코드 '업데이트' 트리거 Flow가 불필요하게 자주 실행되지 않도록, 특정 필드가 실제로 변경되었을 때만 실행하게 만드는 방법은?", choices:["Flow를 매번 수동 실행으로 바꾼다","진입 조건(Entry Conditions)을 설정한다","버전을 여러 개 만든다","After-Save로 전환한다"], correct:1, explain:"진입 조건으로 트리거 조건을 좁히면(예: 관련 필드가 변경된 경우만) 실행 횟수를 줄여 조직 리소스를 아낄 수 있습니다."},
+
+    {lesson:10, adv:true, q:"샌드박스에서 완성·테스트한 변경사항을 운영 조직에 반영하는 올바른 절차는?", choices:["운영 조직에서 Refresh 버튼을 누른다","샌드박스에서 아웃바운드 체인지 셋을 만들어 업로드하고, 운영에서 인바운드 체인지 셋을 검증 후 배포한다","샌드박스가 자동으로 운영에 동기화된다","운영에서 같은 작업을 손으로 다시 반복하는 것이 유일한 방법이다"], correct:1, explain:"배포 방향은 소스(샌드박스)→타겟(운영)이며, 아웃바운드 생성·업로드 → 인바운드 검증(Validate) → 배포(Deploy) 순서를 따릅니다. Refresh는 반대 방향(운영→샌드박스) 복제입니다."},
+    {lesson:10, adv:true, q:"업로드를 마친 체인지 셋에 컴포넌트 하나를 빠뜨린 것을 발견했다. 어떻게 해야 하는가?", choices:["업로드된 체인지 셋을 열어 컴포넌트를 추가한다","업로드된 체인지 셋은 잠기므로, 복제(Clone)하거나 새 체인지 셋을 만들어 누락분을 포함해 다시 업로드한다","운영 조직에서 직접 추가하는 수밖에 없다","Salesforce Support에 잠금 해제를 요청한다"], correct:1, explain:"업로드된 체인지 셋의 구성 요소는 잠겨서 수정할 수 없습니다. 복제 후 컴포넌트를 추가해 다시 업로드하는 것이 표준 절차입니다."},
+    {lesson:10, adv:true, q:"운영 조직이 샌드박스로부터 체인지 셋을 받을 수 있게 하려면 먼저 해야 할 설정은?", choices:["운영 조직의 배포 연결(Deployment Connection)에서 인바운드 변경 허용","샌드박스 삭제 후 재생성","운영 조직의 OWD 변경","프로필 전체에 Modify All Data 부여"], correct:0, explain:"타겟 조직(운영)의 Deployment Settings에서 소스(샌드박스)로부터의 인바운드 변경을 허용해야 체인지 셋을 받을 수 있습니다."},
+    {lesson:10, adv:true, q:"새 커스텀 오브젝트를 운영에 배포했지만 HR 사용자들이 데이터를 전혀 볼 수 없다. 점검해야 할 것은? (a) 커스텀 탭 생성 및 앱/프로필 노출 (b) 프로필·권한 세트의 오브젝트 권한 (c) 필드 수준 보안", choices:["a만","b만","a와 b만","a, b, c 모두"], correct:3, explain:"체인지 셋은 일부 설정을 함께 옮기지 못하므로, 배포 후 탭 노출·오브젝트 권한·FLS를 타겟 조직에서 수동으로 확인/부여해야 합니다."},
+    {lesson:10, adv:true, q:"DevOps Center가 체인지 셋 대비 갖는 장점이 아닌 것은?", choices:["GitHub 연동으로 변경사항이 소스 관리에 자동 추적된다","Work Item으로 작업 단위를 체계적으로 관리한다","배포할 때마다 컴포넌트 목록을 처음부터 다시 구성할 필요가 없다","타겟 조직의 메타데이터를 원격으로 삭제할 수 있다"], correct:3, explain:"DevOps Center도 타겟 조직의 메타데이터 삭제 기능을 제공하지 않습니다. 삭제는 여전히 수동입니다. 나머지 세 가지는 실제 장점입니다."},
+
+    {lesson:11, adv:true, q:"리포트 구독에서 'Run Report as: Another Person'을 선택했다. 구독 이메일을 받는 수신자들이 보게 되는 데이터의 기준은?", choices:["각 수신자 본인의 접근 권한","지정된 그 사람(Another Person)의 접근 권한","항상 관리자의 접근 권한","조직 전체 데이터"], correct:1, explain:"Run Report as로 지정된 사람의 데이터 가시성이 적용되어 발송됩니다. 수신자 본인의 평소 접근 범위보다 많거나 적은 데이터가 보일 수 있어 주의가 필요합니다."},
+    {lesson:11, adv:true, q:"표준 리포트 유형 'Accounts with Account Teams'로 리포트를 만들면, 계정팀이 없는 계정은?", choices:["빈 팀 컬럼과 함께 표시된다","결과에서 아예 제외된다","'팀 없음'으로 그룹화된다","오류가 발생한다"], correct:1, explain:"표준 리포트 유형의 'with' 관계는 내부 조인이므로, 관련 레코드(계정팀)가 없는 계정은 결과에서 제외됩니다. 포함하려면 'with or without'을 정의한 커스텀 리포트 유형이 필요합니다."},
+    {lesson:11, adv:true, q:"커스텀 요약 수식(Summary Formula)이 참조할 수 '있는' 것은?", choices:["다른 요약 수식","수식 필드(Formula Field)","리포트 차트","다른 리포트의 요약 값"], correct:1, explain:"요약 수식은 수식 필드는 참조할 수 있지만 다른 요약 수식은 참조할 수 없습니다. 리포트당 최대 5개까지 만들 수 있습니다."},
+    {lesson:11, adv:true, q:"리포트에 조건부 서식(Conditional Formatting)을 적용하기 위한 전제 조건은?", choices:["Tabular 형식이면 충분하다","Summary 또는 Matrix 형식이고, 요약 필드나 커스텀 요약 수식이 1개 이상 있어야 한다","차트가 반드시 있어야 한다","행 수준 수식이 있어야 한다"], correct:1, explain:"조건부 서식은 Summary/Matrix 리포트에서 요약 필드 또는 커스텀 요약 수식이 있어야 적용 가능하며, 최대 5개의 규칙을 만들 수 있습니다."},
+    {lesson:11, adv:true, q:"대시보드 구독에 대한 설명으로 옳은 것은?", choices:["폴더 접근 권한이 없어도 구독 이메일은 받을 수 있다","이메일 발송 없이 예약된 새로고침만 설정할 수도 있다","동적(Dynamic) 대시보드도 자동 새로고침 예약이 가능하다","구독은 본인만 가능하고 다른 사용자는 지정할 수 없다"], correct:1, explain:"이메일 없이 예약 새로고침만 구독하는 것도 가능합니다. 수신자는 폴더 접근이 필요하고, 동적 대시보드는 예약 새로고침이 불가하며, 다른 사용자/그룹/역할도 구독 대상으로 지정할 수 있습니다."},
+
+    {lesson:12, adv:true, q:"다음 중 Einstein Trust Layer의 구성 요소가 아닌 것은?", choices:["데이터 마스킹(Data Masking)","동적 그라운딩(Dynamic Grounding)","유해성 탐지(Toxicity Detection)","칸반 보드(Kanban Board)"], correct:3, explain:"Trust Layer에는 데이터 마스킹, 안전한 데이터 조회, 동적 그라운딩, 유해성 탐지 등이 포함됩니다. 칸반 보드는 목록 보기 UI 기능으로 무관합니다."},
+    {lesson:12, adv:true, q:"배포한 에이전트가 사용자의 질문에 엉뚱한 주제의 답을 계속 내놓는다. 트러블슈팅 관점에서 가장 먼저 점검할 것은?", choices:["조직의 OWD 설정","에이전트가 요청에 맞는 올바른 Topic을 선택하고 있는지","대시보드 실행 사용자","페이지 레이아웃 할당"], correct:1, explain:"에이전트 트러블슈팅의 대표 범주 중 하나가 '잘못된 Topic 선택'입니다. 요청이 올바른 Topic으로 라우팅되는지부터 점검합니다."},
+    {lesson:12, adv:true, q:"RAG(Retrieval Augmented Generation)의 역할은?", choices:["에이전트의 채널을 결정한다","응답을 생성하기 전에 관련 데이터·지식을 검색해 근거(그라운딩)로 제공한다","사용자 권한을 상승시킨다","레코드를 자동 삭제한다"], correct:1, explain:"RAG는 응답 생성 전에 관련 문서/데이터를 검색해 모델에 근거로 제공함으로써, 조직의 실제 데이터에 기반한 정확한 답변을 만들게 합니다."}
+  ];
+
+  // English versions of question + choices, index-aligned with QUESTIONS / ADVANCED
+  const EN_BASE = [
+    ["In a multi-tenant cloud, why can Salesforce roll out new features to every customer at the same time?",["Each customer runs its own dedicated servers","A single instance of the software and database serves all tenants, while each tenant's data stays isolated","The source code is compiled separately for each customer","Each customer picks its own upgrade schedule"]],
+    ["If an object is compared to a spreadsheet, what does a 'record' correspond to?",["An entire sheet (tab)","A single column of the sheet","A single row of the sheet - one actual data entry","The whole file containing multiple sheets"]],
+    ["Which tool lets an admin view object relationships as a visual diagram and also create new custom objects/fields right on that screen?",["App Launcher","Setup Audit Trail","Schema Builder","Report Builder"]],
+    ["NTO needs a sandbox with the same data volume as production for large-scale load testing and staging. Which sandbox type fits?",["Developer","Developer Pro","Partial Copy","Full Copy"]],
+    ["Which statement is correct for an admin who wants to start using Multi-Currency?",["Multi-currency must be activated first before new currencies can be added","A maximum of 3 currencies can be added per org","Adding a currency automatically converts all existing records","Multi-currency activation can be freely reversed at any time"]],
+    ["After enabling a custom fiscal year, the company wants to switch back to a standard fiscal year. Is this possible?",["Yes, just turn off the toggle in Setup","No - once enabled, the custom fiscal year cannot be disabled","Yes, by request to Salesforce Support at any time","Creating a new fiscal year automatically reverts it to standard"]],
+    ["When a user whose personal locale is set to French creates a new record, which currency does the record default to?",["Always the corporate default currency","The user's personal currency","Always US dollars","The admin assigns it manually every time"]],
+    ["In Lightning Experience, how does a user check their to-dos and calendar events?",["A single Activities tab shows everything","Via the separate Tasks tab and Calendar tab","In the Chatter tab","In Setup's Activity Manager"]],
+    ["An admin wants to require multi-factor authentication for all users logging in from outside the trusted IP range. The best approach is?",["Only configure Trusted IP Ranges","Set an MFA policy that requires it at login","Only strengthen the password policy","Only check the Health Check score"]],
+    ["HR interns already receive Delete permission through the 'HR User' permission set group. How do you remove only the Delete permission?",["Build a brand-new intern profile from scratch","Add a muting permission set to the group to mute only Delete","Edit the HR User permission set itself to remove Delete","Uncheck Modify All Data on the intern profile"]],
+    ["Which of the following can be set only on a profile and not via a permission set?",["Object CRED permissions","Field-level security","Default record type and default app assignment","Login hour restrictions"]],
+    ["A field is marked Required on the page layout but Read-Only in FLS. Can the user edit it?",["Yes, the page layout wins","No - FLS is more restrictive and wins","Only admins can edit it as an exception","The field disappears from the page"]],
+    ["A newly hired admin wants to apply the principle of least privilege. Which standard profile is the best starting point?",["System Administrator","Standard User","Minimum Access - Salesforce","Solution Manager"]],
+    ["What is the most efficient way to grant all Sales users Create/Edit on Opportunities?",["Assign individual permission sets to every user","Modify the Sales User profile itself","Use a muting permission set","Share manually every time"]],
+    ["Opportunity OWD is Private. How can a sales manager see all opportunities owned by their team members?",["Manually share every opportunity","Place the manager above the team members in the role hierarchy","Change OWD to Public Read/Write","Add the manager to every Opportunity Team"]],
+    ["EMEA and AMER sales teams in different role branches need to share records laterally. Can the role hierarchy alone solve this?",["Yes, put the roles at the same level","No - sharing rules or teams are needed","Yes, just adjust OWD","No - the org chart must be redesigned"]],
+    ["Case OWD is Private. You want to give one finance user temporary read access to a single case. Best method?",["Create a sharing rule","Manual Sharing","Change OWD to Public","Restructure the role hierarchy"]],
+    ["A user owns a Contact linked to an Account they don't own. What minimum access do they automatically get to that Account?",["No access","Read","Read/Write","Full Access"]],
+    ["HR interns should only see 'Closed' Position records. They already have read permission on Positions. The right tool is?",["Lower the OWD further","Restriction Rule","Adjust the role hierarchy","Field-level security"]],
+    ["Which statement about the role hierarchy is correct?",["It must match the company org chart","Lower roles automatically access records owned by higher roles","Custom objects can opt out of role-hierarchy inheritance per object","It matters most when OWD is Public Read/Write"]],
+    ["Which of the following cannot be chosen directly as the recipient of a sharing rule?",["Public group","Role","Roles and subordinates","A single individual user"]],
+    ["You add a 'Backup Agent' lookup to User on Case, but only users with the Support User profile should be selectable. How?",["Lookup field + lookup (relationship) filter","Master-Detail field","Text field + validation rule","Cross-object formula field"]],
+    ["'Interview Review' must model a many-to-many relationship strongly dependent on both Position and Applicant (deleted with parents). Use:",["Two lookup fields","Two Master-Detail relationships forming a junction object","A cross-object formula field","Merge the two objects into one"]],
+    ["Which field type cannot be referenced by a custom formula field?",["A number field on the same object","A parent object's field","An encrypted text field","A checkbox field"]],
+    ["In a dependent picklist, which field type cannot be a controlling field?",["Standard picklist","Custom picklist","Custom multi-select picklist","Custom checkbox"]],
+    ["A custom field was deleted 20 days ago. Can it be restored from Deleted Fields in Object Manager?",["Yes, fields are kept forever","No - the 15-day retention period has passed and it is permanently deleted","Yes, with admin approval at any time","Yes, but only by Salesforce Support"]],
+    ["Which relationship is required to use a Roll-Up Summary field?",["Lookup","Master-Detail","Cross-object formula","No relationship needed"]],
+    ["When the Region on an Account changes, all related Opportunities must reflect it in real time. Best approach?",["Add a lookup field to Account on Opportunity","Add a cross-object formula field on Opportunity referencing the Account's Region","Add a Roll-Up Summary field on Account","Copy the field with Workflow every time"]],
+    ["You want one profile to see two different Account page layouts ('Distributor' vs 'Supplier'). What is required?",["Two layouts alone will branch automatically","Create record types and connect a different layout to each","Dynamic Forms alone is enough","Impossible - always one layout per profile"]],
+    ["A field should be shown only when an applicant has prior work experience. The best feature is?",["Required-field setting on the page layout","Dynamic Forms component visibility rules","A validation rule","The role hierarchy"]],
+    ["Cloud Kicks needs a different sales process from NTO. What is the correct order?",["Create the record type first, then attach a business process","Create the business process first, then the record type","Create the Path first","Order doesn't matter"]],
+    ["Which object cannot use a business process?",["Opportunity","Case","Account","Lead"]],
+    ["Which is a correct difference between Lightning App Builder and the Page Layout Editor?",["App Builder places individual fields; Layout Editor places big blocks like related lists","App Builder places page components (related lists, Path, etc.); Layout Editor arranges fields/sections/buttons","The two tools are identical","The Page Layout Editor is deprecated in Lightning"]],
+    ["Which record type is applied to cases created via Web-to-Case?",["Always the Master record type","The default record type of the default case owner","Whatever the submitter chose on the form","Assigned at random"]],
+    ["NTO must import 120,000 Opportunity records from an external system. The right tool is?",["Data Import Wizard","Data Loader","Mass Transfer","Report Export"]],
+    ["Before mass-deleting a large set of lead records, what must the admin do first as a best practice?",["Disable validation rules","Back up the data","Adjust the role hierarchy","Disable field history tracking"]],
+    ["How long do deleted records stay in the Recycle Bin before automatic permanent deletion?",["7 days","15 days","30 days","90 days"]],
+    ["Which is least likely to cause duplicate Leads?",["Leads coming in via Web-to-Lead","Lead default internal access is Private, so reps can't see each other's leads","Reps skipping a search before creating new leads","Field-level security being too strict"]],
+    ["In Duplicate Management, which element defines 'what counts as a duplicate'?",["Duplicate Rule","Matching Rule","Validation Rule","Assignment Rule"]],
+    ["A rep enters a 30% discount and gets an error on save; the max allowed is 20%. This was most likely implemented with?",["System data validation","A custom validation rule","An assignment rule","An approval process rejection action"]],
+    ["What runs first when a record is saved?",["Custom validation rules","Workflow rules","System data validation","Approval processes"]],
+    ["Auto-response emails go to web-submitted leads but not to leads entered manually by reps. Why?",["Auto-response rules apply only to web-submitted records by design","The email field is always empty on manual entry","The auto-response rule is inactive","The rep's profile lacks permission"]],
+    ["What is the only type of record a workflow rule can create?",["Case","Task","Event","Opportunity"]],
+    ["You want to use an Outbound Message action directly in Process Builder. What must you do?",["It's directly supported, just use it","Work around it by calling Apex","Switch to Workflow - the only way","It's impossible"]],
+    ["Which action exists only in approval processes and not in workflow rules?",["Field update","Email alert","Lock/Unlock Record","Task creation"]],
+    ["For case escalation rules to fire correctly, which Support Settings option is recommended?",["Only set Automated Case User","Early Triggers","Only set Notify Default Case Owner","No setting needed"]],
+    ["Support agents need to quickly enter minimal info while on the phone to create a case. The best flow type is?",["Record-Triggered Flow","Screen Flow","Schedule-Triggered Flow","Platform Event-Triggered Flow"]],
+    ["You want to compute and fill fields on the record itself just before it is saved. The highest-performance option is?",["After-Save (Actions and Related Records)","Before-Save (Fast Field Update)","Schedule-Triggered Flow","Screen Flow"]],
+    ["If the automation must create another record (e.g., a related Task), which record-triggered flow timing is required?",["Before-Save","After-Save","Either works","Flows can't do this"]],
+    ["What is the main reason to narrow a flow's entry conditions?",["To make the screens prettier","To reduce unnecessary runs and conserve org resources (governor limits)","To strengthen permissions","To simplify version control"]],
+    ["A regular user should be able to run flows but not edit them. Which permission do they need?",["Manage Flow","Run Flows","Modify All Data","View Setup and Configuration"]],
+    ["Which is a clear advantage Flow has over Process Builder?",["It directly supports Outbound Messages","Unlimited versions","It replaces approval processes","It can edit profile settings"]],
+    ["You built a screen flow letting account owners create an opportunity with a few fields without leaving the Account page. Next step?",["Leave the flow inactive","Activate the flow and add it as a Flow component on the Account record page","Rebuild it as a workflow","Attach it to an approval process"]],
+    ["What is the initial org-wide default (OWD) for a newly created custom object?",["Private","Public Read Only","Public Read/Write","None - set manually every time"]],
+    ["What is the first step in deploying a change set from sandbox to production?",["Create the inbound change set","Configure and test the changes in the source (sandbox)","Deploy immediately in production","Check the Setup Audit Trail"]],
+    ["What must be done right before deploying an inbound change set?",["Validate","Delete","Re-upload","Recreate profiles"]],
+    ["Which statement about change sets is NOT correct?",["They automatically merge with (rather than overwrite) target metadata","They cannot delete metadata in the target org","Components of an uploaded change set are locked","Renamed components appear as new in the target"]],
+    ["NTO wants a report of Accounts and Partners that also includes accounts without partners. What is needed?",["A standard report type","A custom report type defined 'with or without'","A tabular report","Only a joined report can do this"]],
+    ["Which report format groups data across both rows and columns for cross-comparison?",["Tabular","Summary","Matrix","Joined"]],
+    ["Opportunities are Private. A sales rep viewing a dashboard run as the VP clicks a component to drill into the source report. What do they see?",["Data per the VP's access","Only opportunities the rep themselves can access","All opportunities in the org","Nothing at all"]],
+    ["What is the limitation of a dashboard whose running user is 'The Dashboard Viewer' (dynamic)?",["Conditional formatting is unavailable","Scheduled refresh is unavailable (manual refresh only)","Charts can't be added","It can't be subscribed to"]],
+    ["Which statement about summary formulas is correct?",["They can reference other summary formulas","They display on every record row","They display only on summary/subtotal rows and can't reference other summary formulas","They only work on tabular reports"]],
+    ["Which agent attribute defines what the agent should NOT do?",["Role","Data","Guardrails","Channel"]],
+    ["Which prompt template type grounds on multiple objects and can be called as an invocable action in any business process?",["Sales Email","Field Generation","Record Summary","Flex"]],
+    ["Which is the most fitting Agentforce use case for a Sales team?",["Draft onboarding guides","Qualify leads to grow the pipeline","Analyze bug reports and suggest code fixes","Index knowledge articles to triage cases"]],
+    ["What record is automatically created when you link a lead or contact to a campaign?",["Campaign Influence","Campaign Member","Opportunity Contact Role","Marketing Touchpoint"]],
+    ["Where does a Salesforce admin spend most of their working time?",["App Launcher","Chatter","Setup","The Home page"]],
+    ["What is the key difference between Developer and Developer Pro sandboxes?",["Pro includes real production data","Storage size differs (200 MB vs 1 GB)","Only Pro copies metadata","Developer can't be used for coding"]],
+    ["You need a sandbox containing a sample of production data for UAT and integration testing. Which type?",["Developer","Developer Pro","Partial Copy","Full Copy"]],
+    ["Which objects does the standard Case object look up to?",["Account only","Contact only","Account and Contact","Campaign and Lead"]],
+    ["Which of the following is an Experience Cloud user license?",["Salesforce","Lightning Platform","Partner Community","Chatter Free"]],
+    ["A company using 13-week quarters (e.g., 4-4-5) must choose which fiscal year option?",["Standard fiscal year","Custom fiscal year","Calendar year","No fiscal setting needed"]],
+    ["Who ultimately controls whether Chatter email notifications are received?",["Only the system admin","Each user, via personal settings","Profile settings","Org-wide settings only"]],
+    ["Which customizations are automatically available in the Salesforce mobile app?",["Custom fields","Record types","Page layouts and custom objects","All of the above"]],
+    ["If you make security settings less restrictive, what happens to the Health Check score?",["It goes up","It goes down","No change","It's unrelated"]],
+    ["Sales wants tasks assigned to a group rather than one person so reps can share the workload. How?",["Tasks can only go to individuals","Assign tasks to a queue","Assign to a Chatter group","Assign directly to a public group"]],
+    ["Which action can an admin NOT perform on a standard profile?",["Clone it to create a custom profile","Assign it to users","Delete it","View its contents"]],
+    ["Only 3 specific sales reps need report-creation rights. The most appropriate method is?",["Modify the Sales User profile","Assign a permission set to those 3 users","Create a new role","Change OWD"]],
+    ["Which feature automates assigning and revoking permission sets and permission set groups?",["User Access Policies","Login Flows","Session Settings","Delegated Administration"]],
+    ["How does a field hidden via FLS appear in reports and search results?",["Visible only in reports","Visible only in search","Not visible in reports, search, or list views","Visible upon request to the admin"]],
+    ["What is the correct order of login access checks?",["Org trusted IPs, then profile login hours, then profile IPs","Profile login hours, then profile login IP ranges, then org trusted IPs, then authentication","Authentication, then profile hours, then IPs","The order is random"]],
+    ["Which correctly describes a user's final object permissions?",["Profile permissions only","Permission set permissions only","Profile permissions plus all assigned permission sets combined","Only the most recently assigned permission"]],
+    ["Which OWD option exists only for Leads and Cases?",["Private","Public Read Only","Public Read/Write","Public Read/Write/Transfer"]],
+    ["What access do queue members get to records owned by the queue?",["Read only","Read/Write","Full Access","No access"]],
+    ["Which is NOT included in 'Full Access' to a record?",["Deleting the record","Transferring ownership","Sharing the record","Creating new fields on the object"]],
+    ["Which object does NOT support restriction rules?",["Custom objects","Contract","Task","Account"]],
+    ["Which tool traces why a specific user has access to a specific record?",["Setup Audit Trail","The Sharing Hierarchy button","Login History","Field History"]],
+    ["Who cannot use the Manual Sharing button?",["The record owner","A user above the owner in the role hierarchy","A system administrator","An unrelated coworker"]],
+    ["What access can Account Team members be granted?",["Access to the Account only","Read or Read/Write on the account and its related contacts/opportunities/cases","Access to Opportunities only","Always Full Access"]],
+    ["Which feature renames standard object tabs and labels (singular/plural) to match company terminology?",["Deleting and recreating the object in Object Manager","Rename Tabs and Labels","Only Translation Workbench","Standard labels can't be changed"]],
+    ["Multiple picklist fields across objects must share one identical value list. The most efficient method is?",["Copy the values into each field","Use a Global Picklist Value Set","Use a dependent picklist","Use a formula field"]],
+    ["Which statement about custom formula field values is correct?",["Users can edit them directly","They are read-only and auto-calculated","They can only be changed via API","Only admins can edit them"]],
+    ["What is the correct order of the 4-step new custom field wizard?",["Set FLS, choose type, enter details, add to layout","Choose data type, enter details, set FLS, add to page layouts","Add to layout, enter details, choose type, set FLS","Enter details, choose type, add to layout, set FLS"]],
+    ["Which is NOT an available behavior when the parent record of a lookup is deleted?",["Clear the lookup field value on the child","Prevent deletion of the parent","Also delete the child record","Automatically change the child's owner"]],
+    ["Which statement about Master-Detail relationships is NOT correct?",["The parent reference is always required","A standard object can be the detail (child)","Up to 3 levels deep","The child's access is inherited from the parent"]],
+    ["How many parent levels can a cross-object formula traverse?",["3","5","10","Unlimited"]],
+    ["You want opportunities displayed as a card board grouped by Stage. Which list view display option?",["Table","Kanban","Split View","Chart"]],
+    ["What is the maximum number of columns in an Enhanced Related List?",["5","10","15","20"]],
+    ["A new Lightning home page was assigned to a profile but users can't see it. Which step was most likely missed?",["Page activation","Saving the page","Creating the profile","Adding components"]],
+    ["Which tool reorders or removes tabs within a Lightning app?",["Object Manager","App Manager","Schema Builder","Tab Settings"]],
+    ["What happens when you add a new picklist value on an object with multiple record types?",["It's added to all record types automatically","You're prompted to choose which record types include the new value","It's only added to the Master record type","New values can't be added"]],
+    ["What default record type does every object have?",["Default","Master","Standard","Primary"]],
+    ["Which object is NOT supported by the Data Import Wizard?",["Account","Lead","Opportunity","Campaign Member"]],
+    ["What is the most reliable matching key when bulk-updating existing records?",["Record name","The Salesforce record ID","Created date","Owner name"]],
+    ["Which is NOT a best practice before a mass data update?",["Consider temporarily disabling automation (workflow/flows)","Test with a small batch first","Avoid business hours","Deactivate all user accounts"]],
+    ["What is the max number of fields per object for Field History Tracking?",["10","20","30","Unlimited"]],
+    ["Which field types cannot use field history tracking?",["Number","Text","Multi-select picklists and long text areas","Date"]],
+    ["Which is true of Dataloader.io?",["It's an installed desktop program","It's 100% cloud, logs in via Salesforce OAuth, and supports scheduled tasks","It doesn't support exports","It handles only up to 50,000 records"]],
+    ["How are escalated cases indicated in list views and queues?",["Bold text","A red arrow indicator","Yellow background","Auto-pinned to the top"]],
+    ["When Email-to-Case creates a case, what is the sender's email address used to associate?",["Account","Contact","Lead","User"]],
+    ["In workflow rules, what is the execution order of field updates vs. email alerts?",["Email first","Field updates first","Simultaneous","Random"]],
+    ["What is the 24-hour limit for auto-response emails to web-submitted leads?",["100","500","5,000","Unlimited"]],
+    ["Which is NOT a point where approval process actions can be configured?",["Initial submission","Final approval","Final rejection","Record view"]],
+    ["What is automatically created along with a new queue?",["A public group","A report","A list view for that queue","A dashboard"]],
+    ["To keep custom lead field values after conversion, the admin must first?",["Nothing - they map automatically","Set up manual mapping to custom fields of the same data type","Delete and recreate the fields","Add a validation rule"]],
+    ["Records matching criteria must be batch-processed at 2 AM daily. The right flow type is?",["Screen Flow","Record-Triggered Flow","Schedule-Triggered Flow","Autolaunched Flow (No Trigger)"]],
+    ["Which flow type coordinates multi-step processes involving multiple users?",["Screen Flow","Record-Triggered Orchestration","Platform Event-Triggered Flow","Fast Field Update"]],
+    ["How do you show users a friendly message when a flow hits an error (fault)?",["Configure the fault to be ignored","Connect a custom fault screen on the fault path","Delete the flow","Errors show only to admins automatically"]],
+    ["In a record-triggered flow, what does {!$Record} refer to?",["The admin who built the flow","The very record that triggered the flow","All records in the org","Whatever record was last modified"]],
+    ["Which Flow Builder feature tests each step before activation?",["Debug","Validate","Preview","Simulate"]],
+    ["How many versions can one flow have, and how many can be active?",["10 versions / 1 active","50 versions / 1 active","50 versions / 5 active","Unlimited / unlimited"]],
+    ["Which tool creates a custom object directly from a spreadsheet?",["Data Import Wizard","Lightning Object Creator","Schema Builder","Data Loader"]],
+    ["How far back can Setup Audit Trail history be downloaded?",["1 month","3 months","6 months","1 year"]],
+    ["Which profile permissions are required to use change sets?",["Only Modify All Data","'Deploy Change Sets' and 'Create and Upload Change Sets'","Manage Users","Only API Enabled"]],
+    ["Which custom object does DevOps Center use to track each unit of change?",["Change Request","Work Item","Task","Deployment Log"]],
+    ["Which layout summarizes key fields at the top of a mobile record page?",["Page layout","Compact layout","Mini layout","Search layout"]],
+    ["Which is the correct set of access levels for report/dashboard folders?",["Read / Write / Delete","Viewer / Editor / Manager","Public / Private / Hidden","User / Admin / Owner"]],
+    ["What is the only way to use a tabular report on a dashboard?",["As a gauge component","As a Lightning table component","As a pie chart","It cannot be used at all"]],
+    ["What must a joined report have to be used as a dashboard source?",["No filters","A chart","Only one block","No groupings"]],
+    ["What happens to the report chart when exporting a report to .xlsx?",["It is exported too","It's converted to an image","Charts are not exported","Only PDF export includes it"]],
+    ["Which dashboard component displays a single key figure, like total pipeline?",["Gauge","Metric","Funnel","Scatter"]],
+    ["Which component shows where a value sits within a defined min-max range?",["Metric","Gauge","Line","Donut"]],
+    ["What is the correct order of steps in the agentic loop after the trigger?",["Action, Plan, Evaluate, Refine","Plan, Evaluate, Refine, Action","Evaluate, Plan, Action, Refine","Refine, Plan, Action, Evaluate"]],
+    ["What are the three components of a prompt?",["The question, the instruction, and the context","Code, data, and model","Role, channel, and data","Input, output, and logs"]],
+    ["What is the flagship Agentforce use case for a Service team?",["Lead qualification","Indexing knowledge articles to triage cases","Campaign optimization","Code review"]]
+  ];
+
+  const EN_ADV = [
+    ["What happens when you refresh a developer sandbox?",["Sandbox changes deploy to production automatically","The sandbox is replaced with production's latest metadata, and undeployed sandbox work is lost","Production data is wiped","Sandbox and production become real-time synced"]],
+    ["In a multi-tenant environment, how do NTO's custom fields and objects affect other companies on the same instance?",["They may appear in other tenants' UIs","They directly degrade other tenants' performance","No effect - each tenant's data and metadata are fully isolated","They require Salesforce pre-approval"]],
+    ["A user logs in from inside the trusted IP range but outside their profile's login hours. What happens?",["Normal login - trusted IP wins","Login after entering a verification code","Login is denied - profile login hours apply regardless of IP","Read-only login"]],
+    ["With Advanced Currency Management enabled, changing a Closed-Won opportunity's Close Date to a quarter with different rates does what to the converted amount?",["The original closing rate stays locked forever","It's reconverted using the dated exchange rate for the new Close Date","Today's rate always applies","The converted amount becomes zero"]],
+    ["What does enabling Parenthetical Currency Conversion do to currency fields?",["They always show only corporate currency","They display in the record currency, with the viewer's personal-currency conversion in parentheses","They show only the user's personal currency","The two currencies split into separate columns"]],
+    ["Which of the following CAN be configured as a standard fiscal year?",["4-4-5 thirteen-week quarters","A 13-month fiscal year","February 1 through January 31 of the next year","A fiscal year starting August 15"]],
+    ["Permission set A is assigned to a user directly AND inside group G, whose muting permission set mutes A's Delete. Can the user delete?",["No - muting applies everywhere","Yes - muting applies only within group G; the direct assignment of A is unaffected","Only with admin approval","Permission set A is auto-revoked"]],
+    ["Which required-field setting is enforced even when records are saved via the API?",["The page-layout required flag","The field definition's universally-required setting","Compact layout field order","List view filters"]],
+    ["What do the 'View All' / 'Modify All' object permissions do?",["Allow deleting all the object's fields","Grant access to all records of the object, bypassing OWD and sharing rules","Move the user to the top of the role hierarchy","Change the profile to System Administrator"]],
+    ["Which correctly states profile and permission set assignment rules?",["Multiple profiles, one permission set","Exactly one profile required; zero or more permission sets allowed","Exactly one of each","With permission sets, no profile is needed"]],
+    ["Opportunity OWD is Private. Rep A owns Account X; opportunity O on X is owned by B in another role branch. A's role sets related-opportunity access to View All. Can A see O?",["No - Private OWD makes it impossible","Yes - via the account owner's associated (implicit) access setting","Only if B shares it manually","Only admins can see it"]],
+    ["When is a manual share automatically and permanently deleted?",["Every time the record is edited","When record ownership changes or the owner is deactivated","When the recipient logs out","When OWD changes"]],
+    ["What is the maximum access level a sharing rule can grant?",["Read Only","Read/Write","Full Access (including delete)","Full transfer rights"]],
+    ["Which are true of Case Teams? (a) up to 3 teams per case (b) predefined case teams can be created (c) assignment rules can auto-add teams",["a only","a and b only","b and c only","a, b, and c"]],
+    ["What is the first question an admin should ask when setting OWD levels?",["Which profile is most used","Is there any record of this object that some user must never see?","How many people view reports","How many records exist"]],
+    ["What happens when 'Grant Access Using Hierarchies' is unchecked on a custom object?",["OWD switches to Private","Higher roles no longer automatically access records owned by lower roles","All sharing rules deactivate","The same can be done on standard objects"]],
+    ["Four roles must see each other's records. What is the biggest benefit of using a public group?",["Ownership transfers automatically","The number of sharing rules drops dramatically (many pairwise rules become one group rule)","OWD never needs changing","The role hierarchy becomes unnecessary"]],
+    ["A junction object's two master parents - one gets deleted. The junction record?",["Re-links to the remaining parent","Is deleted along with it","Auto-converts to a lookup","Transfers to the owner"]],
+    ["Which set of aggregations do Roll-Up Summary fields support?",["COUNT, SUM, MIN, MAX","AVG, MEDIAN, MODE","CONCAT, JOIN","FIRST, LAST"]],
+    ["Changing the data type of a custom field that already contains data can cause?",["Data loss","Deletion of list views based on that field","Impact on assignment/escalation rules","All of the above"]],
+    ["Are formula fields searchable in global search?",["Yes, all of them","No, formula fields are not searchable","Only numeric formulas","Yes, if the admin enables it"]],
+    ["Which cannot be referenced in a lookup (relationship) filter?",["Fields on the source record","Fields on the target object","The current user's profile/role","The body content of files attached to the target record"]],
+    ["What are the maximum Master-Detail and Lookup parents a single child object can have?",["M-D 1 / Lookup 10","M-D 2 / Lookup 40","M-D 3 / Lookup 20","Unlimited"]],
+    ["Account has 2 record types (NTO/CK) and 3 profiles. How are page layouts assigned?",["One per profile - 3 total","One per record type - 2 total","One per profile-and-record-type combination - 6 slots","One for the whole org"]],
+    ["Which record type is applied to leads created via Web-to-Lead?",["Always the Master record type","The default record type of the default lead owner","Whatever the submitter selected","The most recently created record type"]],
+    ["After migrating to Dynamic Forms, where are individual fields managed?",["Still only in the page layout editor","As independent components in the Fields tab of Lightning App Builder","In Object Manager's Compact Layouts","In Setup's Global Actions"]],
+    ["Can a user skip the record-type selection screen when creating records?",["No","Yes - a personal setting can default to their profile's default record type","Only for admin profiles","Only by deleting record types"]],
+    ["Sales asks you to import 40,000 Opportunities from CSV. Can the Data Import Wizard do it?",["Yes - under the 50,000 limit","No - regardless of count, the wizard doesn't support the Opportunity object","Yes - with admin permission","No - CSV isn't supported"]],
+    ["Which are true of the Data Export Service? (a) zips all org data as CSVs (b) can be scheduled (c) emails you when ready",["a only","a and b only","b and c only","a, b, and c"]],
+    ["You want to warn users about potential duplicates but still allow saving. Which duplicate rule action?",["Block","Alert","Delete","Merge"]],
+    ["Which is NOT possible with the Mass Transfer tool when transferring accounts?",["Choosing whether open opportunities transfer too","Choosing whether open cases transfer too","Transferring many matching accounts at once","Assigning a different new owner per record"]],
+    ["Which is the correct save-time execution order?",["Custom validation, system validation, before-save flow, commit","System validation, custom validation, before-save flows, after-save automation, commit","Before-save flow, system validation, custom validation, commit","Admins can reorder freely"]],
+    ["A new lead matches two assignment rule entries at once. What happens?",["All matching entries run in order","Only the first matching entry (by order) applies","An error blocks lead creation","The admin is asked to assign manually"]],
+    ["A workflow assigns a Task to a role containing several users. Who actually gets it?",["Every user in the role gets a copy","A random member","The record owner","The assignment fails with an error"]],
+    ["Escalation rules can be applied to which object(s)?",["Leads and Cases","Cases only","Opportunities and Cases","All standard objects"]],
+    ["Standard approval actions aren't enough for complex post-approval logic. What does the course recommend?",["Always write an Apex trigger","Use the approval's final field update as a trigger to launch a Flow","Create two approval processes","Switch to manual processing"]],
+    ["Which are true of auto-response rules? (a) not sent for manually created records (b) only one rule active at a time (c) one rule can have many entries",["a only","a and c only","b and c only","a, b, and c"]],
+    ["Which action is NOT possible in a Before-Save (Fast Field Update) flow?",["Calculating values for the triggering record","Updating the triggering record's fields","Sending email or creating other records","Referencing the triggering record's values"]],
+    ["You must modify an active flow's logic. The correct procedure is?",["Open and edit the active version directly","Create a new version, edit it, then activate that version","Delete the flow and start over","Active flows can never be changed"]],
+    ["Which directly support Outbound Messages?",["All three","Workflow and Flow (not Process Builder)","Process Builder only","Flow only"]],
+    ["How do you keep an update-triggered flow from running unnecessarily, firing only when a relevant field actually changes?",["Make it manual","Set entry conditions","Create many versions","Switch to After-Save"]],
+    ["What is the correct procedure to move tested sandbox changes to production?",["Press Refresh in production","Create and upload an outbound change set from the sandbox, then validate and deploy the inbound change set in production","The sandbox syncs automatically","Manually redo the work in production - the only way"]],
+    ["You uploaded a change set, then noticed a missing component. What now?",["Open the uploaded change set and add it","Uploaded change sets are locked - clone it (or create a new one) with the missing component and upload again","Add it directly in production - the only option","Ask Salesforce Support to unlock it"]],
+    ["Before production can receive change sets from the sandbox, what must be configured first?",["Allow inbound changes in production's Deployment Connection settings","Delete and recreate the sandbox","Change production OWD","Grant Modify All Data to all profiles"]],
+    ["After deploying a new custom object, HR users can't see any data. What should you check? (a) custom tab created and exposed (b) object permissions on profiles/permission sets (c) field-level security",["a only","b only","a and b only","a, b, and c"]],
+    ["Which is NOT an advantage of DevOps Center over change sets?",["GitHub-backed automatic change tracking","Organized tracking via Work Items","No need to rebuild component lists for every deployment","It can remotely delete metadata in the target org"]],
+    ["A report subscription uses 'Run Report as: Another Person'. Whose access determines the emailed data?",["Each recipient's own access","The designated person's access","Always the admin's access","The whole org's data"]],
+    ["Using the standard report type 'Accounts with Account Teams', what happens to accounts without teams?",["Shown with empty team columns","Excluded from results entirely","Grouped under 'No team'","An error occurs"]],
+    ["Which CAN a custom summary formula reference?",["Another summary formula","A formula field","The report chart","Summary values from another report"]],
+    ["What are the prerequisites for conditional formatting on a report?",["Tabular format is enough","Summary or Matrix format with at least one summary field or custom summary formula","A chart is required","A row-level formula is required"]],
+    ["Which is true about dashboard subscriptions?",["Recipients without folder access still get the email","You can schedule a refresh only, without sending email","Dynamic dashboards can also schedule refreshes","Only yourself can subscribe - no other users"]],
+    ["Which is NOT part of the Einstein Trust Layer?",["Data Masking","Dynamic Grounding","Toxicity Detection","Kanban Board"]],
+    ["Your deployed agent keeps answering off-topic. What should you check first?",["The org's OWD settings","Whether the agent is selecting the correct Topic for the request","The dashboard running user","Page layout assignments"]],
+    ["What is the role of RAG (Retrieval Augmented Generation)?",["Determines the agent's channel","Retrieves relevant data/knowledge before generating a response to ground it","Elevates user permissions","Automatically deletes records"]]
+  ];
+
+  QUESTIONS.forEach((it, i)=>{ const t = EN_BASE[i]; if(t){ it.qEn = t[0]; it.cEn = t[1]; } });
+  ADVANCED.forEach((it, i)=>{ const t = EN_ADV[i]; if(t){ it.qEn = t[0]; it.cEn = t[1]; } });
+
+  // 개념 사전: 해설 앞에 붙는 배경 개념 설명
+  const CONCEPTS = {
+    multitenant: "멀티테넌트(Multi-tenant)는 하나의 소프트웨어·데이터베이스 인스턴스를 여러 고객사(테넌트)가 공유하되, 각 테넌트의 데이터와 커스터마이징은 완전히 격리되는 클라우드 구조입니다. 아파트처럼 인프라는 공유해도 각 세대의 공간은 분리되어 있어, 세일즈포스가 전체 고객에게 동시에 업데이트를 배포할 수 있는 기반이 됩니다.",
+    object: "오브젝트(Object)는 데이터를 담는 테이블로, 필드(열)와 레코드(행)로 구성됩니다. Account, Contact처럼 미리 제공되는 것이 표준 오브젝트, 회사가 직접 만드는 것이 커스텀 오브젝트입니다.",
+    schemabuilder: "Schema Builder는 조직의 오브젝트와 그 관계를 시각적 다이어그램으로 보여주는 도구로, 같은 화면에서 새 커스텀 오브젝트·필드를 바로 생성할 수도 있습니다. Object Manager가 목록형 관리 도구라면 Schema Builder는 시각적 설계 도구입니다.",
+    sandbox: "샌드박스(Sandbox)는 운영 조직(Production)의 복제본으로, 실제 데이터에 영향 없이 개발·테스트·교육을 하는 환경입니다. 유형은 4가지: Developer(메타데이터만, 200MB), Developer Pro(1GB), Partial Copy(메타데이터+샘플 데이터, 5GB), Full Copy(운영과 동일 용량, 성능·부하 테스트용).",
+    multicurrency: "다중 통화(Multi-Currency)는 조직에서 여러 통화를 쓰게 하는 기능으로, 기본은 단일 통화이며 Company Information에서 활성화합니다. 사용자는 개인 통화를, 레코드는 레코드 통화를 가지며, Advanced Currency Management를 켜면 환율이 날짜별로 관리되어 영업기회 금액이 Close Date 기준 환율로 환산됩니다.",
+    fiscalyear: "회계연도(Fiscal Year)는 리포트·예측의 기준 기간입니다. 표준 회계연도는 어느 달이든 '월의 첫날'에 시작하는 12개월이고, 13개월 연도·13주 분기(4-4-5 등)·특수 시작일이 필요하면 커스텀 회계연도를 씁니다. 커스텀은 한번 활성화하면 되돌릴 수 없습니다.",
+    activities: "활동(Activities)은 Task(할 일: 마감일 기반, 완료 처리)와 Event(일정: 시작/종료 시각, 캘린더 표시)로 나뉩니다. Lightning에는 Activities 탭이 없고 Tasks 탭과 Calendar 탭이 따로 있으며, Task는 큐에도 배정해 팀이 업무량을 나눌 수 있습니다.",
+    loginsecurity: "로그인 보안은 계층 구조입니다: 프로필의 로그인 시간/IP 제한 확인 → 조직 전체 신뢰 IP 범위 확인 → 인증(비밀번호, MFA/SSO). 신뢰 IP 밖 + 미인식 기기 로그인 시 인증 코드로 본인 확인(기기 활성화)을 거치며, MFA는 피싱·계정 탈취를 막는 추가 인증 계층입니다.",
+    muting: "뮤팅 권한 세트(Muting Permission Set)는 권한 세트 그룹 안에서만 동작하는 특수 권한 세트로, 그룹이 부여하는 특정 권한만 선택적으로 '음소거(제거)'합니다. 일반 권한 세트가 권한을 '더하는' 도구라면 뮤팅은 그룹 범위 안에서 '빼는' 도구입니다.",
+    profile: "프로필(Profile)은 사용자가 무엇을 보고(설정) 무엇을 할 수 있는지(권한)를 정의하며, 모든 사용자는 정확히 1개의 프로필을 갖습니다. 표준 프로필은 삭제·수정이 제한되므로 복제(Clone)해 커스텀 프로필을 만드는 것이 모범 사례이며, 조직 공통 권한은 프로필에서, 개인·직무별 예외는 권한 세트로 관리합니다.",
+    fls: "필드 수준 보안(FLS)은 프로필/권한 세트에서 필드 단위로 보기·편집을 제어합니다. 상세 화면뿐 아니라 리포트, 검색, 목록 보기에도 적용되며, 페이지 레이아웃 설정과 충돌하면 항상 더 제한적인 쪽이 이깁니다.",
+    permset: "권한 세트(Permission Set)는 프로필 위에 권한을 '추가로' 얹는 도구입니다. 최종 권한 = 프로필 + 할당된 모든 권한 세트의 합이며, 권한을 빼는 용도로는 쓸 수 없습니다(그건 뮤팅의 역할). 소수 인원에게만 필요한 권한은 프로필 수정 대신 권한 세트로 부여하는 것이 원칙입니다.",
+    rolehierarchy: "역할 계층(Role Hierarchy)은 상위 역할이 하위 역할 소유 레코드에 자동으로 전체 접근을 상속받게 하는 '수직적' 공유 장치입니다. 조직도(보고 체계)가 아니라 데이터 가시성 구조이며, OWD가 Private/Public Read Only일 때 의미가 있습니다. 수평적 공유는 공유 규칙·팀이 담당합니다.",
+    owd: "조직 전체 기본값(OWD)은 '소유하지 않은 레코드'에 대한 기본 접근 수준을 정합니다: Private / Public Read Only / Public Read/Write, 그리고 Lead·Case 한정 Public Read/Write/Transfer. 가장 제한적인 수준을 기본으로 두고 역할 계층·공유 규칙·팀으로 필요한 만큼 넓히는 것이 설계 원칙입니다.",
+    manualshare: "수동 공유(Manual Sharing)는 소유자·역할 계층상 그 상위 사용자·관리자가 개별 레코드 1건을 특정 사용자/그룹/역할에 일회성으로 공유하는 기능입니다. 레코드 소유자가 바뀌거나 비활성화되면 수동 공유는 영구 삭제됩니다.",
+    implicitaccess: "암묵적 접근(Implicit Access)은 부모-자식 레코드 간 자동 부여되는 접근입니다. 자식(Contact/Opportunity/Case)을 소유하면 부모 Account에 최소 읽기 권한이 자동 부여되고(해제 불가), 반대로 계정 소유자는 역할 정의의 설정(No Access/View All/Edit All)에 따라 계정의 관련 자식 레코드에 접근할 수 있습니다.",
+    restriction: "제한 규칙(Restriction Rule)은 특정 조건에 부합하는 사용자가 지정된 레코드만 볼 수 있도록 이미 부여된 접근을 '걸러내는' 유일한 축소형 보안 기능입니다. 사용자 기준+레코드 기준으로 구성되며 역할 계층·공유 규칙보다 나중에(최종 필터로) 적용됩니다. 지원 대상은 커스텀 오브젝트, Contract, Task, Event뿐입니다.",
+    sharingrule: "공유 규칙(Sharing Rule)은 OWD의 예외로서 그룹·역할 단위로 지속적·자동으로 접근을 '넓히는' 도구입니다. 소유자 기준 또는 조건 기준으로 만들고, 공유 대상은 공개 그룹/역할/역할과 하위만 가능하며(개인 지정 불가), 부여 가능한 최대 수준은 Read/Write입니다.",
+    teams: "팀(Opportunity/Account/Case Team)은 특정 레코드에 협업 멤버를 지정해 그 레코드(및 연관 레코드)에만 접근을 부여합니다. 공유 규칙이 '그룹 대 그룹'의 광범위한 공유라면 팀은 '레코드 단위'의 정밀한 공유이며, Account Team은 계정과 관련 Contact/Opportunity/Case에 Read 또는 Read/Write를 부여할 수 있습니다.",
+    queue: "큐(Queue)는 레코드의 '공동 소유자' 역할을 하는 그룹으로 Lead, Case, Task, 커스텀 오브젝트에 사용됩니다. 큐 멤버는 큐 소유 레코드에 전체 접근을 가지며, 큐를 만들면 해당 큐의 목록 보기가 자동 생성됩니다.",
+    lookup_md: "관계 필드는 두 오브젝트를 연결합니다. Lookup은 느슨한 연결(부모 선택적·독립적 공유·부모 최대 40개, 부모 삭제 시 값 비우기/삭제 방지/자식 삭제 중 선택), Master-Detail은 강한 종속(부모 필수·접근 상속·부모 삭제 시 자식도 삭제·부모 최대 2개·3단계 깊이, 표준 오브젝트는 자식 불가)입니다. Master-Detail 2개를 조합하면 다대다를 구현하는 정션 오브젝트가 됩니다.",
+    formula: "수식 필드(Formula Field)는 다른 필드 값으로 자동 계산되는 읽기 전용 필드입니다. 암호화 필드·Description·긴 텍스트 영역은 참조할 수 없고 검색 대상도 아닙니다. 교차 오브젝트 수식은 부모 관계를 최대 10단계까지 거슬러 올라가 참조하며, 부모 값이 바뀌면 자동 반영됩니다.",
+    rollup: "Roll-Up Summary 필드는 자식 레코드들의 값을 부모 레코드에 집계(COUNT/SUM/MIN/MAX)하는 필드로, Master-Detail 관계에서만 사용할 수 있습니다. Lookup 관계에서는 만들 수 없습니다.",
+    picklist: "피크리스트(Picklist)는 미리 정의된 값 목록에서 선택하는 필드로 데이터 품질을 높입니다. 종속 피크리스트는 통제 필드 값에 따라 선택지가 달라지며(표준 피크리스트·체크박스=통제 필드만 가능, 커스텀 다중선택=종속 필드만 가능), Global Picklist Value Set으로 여러 오브젝트가 하나의 값 목록을 공유할 수 있습니다.",
+    customfield: "커스텀 필드는 표준 필드와 달리 타입 변경·삭제가 가능합니다. 단, 데이터가 있는 필드의 타입 변경은 데이터 손실·목록 보기 삭제·배정/에스컬레이션 규칙 영향의 위험이 있고, 삭제된 필드는 Object Manager의 Deleted Fields에서 최대 15일간만 복구할 수 있습니다. 생성 4단계: 타입 선택→상세 입력→FLS 설정→페이지 레이아웃 추가.",
+    recordtype: "레코드 타입(Record Type)은 하나의 오브젝트에서 비즈니스 시나리오별로 다른 페이지 레이아웃과 피크리스트 값 집합을 제공하며 프로필 단위로 할당됩니다. 모든 오브젝트는 기본 Master 레코드 타입을 갖고, Opportunity/Case/Lead/Solution의 레코드 타입은 비즈니스 프로세스를 '먼저' 만들어야 생성할 수 있습니다(Account에는 비즈니스 프로세스 개념이 없음).",
+    pagelayout: "페이지 레이아웃은 레코드 화면의 필드·섹션·버튼·관련 목록 구성을 정의하며 '프로필 × 레코드 타입' 조합 단위로 할당됩니다. Lightning App Builder는 관련 목록·Path 같은 큰 컴포넌트 배치를, Page Layout Editor는 필드·섹션 수준 배치를 담당합니다.",
+    dynamicforms: "Dynamic Forms는 페이지 레이아웃의 필드/섹션을 Lightning App Builder의 독립 컴포넌트로 분리하는 기능입니다. 필드는 App Builder의 Fields 탭에서 관리하며, 표시 조건(Visibility Rule)으로 '특정 조건에서만 필드 노출' 같은 요구사항을 구현합니다.",
+    listview: "목록 보기(List View)는 조건으로 걸러낸 레코드 목록입니다. Table 외에 Kanban(그룹 기준 카드 보드, 예: Stage별 영업기회)과 Split View(왼쪽 목록+오른쪽 상세)로 표시할 수 있고, 최대 15개 컬럼과 인라인 편집을 지원합니다.",
+    appbuilder_home: "Lightning App Builder로 만든 홈/레코드 페이지는 컴포넌트 배치 → 저장 → 프로필별 할당 → 활성화(Activate)의 단계를 거칩니다. 활성화를 빼먹으면 사용자에게 보이지 않습니다.",
+    importexport: "데이터 도구 선택 기준: Data Import Wizard는 5만 건 미만, Account/Contact/Lead/Solution/Campaign Member/커스텀 오브젝트만 지원(Opportunity 불가)하며 중복 방지와 워크플로우 실행 여부 선택이 가능합니다. Data Loader/Dataloader.io는 최대 500만 건, 전 오브젝트, Export/Delete/Upsert와 예약 작업을 지원합니다. 기존 레코드 업데이트 매칭에는 고유한 Salesforce 레코드 ID를 씁니다.",
+    recyclebin: "삭제된 레코드는 Recycle Bin(휴지통)에 최대 15일간 보관된 후 자동 영구 삭제됩니다. 보관 기간 내에는 복원하거나 수동으로 영구 삭제할 수 있습니다.",
+    duplicates: "중복 관리(Duplicate Management)는 두 계층으로 동작합니다: 매칭 규칙(Matching Rule)이 '무엇을 중복으로 볼지' 기준을 정의하고, 중복 규칙(Duplicate Rule)이 발견 시 조치를 정합니다(Alert=경고 후 저장 허용, Block=저장 차단). Lead는 기본 내부 접근이 Private라 담당자들이 서로의 리드를 못 봐 중복이 특히 잦습니다.",
+    fieldhistory: "필드 이력 추적(Field History Tracking)은 오브젝트당 최대 20개 필드의 변경 이력(일시·변경자·이전/이후 값)을 History 관련 목록과 리포트로 기록합니다. 다중 선택 피크리스트와 긴 텍스트 영역은 지원되지 않습니다.",
+    masstools: "Mass Delete는 조건에 맞는 레코드를 일괄 삭제하는 도구로 미리보기 목록과 연쇄 삭제 경고를 제공하며, 실행 전 백업이 모범 사례입니다. Mass Transfer는 여러 레코드(Account/Lead/Service Contract/커스텀)를 '한 명의' 새 소유자에게 일괄 이전합니다.",
+    validation: "데이터 검증은 2단계입니다: 시스템 데이터 검증(필드 타입·필수·고유값 등)이 먼저, 커스텀 검증 규칙(비즈니스 조건 수식이 True면 저장 차단+오류 메시지)이 그다음 실행됩니다. 필드 정의의 범용 필수(Universally Required)는 UI·API 모두에 강제되는 '하드' 요구사항이고, 페이지 레이아웃의 필수 표시는 UI에만 적용되는 '소프트' 요구사항입니다.",
+    assignmentrules: "배정 규칙(Assignment Rule)은 Lead/Case를 조건에 따라 사용자·큐에 자동 배정합니다. 오브젝트당 동시에 1개 규칙만 활성화되며, 규칙 안의 여러 항목(Entry)은 지정된 순서대로 평가되어 첫 번째로 일치하는 항목 하나만 적용됩니다.",
+    autoresponse: "자동 응답 규칙(Auto-Response Rule)은 '웹으로 제출된' Lead/Case에만 조건별 자동 회신 이메일을 보냅니다(내부 사용자가 만든 레코드에는 미발송). 활성 규칙은 1개, 항목은 여러 개 가능하며, 발송 한도는 24시간당 리드 500건/케이스 5000건입니다.",
+    escalation: "에스컬레이션 규칙(Escalation Rule)은 Case 전용 자동화로, 지정 시간 내 처리되지 않은 케이스를 다른 사용자/큐로 재배정하고 알림을 보냅니다. 에스컬레이션된 케이스는 목록·큐에서 빨간 화살표로 표시되고, 정확한 작동을 위해 Support Settings의 Early Triggers 활성화가 권장됩니다.",
+    workflow: "워크플로우 규칙(Workflow Rule)은 조건 충족 시 필드 업데이트·이메일·Task 생성·Outbound Message를 실행하는 자동화입니다. 제약: 생성 가능한 레코드는 Task뿐, Task는 1인에게만 할당 가능(여러 명의 역할 지정 시 레코드 소유자에게), 필드 업데이트는 본인/부모 오브젝트만 가능하며 다른 액션보다 먼저 실행됩니다.",
+    processbuilder: "Process Builder는 레코드 생성, Chatter 게시, 승인 제출, Flow 실행 등 다양한 액션을 지원하지만 Outbound Message는 직접 지원하지 않아 Apex 호출로 우회해야 합니다(Workflow와 Flow는 직접 지원). 버전은 최대 50개, 활성은 1개입니다.",
+    approval: "승인 프로세스(Approval Process)는 제출 → 승인 단계 → 승인/반려/회수별 액션으로 구성된 다단계 워크플로우입니다. 액션 설정 시점은 최초 제출·최종 승인·최종 반려·회수의 4곳이며, Lock/Unlock Record는 승인 프로세스에만 있는 고유 액션입니다. 최종 필드 업데이트를 트리거로 Flow를 연계하면 더 복잡한 후속 로직도 처리할 수 있습니다.",
+    leadconversion: "리드 전환(Lead Conversion) 시 리드는 Account/Contact(선택적으로 Opportunity)로 변환됩니다. 표준 필드는 자동 매핑되지만 커스텀 필드는 같은 데이터 타입의 커스텀 필드로 관리자가 '수동 매핑'을 미리 설정해야 값이 유지됩니다.",
+    flowtypes: "Flow 유형 6가지: Screen Flow(사용자가 화면에서 입력), Record-Triggered(레코드 생성/수정/삭제 시 자동), Schedule-Triggered(지정 시각/주기에 배치 실행), Autolaunched(Apex·API 등 외부 호출), Platform Event-Triggered(이벤트 수신 시), Orchestration(다단계·다중 사용자 프로세스). 사람의 입력이 필요하면 Screen Flow, 레코드 변경이 트리거면 Record-Triggered를 선택합니다.",
+    beforeafter: "Record-Triggered Flow의 실행 시점 2가지: Before-Save(Fast Field Update)는 저장 직전에 트리거 레코드 '자신의' 필드만 빠르게 업데이트하고(이메일·다른 레코드 처리 불가, 성능 최고), After-Save(Actions and Related Records)는 저장 후 다른 레코드 생성·이메일 발송 등 폭넓은 작업을 수행합니다.",
+    flowmgmt: "Flow 관리 요점: 버전은 최대 50개, 활성은 1개(활성 버전은 직접 수정 불가 — 새 버전을 만들어 수정 후 활성화), 진입 조건(Entry Conditions)으로 불필요한 실행을 줄여 조직 리소스를 절약하며, 실행에는 'Run Flows', 열람·수정에는 'Manage Flow' 권한이 필요합니다.",
+    flowbuilder: "Flow Builder는 리소스(참조 값)와 엘리먼트(Interaction/Logic/Data 3분류)로 흐름을 구성합니다. {!$Record}는 Flow를 트리거한 레코드를 가리키는 전역 변수이고, 활성화 전 Debug 기능으로 단계별 테스트하며, 오류(Fault) 경로에 커스텀 화면을 연결해 친절한 안내를 보여줄 수 있습니다.",
+    flowsurface: "Flow를 사용자에게 노출(surface)하는 방법: 커스텀 버튼/링크, 커스텀 액션, 또는 Lightning 컴포넌트로 레코드 페이지에 배치. Flow는 반드시 활성화(Activate)되어야 사용자에게 동작합니다.",
+    ooe: "실행 순서(Order of Execution)는 레코드 저장 시 검증과 자동화가 실행되는 고정된 순서입니다: 시스템 데이터 검증 → 커스텀 검증 규칙 → Before-Save Flow → After-Save Flow/워크플로우/프로세스 → 커밋(최종 저장).",
+    customobject: "커스텀 오브젝트 구축 4단계: ①오브젝트 생성 ②필드 구성 ③커스텀 탭 생성(앱·프로필에 노출) ④접근·보안 설정. 신규 커스텀 오브젝트의 OWD 기본값은 Public Read/Write이므로 필요 시 관리자가 좁혀야 하며, 탭 노출·오브젝트 권한·FLS가 모두 갖춰져야 사용자가 데이터를 볼 수 있습니다.",
+    changeset: "체인지 셋(Change Set)은 연결된 조직 간(샌드박스↔운영) 메타데이터를 클릭으로 옮기는 배포 도구입니다. 절차: 소스에서 구성·테스트 → 타겟에서 인바운드 허용 → Outbound 생성·업로드 → 타겟에서 검증(Validate) → 배포(Deploy). 업로드 후엔 구성이 잠기고, 타겟의 것을 삭제할 수 없으며, 병합이 아닌 덮어쓰기로 배포됩니다.",
+    devops: "DevOps Center는 체인지 셋의 현대적 대안으로, GitHub 소스 관리와 연동해 변경사항을 자동 추적하고 Work Item이라는 커스텀 오브젝트 단위로 작업을 관리하며, 클릭 기반으로 여러 환경에 배포합니다. 단, 타겟 조직의 메타데이터 삭제는 여전히 수동입니다.",
+    audittrail: "Setup Audit Trail은 조직의 주요 설정(메타데이터) 변경 이력을 기록하는 감사 도구입니다. 화면에는 최근 20건이 표시되고, 최근 6개월치를 CSV로 다운로드할 수 있습니다.",
+    reporttypes: "리포트 유형(Report Type)은 리포트가 다룰 오브젝트·필드 조합과 조인 방식을 정의합니다. 표준 유형은 'with'(내부 조인: 관련 레코드가 있는 것만 표시), 커스텀 유형은 'with or without'(외부 조인: 관련 레코드가 없어도 포함)까지 표현할 수 있습니다.",
+    reportformats: "리포트 포맷 4종: Tabular(단순 목록, 그룹화·차트 불가, 대시보드에선 Lightning 테이블로만 사용), Summary(행 그룹화 최대 3단계), Matrix(행+열 교차 그룹화), Joined(서로 다른 리포트 블록 최대 5개 결합, 대시보드 소스로 쓰려면 차트 필수).",
+    reportformulas: "요약 수식(Summary Formula)은 그룹 합계 줄에만 표시되며 리포트당 최대 5개, 다른 요약 수식은 참조 불가(수식 필드는 참조 가능)입니다. 행 수준 수식(Row-Level Formula)은 각 레코드 행마다 계산됩니다. 조건부 서식은 Summary/Matrix 형식 + 요약 필드(또는 요약 수식) 1개 이상이 전제이고 규칙은 최대 5개입니다.",
+    reportexport: "리포트는 .csv/.xlsx/.xls로 내보낼 수 있고 서식을 유지하려면 Formatted Report 옵션을 선택합니다. 단, 리포트 차트는 내보내기에 포함되지 않습니다.",
+    runninguser: "대시보드의 실행 사용자(Running User)는 대시보드에 '보이는 데이터'의 권한 기준을 정합니다. 옵션: Me(작성자 고정) / Another Person(특정인 고정) / The Dashboard Viewer(동적 — 보는 사람 권한). 동적 대시보드는 예약 새로고침이 불가하고, 컴포넌트에서 원본 리포트로 드릴다운하면 그때부터는 '클릭한 사용자 본인'의 권한이 적용됩니다.",
+    subscriptions: "리포트/대시보드 구독은 예약된 새로고침 결과를 이메일로 발송하는 기능입니다. 수신자는 해당 폴더 접근 권한이 필요하고, 리포트 구독의 실행 기준(Run as: Me/Another Person)에 따라 발송되는 데이터가 달라지며, 이메일 없이 새로고침만 예약할 수도 있습니다. CSV 첨부는 지원되지 않습니다.",
+    dashcomponents: "대시보드는 소스 리포트를 시각화하며(컴포넌트 최대 20개) 마지막 새로고침 시점의 데이터를 보여줍니다. 주요 컴포넌트: Metric(단일 핵심 수치), Gauge(범위 내 현재 값 위치), Funnel(단계 흐름), 막대/도넛/라인/테이블/Scatter 등.",
+    folders: "리포트·대시보드는 폴더로 접근을 통제합니다. 폴더는 사용자/역할/공개 그룹에 Viewer(보기)/Editor(편집)/Manager(관리) 3단계 수준으로 공유할 수 있으며, 하위 폴더는 상위 폴더의 접근을 상속합니다.",
+    agentforce: "Agentforce는 두 가지 관점으로 이해합니다: ①에이전트를 만드는 도구 집합 — Topic, Action(Flow/Apex/Prompt/API), RAG(응답 전 관련 지식을 검색해 근거로 제공), Advanced Planner ②미리 만들어진 에이전트 제품군 — Service Agent, Sales Coach, Lead Nurturing 등. 에이전트의 5속성은 Role(역할)·Data(지식)·Actions(능력)·Guardrails(금지사항)·Channel(접점)이며, Einstein Trust Layer(데이터 마스킹·동적 그라운딩·유해성 탐지 등)가 전 과정을 보호합니다.",
+    agenticloop: "에이전틱 루프(Agentic Loop)는 에이전트의 작동 사이클입니다: 트리거(채팅·이메일·전화 같은 대화형 또는 Flow·API 같은 시스템형) → Plan(계획) → Evaluate(평가) → Refine(정제) → Action(실행). 전 과정이 Trust Layer 안에서 통제됩니다.",
+    prompts: "프롬프트(Prompt)는 AI 모델에 전달하는 질문+지시사항+맥락(Context)의 묶음입니다. 프롬프트 템플릿 4유형: Sales Email(CRM 데이터 기반 개인화 이메일), Field Generation(클릭 한 번으로 필드 값 생성), Flex(여러 오브젝트 근거 + 어느 프로세스에서든 호출 가능한 액션), Record Summary(필드·활동·관련 레코드 기반 요약).",
+    appmanager: "App Manager는 Lightning 앱을 관리하는 도구로, 앱 생성·설정과 함께 앱 내 탭의 순서 변경·추가·제거를 담당합니다.",
+    webtox: "Web-to-Lead/Web-to-Case는 웹 폼 제출을 자동으로 리드/케이스 레코드로 만드는 기능이고, Email-to-Case는 수신 이메일로 케이스를 만들며 발신자 이메일로 Contact를 연결합니다. 이렇게 생성된 레코드에는 '기본 소유자의 기본 레코드 타입'이 적용되고, 배정·자동응답·에스컬레이션 규칙과 연계됩니다.",
+    healthcheck: "Health Check는 조직의 보안 설정을 Salesforce 권장 기준과 비교해 한 화면에서 점수로 보여주는 진단 도구입니다. 설정을 덜 제한적으로 바꿀수록 점수가 내려갑니다.",
+    mobile: "Salesforce 모바일 앱(Android 9+/iOS 15+)에는 커스텀 필드·레코드 타입·페이지 레이아웃·커스텀 오브젝트 등 대부분의 커스터마이징이 자동 반영됩니다. 모바일 레코드 페이지는 액션 바 + 컴팩트 레이아웃(핵심 필드 요약) + 관련 목록 + 상세로 구성됩니다.",
+    licenses: "사용자 라이선스는 크게 세 계열입니다: Standard(Salesforce, Lightning Platform 등), Chatter 계열(Chatter Free 등), Experience Cloud 계열(Customer Community, Customer Community Plus, Partner Community 등 외부 사용자용).",
+    chatter: "Chatter는 사내 협업 피드로 게시물·파일·레코드 팔로우와 공개/비공개/미공개 그룹을 지원합니다. 관리자는 프로필별 접근과 피드 추적을 설정하지만, 이메일 알림 수신 여부는 각 사용자가 개인 설정에서 제어합니다.",
+    standardfields: "표준 필드는 삭제할 수 없고(FLS로 숨기기만 가능) 라벨 변경·피크리스트 값 편집·도움말 추가 등 일부만 커스터마이징할 수 있습니다. Setup > User Interface의 Rename Tabs and Labels로 표준 오브젝트/탭의 단수·복수 명칭을 조직 용어에 맞게 바꿉니다.",
+    relatedlist: "관련 목록(Related List)은 현재 레코드에 연결된 다른 레코드들을 보여주는 영역입니다. Enhanced Related List는 최대 10개 컬럼 표시, 컬럼 정렬·크기 조정, 대량 작업, 텍스트 줄바꿈을 지원합니다.",
+    caselookup: "표준 오브젝트 관계의 핵심: 하나의 Account는 여러 Contact/Opportunity/Case와 1:다로 연결되고, Case는 Account와 Contact를 함께 조회합니다. Campaign은 Lead/Contact와 직접 관계가 없어 연결 시 Campaign Member라는 중간 레코드가 자동 생성됩니다.",
+    setup: "Setup은 세일즈포스의 관리자 백엔드로, 관리자는 업무 시간 대부분을 여기서 보냅니다. Quick Find 검색으로 설정 메뉴를 빠르게 찾을 수 있고, Object Manager·사용자 관리·보안 설정 등이 모두 이곳에 있습니다.",
+    fullaccess: "레코드 접근 수준의 서열: Full Access(보기·수정·삭제·소유권 이전·공유·레코드타입 변경) > Read/Write > Read Only > No Access. 소유자·역할 계층상 상위·관리자가 Full Access를 가지며, 오브젝트 설정 변경(필드 생성 등)은 레코드 접근이 아니라 관리자(설정) 권한의 영역입니다.",
+    sharinghierarchy: "Sharing Hierarchy 버튼은 특정 사용자가 특정 레코드에 어떤 경로(소유권/역할 계층/공유 규칙/팀/수동 공유)로 접근할 수 있는지 추적해 보여주는 진단 도구입니다.",
+    useraccess: "User Access Policies는 조건에 따라 권한 세트·권한 세트 그룹의 할당과 회수를 자동으로 처리해, 대규모 조직의 권한 관리를 간소화하는 기능입니다.",
+    objectcreator: "Lightning Object Creator는 스프레드시트 파일을 업로드하면 곧바로 커스텀 오브젝트(필드+데이터 포함)를 생성해주는 도구입니다.",
+    deployperms: "체인지 셋 배포의 전제 조건: 프로필에 'Deploy Change Sets'와 'Create and Upload Change Sets' 권한이 필요하고, 타겟 조직의 배포 연결(Deployment Connection, Setup > Environments > Deploy)에서 소스로부터의 인바운드 변경을 먼저 허용해야 합니다.",
+    viewall: "'View All'/'Modify All' 오브젝트 권한은 OWD·공유 규칙 등 공유 설정을 완전히 우회해 해당 오브젝트의 전체 레코드 접근을 부여하는 강력한 권한으로, 관리자급 사용자에게만 신중하게 부여해야 합니다.",
+    dataexport: "Data Export Service는 조직 '전체' 데이터를 CSV 압축본(zip)으로 만드는 인앱 백업 기능으로, 정기 예약 실행과 완료 시 이메일 통지를 지원합니다. 더 정교한 백업(버전 관리 등)이 필요하면 AppExchange의 서드파티 솔루션을 검토합니다."
+  };
+
+  const CB = ("multitenant object schemabuilder sandbox multicurrency fiscalyear multicurrency activities loginsecurity muting profile fls profile permset rolehierarchy rolehierarchy manualshare implicitaccess restriction rolehierarchy sharingrule lookup_md lookup_md formula picklist customfield rollup formula recordtype dynamicforms recordtype recordtype pagelayout webtox importexport masstools recyclebin duplicates duplicates validation validation autoresponse workflow processbuilder approval escalation flowtypes beforeafter beforeafter flowmgmt flowmgmt processbuilder flowsurface customobject changeset changeset changeset reporttypes reportformats runninguser runninguser reportformulas agentforce prompts agentforce caselookup setup sandbox sandbox caselookup licenses fiscalyear chatter mobile healthcheck queue profile permset useraccess fls loginsecurity permset owd queue fullaccess restriction sharinghierarchy manualshare teams standardfields picklist formula customfield lookup_md lookup_md formula listview relatedlist appbuilder_home appmanager recordtype recordtype importexport importexport importexport fieldhistory fieldhistory importexport escalation webtox workflow autoresponse approval queue leadconversion flowtypes flowtypes flowbuilder flowbuilder flowbuilder flowmgmt objectcreator audittrail deployperms devops mobile folders reportformats reportformats reportexport dashcomponents dashcomponents agenticloop prompts agentforce").split(" ");
+  const CA = ("sandbox multitenant loginsecurity multicurrency multicurrency fiscalyear muting validation viewall permset implicitaccess manualshare sharingrule teams owd rolehierarchy sharingrule lookup_md rollup customfield formula lookup_md lookup_md pagelayout webtox dynamicforms recordtype importexport dataexport duplicates masstools ooe assignmentrules workflow escalation approval autoresponse beforeafter flowmgmt processbuilder flowmgmt changeset changeset deployperms customobject devops subscriptions reporttypes reportformulas reportformulas subscriptions agentforce agentforce agentforce").split(" ");
+  QUESTIONS.forEach((it, i)=>{ it.ck = CB[i]; });
+  ADVANCED.forEach((it, i)=>{ it.ck = CA[i]; });
+
+  // ---- state ----
+  let mode = null; // 'exam' | 'practice'
+  let lang = "ko"; // 'ko' | 'en'
+  let currentItem = null;
+  let pool = [];
+  let idx = 0;
+
+  function getQ(item){ return (lang === "en" && item.qEn) ? item.qEn : item.q; }
+  function getC(item, i){ return (lang === "en" && item.cEn) ? item.cEn[i] : item.choices[i]; }
+  function fullExplain(item){
+    const c = CONCEPTS[item.ck];
+    return (c ? c + "<br><br>" : "") + item.explain;
+  }
+  let selectedLessons = new Set();
+  let answers = []; // {lesson, correctIdx, chosenIdx, correct}
+  let timerInterval = null;
+  let secondsLeft = 105*60;
+
+  const $ = (id) => document.getElementById(id);
+  const startScreen = $("startScreen"), quizScreen = $("quizScreen"), resultsScreen = $("resultsScreen");
+
+  // build lesson picker chips
+  const lessonGrid = $("lessonGrid");
+  Object.keys(LESSON_NAMES).forEach(n=>{
+    const chip = document.createElement("div");
+    chip.className = "adx-lesson-chip";
+    chip.textContent = "L" + n;
+    chip.title = LESSON_NAMES[n];
+    chip.addEventListener("click", ()=>{
+      const num = parseInt(n,10);
+      if(selectedLessons.has(num)){ selectedLessons.delete(num); chip.classList.remove("active"); }
+      else { selectedLessons.add(num); chip.classList.add("active"); }
+      $("goPracticeBtn").disabled = selectedLessons.size === 0;
+    });
+    lessonGrid.appendChild(chip);
+  });
+
+  $("startExamBtn").addEventListener("click", ()=>{
+    mode = "exam";
+    pool = shuffle([...QUESTIONS]).slice(0, 65);
+    beginQuiz(true, 105);
+  });
+
+  $("startAdvancedBtn").addEventListener("click", ()=>{
+    mode = "exam";
+    pool = shuffle([...ADVANCED]).slice(0, 40);
+    beginQuiz(true, 65);
+  });
+
+  $("startPracticeBtn").addEventListener("click", ()=>{
+    $("lessonPicker").classList.toggle("show");
+  });
+
+  $("goPracticeBtn").addEventListener("click", ()=>{
+    mode = "practice";
+    pool = QUESTIONS.concat(ADVANCED).filter(q=>selectedLessons.has(q.lesson));
+    beginQuiz(false);
+  });
+
+  function shuffle(arr){
+    for(let i=arr.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]] = [arr[j],arr[i]];
+    }
+    return arr;
+  }
+
+  function beginQuiz(withTimer, minutes){
+    idx = 0; answers = [];
+    if(timerInterval) clearInterval(timerInterval);
+    startScreen.classList.add("adx-hidden");
+    resultsScreen.classList.add("adx-hidden");
+    quizScreen.classList.remove("adx-hidden");
+    if(withTimer){
+      const mins = minutes || 105;
+      secondsLeft = mins*60;
+      $("timerText").textContent = String(mins).padStart(2,"0") + ":00";
+      $("timerBox").classList.remove("warn");
+      $("timerBox").classList.remove("adx-hidden");
+      timerInterval = setInterval(tickTimer, 1000);
+    } else {
+      $("timerBox").classList.add("adx-hidden");
+    }
+    renderQuestion();
+  }
+
+  function tickTimer(){
+    secondsLeft--;
+    const m = Math.floor(secondsLeft/60), s = secondsLeft%60;
+    $("timerText").textContent = String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
+    $("timerBox").classList.toggle("warn", secondsLeft <= 300);
+    if(secondsLeft <= 0){
+      clearInterval(timerInterval);
+      finishQuiz();
+    }
+  }
+
+  function renderQuestion(){
+    const item = pool[idx];
+    currentItem = item;
+    $("lessonTag").textContent = (item.adv ? "심화 · " : "") + "LESSON " + item.lesson + " · " + LESSON_NAMES[item.lesson];
+    $("qText").textContent = getQ(item);
+    $("progressLabel").textContent = (idx+1) + " / " + pool.length;
+    $("progressFill").style.width = (((idx)/pool.length)*100) + "%";
+    const box = $("optionsBox");
+    box.innerHTML = "";
+    const letters = ["A","B","C","D"];
+    item.choices.forEach((choice, i)=>{
+      const btn = document.createElement("button");
+      btn.className = "adx-option";
+      btn.innerHTML = '<span class="letter">'+letters[i]+'</span><span></span>';
+      btn.lastElementChild.textContent = getC(item, i);
+      btn.addEventListener("click", ()=> selectAnswer(i));
+      box.appendChild(btn);
+    });
+    $("explainBox").classList.remove("show");
+    $("explainBox").innerHTML = "";
+    $("revealBtn").classList.add("adx-hidden");
+    $("nextBtn").disabled = true;
+    $("skipBtn").classList.remove("adx-hidden");
+    $("skipBtn").disabled = false;
+  }
+
+  function selectAnswer(i){
+    const item = pool[idx];
+    const opts = document.querySelectorAll("#optionsBox .adx-option");
+    opts.forEach(o=>o.disabled = true);
+    $("skipBtn").disabled = true;
+
+    const isCorrect = i === item.correct;
+    answers.push({item:item, lesson:item.lesson, q:item.q, choices:item.choices, correctIdx:item.correct, chosenIdx:i, correct:isCorrect, explain:item.explain});
+
+    if(mode === "practice"){
+      opts[i].classList.add(isCorrect ? "correct" : "incorrect");
+      if(!isCorrect) opts[item.correct].classList.add("correct");
+      const ex = $("explainBox");
+      ex.innerHTML = '<b>'+(isCorrect?"정답입니다.":"오답입니다.")+'</b><br><br>' + fullExplain(item);
+      ex.classList.add("show");
+    } else {
+      opts[i].classList.add("selected");
+      $("revealBtn").classList.remove("adx-hidden");
+    }
+    $("nextBtn").disabled = false;
+  }
+
+  $("revealBtn").addEventListener("click", ()=>{
+    const a = answers[answers.length - 1];
+    if(!a) return;
+    const opts = document.querySelectorAll("#optionsBox .adx-option");
+    if(a.chosenIdx >= 0){
+      opts[a.chosenIdx].classList.remove("selected");
+      opts[a.chosenIdx].classList.add(a.correct ? "correct" : "incorrect");
+    }
+    if(!a.correct) opts[a.correctIdx].classList.add("correct");
+    const ex = $("explainBox");
+    ex.innerHTML = '<b>'+(a.correct?"정답입니다.":"오답입니다.")+'</b><br><br>' + fullExplain(a.item);
+    ex.classList.add("show");
+    $("revealBtn").classList.add("adx-hidden");
+  });
+
+  $("langBtn").addEventListener("click", ()=>{
+    lang = (lang === "ko") ? "en" : "ko";
+    $("langBtn").textContent = (lang === "ko") ? "EN" : "한국어";
+    if(!quizScreen.classList.contains("adx-hidden") && currentItem){
+      $("qText").textContent = getQ(currentItem);
+      const opts = document.querySelectorAll("#optionsBox .adx-option");
+      opts.forEach((btn, i)=>{ btn.lastElementChild.textContent = getC(currentItem, i); });
+    }
+  });
+
+  $("skipBtn").addEventListener("click", ()=>{
+    const item = pool[idx];
+    answers.push({item:item, lesson:item.lesson, q:item.q, choices:item.choices, correctIdx:item.correct, chosenIdx:-1, correct:false, explain:item.explain});
+    advance();
+  });
+
+  $("nextBtn").addEventListener("click", advance);
+
+  function advance(){
+    idx++;
+    if(idx >= pool.length){
+      finishQuiz();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function finishQuiz(){
+    if(timerInterval) clearInterval(timerInterval);
+    quizScreen.classList.add("adx-hidden");
+    resultsScreen.classList.remove("adx-hidden");
+
+    const total = answers.length;
+    const correctCount = answers.filter(a=>a.correct).length;
+    const pct = total ? Math.round((correctCount/total)*100) : 0;
+
+    $("scoreBig").textContent = pct + "%";
+    $("scoreOf").textContent = correctCount + " / " + total + " 정답";
+    const verdict = $("scoreVerdict");
+    if(pct >= 68){
+      verdict.textContent = "합격 추정 범위";
+      verdict.className = "verdict pass";
+    } else {
+      verdict.textContent = "추가 학습 필요";
+      verdict.className = "verdict fail";
+    }
+
+    // breakdown by lesson
+    const byLesson = {};
+    answers.forEach(a=>{
+      byLesson[a.lesson] = byLesson[a.lesson] || {correct:0, total:0};
+      byLesson[a.lesson].total++;
+      if(a.correct) byLesson[a.lesson].correct++;
+    });
+    const bd = $("breakdownBox");
+    bd.innerHTML = "";
+    Object.keys(byLesson).sort((a,b)=>a-b).forEach(n=>{
+      const d = byLesson[n];
+      const p = Math.round((d.correct/d.total)*100);
+      const row = document.createElement("div");
+      row.className = "adx-bd-row";
+      row.innerHTML = '<div class="adx-bd-label">L'+n+' · '+LESSON_NAMES[n]+'</div>'+
+        '<div class="adx-bd-track"><div class="adx-bd-fill'+(p<60?' weak':'')+'" style="width:'+p+'%"></div></div>'+
+        '<div class="adx-bd-pct">'+p+'%</div>';
+      bd.appendChild(row);
+    });
+
+    // review wrong
+    const rb = $("reviewBox");
+    rb.innerHTML = "";
+    const wrong = answers.filter(a=>!a.correct);
+    if(wrong.length === 0){
+      rb.innerHTML = '<p style="font-size:13.5px;color:var(--ink-soft)">오답이 없습니다. 완벽합니다!</p>';
+    } else {
+      const letters = ["A","B","C","D"];
+      wrong.forEach(a=>{
+        const div = document.createElement("div");
+        div.className = "adx-review-item";
+        const chosenText = a.chosenIdx >= 0 ? letters[a.chosenIdx]+". "+getC(a.item, a.chosenIdx) : "(건너뜀)";
+        const correctText = letters[a.correctIdx]+". "+getC(a.item, a.correctIdx);
+        div.innerHTML = '<div class="rq">[L'+a.lesson+'] '+getQ(a.item)+'</div>'+
+          '<div class="ra">내 답: <b class="wrong">'+chosenText+'</b><br>정답: <b class="right">'+correctText+'</b><br><br>'+fullExplain(a.item)+'</div>';
+        rb.appendChild(div);
+      });
+    }
+  }
+
+  $("restartBtn").addEventListener("click", ()=>{
+    resultsScreen.classList.add("adx-hidden");
+    startScreen.classList.remove("adx-hidden");
+    selectedLessons.clear();
+    document.querySelectorAll(".adx-lesson-chip").forEach(c=>c.classList.remove("active"));
+    $("goPracticeBtn").disabled = true;
+    $("lessonPicker").classList.remove("show");
+  });
+})();
+</script>
+</body>
+</html>
