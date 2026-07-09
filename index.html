@@ -121,6 +121,8 @@
   .adx-mode-btn.advanced{ background: var(--amber-soft); border-color: var(--amber); }
   .adx-mode-btn.advanced:hover{ border-color: var(--amber); }
   .adx-mode-btn.advanced .m-title{ color: var(--amber); }
+  .adx-mode-btn:disabled{ opacity:.45; cursor:not-allowed; }
+  .adx-mode-btn:disabled:hover{ transform:none; border-color: var(--border); }
 
   .adx-lesson-picker{ display:none; margin-top: 16px; }
   .adx-lesson-picker.show{ display:block; }
@@ -240,7 +242,7 @@
         <span class="sub">Essentials for New Lightning Experience Administrators</span>
       </div>
       <div style="display:flex; gap:10px; align-items:center;">
-        <button class="adx-lang-btn" id="langBtn" title="문제/보기 언어 전환 (한국어 ↔ English)">EN</button>
+        <button class="adx-lang-btn" id="langBtn" title="문제/보기 언어 전환 (한국어 ↔ English)">🇺🇸 EN</button>
         <div class="adx-timer adx-hidden" id="timerBox"><span class="dot"></span><span id="timerText">105:00</span></div>
       </div>
     </div>
@@ -268,6 +270,17 @@
           <div class="m-title">심화 모의고사 (고난도)</div>
           <div class="m-desc">시나리오·함정·엣지케이스 중심의 심화 은행 54문항 중 40문항 무작위 출제 · 65분 타이머 · 정답은 제출 후 확인. 기본 실전 모드에서 80% 이상 득점했다면 도전해 보세요.</div>
         </button>
+        <button class="adx-mode-btn" id="startMiniBtn">
+          <div class="m-title">미니 스낵 모드 🍪</div>
+          <div class="m-desc">전체 문제 은행(189문항)에서 딱 5문항 무작위. 자투리 시간에 가볍게 — 문제마다 즉시 해설이 나옵니다.</div>
+        </button>
+        <button class="adx-mode-btn" id="startWrongBtn">
+          <div class="m-title">오답노트 복습 📕</div>
+          <div class="m-desc" id="wrongDesc">아직 저장된 오답이 없습니다. 어떤 모드에서든 틀린 문제가 자동으로 여기에 쌓입니다.</div>
+        </button>
+      </div>
+      <div id="wrongActions" style="text-align:right; margin-top:10px; display:none;">
+        <button class="adx-btn" id="clearWrongBtn" style="font-size:12px; padding:8px 14px;">오답 기록 비우기</button>
       </div>
       <div class="adx-lesson-picker" id="lessonPicker">
         <div class="adx-section-title" style="margin-top:4px;">레슨 선택 (복수 선택 가능)</div>
@@ -824,8 +837,8 @@
 
   const CB = ("multitenant object schemabuilder sandbox multicurrency fiscalyear multicurrency activities loginsecurity muting profile fls profile permset rolehierarchy rolehierarchy manualshare implicitaccess restriction rolehierarchy sharingrule lookup_md lookup_md formula picklist customfield rollup formula recordtype dynamicforms recordtype recordtype pagelayout webtox importexport masstools recyclebin duplicates duplicates validation validation autoresponse workflow processbuilder approval escalation flowtypes beforeafter beforeafter flowmgmt flowmgmt processbuilder flowsurface customobject changeset changeset changeset reporttypes reportformats runninguser runninguser reportformulas agentforce prompts agentforce caselookup setup sandbox sandbox caselookup licenses fiscalyear chatter mobile healthcheck queue profile permset useraccess fls loginsecurity permset owd queue fullaccess restriction sharinghierarchy manualshare teams standardfields picklist formula customfield lookup_md lookup_md formula listview relatedlist appbuilder_home appmanager recordtype recordtype importexport importexport importexport fieldhistory fieldhistory importexport escalation webtox workflow autoresponse approval queue leadconversion flowtypes flowtypes flowbuilder flowbuilder flowbuilder flowmgmt objectcreator audittrail deployperms devops mobile folders reportformats reportformats reportexport dashcomponents dashcomponents agenticloop prompts agentforce").split(" ");
   const CA = ("sandbox multitenant loginsecurity multicurrency multicurrency fiscalyear muting validation viewall permset implicitaccess manualshare sharingrule teams owd rolehierarchy sharingrule lookup_md rollup customfield formula lookup_md lookup_md pagelayout webtox dynamicforms recordtype importexport dataexport duplicates masstools ooe assignmentrules workflow escalation approval autoresponse beforeafter flowmgmt processbuilder flowmgmt changeset changeset deployperms customobject devops subscriptions reporttypes reportformulas reportformulas subscriptions agentforce agentforce agentforce").split(" ");
-  QUESTIONS.forEach((it, i)=>{ it.ck = CB[i]; });
-  ADVANCED.forEach((it, i)=>{ it.ck = CA[i]; });
+  QUESTIONS.forEach((it, i)=>{ it.ck = CB[i]; it.qid = "B" + i; });
+  ADVANCED.forEach((it, i)=>{ it.ck = CA[i]; it.qid = "A" + i; });
 
   // ---- state ----
   let mode = null; // 'exam' | 'practice'
@@ -839,6 +852,39 @@
   function fullExplain(item){
     const c = CONCEPTS[item.ck];
     return (c ? c + "<br><br>" : "") + item.explain;
+  }
+
+  // ---- 오답노트: localStorage에 틀린 문제를 영구 저장 ----
+  const WRONG_KEY = "adx201_wrongs";
+  function loadWrongs(){
+    try{ return JSON.parse(localStorage.getItem(WRONG_KEY)) || {}; }catch(e){ return {}; }
+  }
+  function saveWrongs(w){
+    try{ localStorage.setItem(WRONG_KEY, JSON.stringify(w)); }catch(e){}
+  }
+  function wrongItems(){
+    const w = loadWrongs();
+    return QUESTIONS.concat(ADVANCED).filter(it => w[it.qid]);
+  }
+  function recordResult(item, correct){
+    const w = loadWrongs();
+    if(correct){
+      if(w[item.qid]){ delete w[item.qid]; saveWrongs(w); }
+    } else {
+      const e = w[item.qid] || {w:0};
+      e.w++; e.t = Date.now();
+      w[item.qid] = e;
+      saveWrongs(w);
+    }
+    updateWrongBadge();
+  }
+  function updateWrongBadge(){
+    const n = wrongItems().length;
+    $("startWrongBtn").disabled = (n === 0);
+    $("wrongDesc").textContent = n > 0
+      ? ("저장된 오답 " + n + "문항. 다시 맞히면 목록에서 자동으로 사라집니다. 기록은 이 브라우저에 계속 보관됩니다.")
+      : "아직 저장된 오답이 없습니다. 어떤 모드에서든 틀린 문제가 자동으로 여기에 쌓입니다.";
+    $("wrongActions").style.display = n > 0 ? "block" : "none";
   }
   let selectedLessons = new Set();
   let answers = []; // {lesson, correctIdx, chosenIdx, correct}
@@ -874,6 +920,34 @@
     mode = "exam";
     pool = shuffle([...ADVANCED]).slice(0, 40);
     beginQuiz(true, 65);
+  });
+
+  $("startMiniBtn").addEventListener("click", ()=>{
+    mode = "practice";
+    pool = shuffle(QUESTIONS.concat(ADVANCED)).slice(0, 5);
+    beginQuiz(false);
+  });
+
+  $("startWrongBtn").addEventListener("click", ()=>{
+    const items = wrongItems();
+    if(items.length === 0) return;
+    mode = "practice";
+    pool = shuffle(items.slice());
+    beginQuiz(false);
+  });
+
+  let clearArmed = false;
+  $("clearWrongBtn").addEventListener("click", ()=>{
+    if(!clearArmed){
+      clearArmed = true;
+      $("clearWrongBtn").textContent = "정말 비울까요? 한 번 더 클릭";
+      setTimeout(()=>{ clearArmed = false; $("clearWrongBtn").textContent = "오답 기록 비우기"; }, 3000);
+      return;
+    }
+    clearArmed = false;
+    $("clearWrongBtn").textContent = "오답 기록 비우기";
+    saveWrongs({});
+    updateWrongBadge();
   });
 
   $("startPracticeBtn").addEventListener("click", ()=>{
@@ -958,6 +1032,7 @@
 
     const isCorrect = i === item.correct;
     answers.push({item:item, lesson:item.lesson, q:item.q, choices:item.choices, correctIdx:item.correct, chosenIdx:i, correct:isCorrect, explain:item.explain});
+    recordResult(item, isCorrect);
 
     if(mode === "practice"){
       opts[i].classList.add(isCorrect ? "correct" : "incorrect");
@@ -989,7 +1064,7 @@
 
   $("langBtn").addEventListener("click", ()=>{
     lang = (lang === "ko") ? "en" : "ko";
-    $("langBtn").textContent = (lang === "ko") ? "EN" : "한국어";
+    $("langBtn").textContent = (lang === "ko") ? "🇺🇸 EN" : "🇰🇷 한국어";
     if(!quizScreen.classList.contains("adx-hidden") && currentItem){
       $("qText").textContent = getQ(currentItem);
       const opts = document.querySelectorAll("#optionsBox .adx-option");
@@ -1000,6 +1075,7 @@
   $("skipBtn").addEventListener("click", ()=>{
     const item = pool[idx];
     answers.push({item:item, lesson:item.lesson, q:item.q, choices:item.choices, correctIdx:item.correct, chosenIdx:-1, correct:false, explain:item.explain});
+    recordResult(item, false);
     advance();
   });
 
@@ -1081,7 +1157,10 @@
     document.querySelectorAll(".adx-lesson-chip").forEach(c=>c.classList.remove("active"));
     $("goPracticeBtn").disabled = true;
     $("lessonPicker").classList.remove("show");
+    updateWrongBadge();
   });
+
+  updateWrongBadge();
 })();
 </script>
 </body>
