@@ -9,34 +9,34 @@
 <body>
 <style>
   :root{
-    --bg:#EEF0F2; --surface:#FFFFFF; --surface-2:#F5F6F8;
-    --ink:#1C2531; --ink-soft:#5B6472; --ink-faint:#88919C;
-    --accent:#2E5C55; --accent-ink:#FFFFFF; --accent-soft:#DCE8E5;
-    --border:#D8DCE1;
-    --good:#1F7A4C; --good-soft:#E3F3EA; --good-border:#B7DEC7;
-    --bad:#B3412B; --bad-soft:#FBEAE5; --bad-border:#F0C4B8;
-    --amber:#96650E; --amber-soft:#FBF0DC;
-    --shadow: 0 1px 2px rgba(20,26,34,.06), 0 8px 24px -12px rgba(20,26,34,.18);
+    --bg:#EDF4FB; --surface:#FFFFFF; --surface-2:#F2F8FE;
+    --ink:#032D60; --ink-soft:#54698D; --ink-faint:#8199B5;
+    --accent:#0176D3; --accent-ink:#FFFFFF; --accent-soft:#D8EDFF;
+    --border:#C5D7EA;
+    --good:#2E844A; --good-soft:#EBF7EE; --good-border:#ACD8B9;
+    --bad:#BA0517; --bad-soft:#FDEDEE; --bad-border:#F5B8BE;
+    --amber:#8C4B02; --amber-soft:#FEF1DE;
+    --shadow: 0 1px 2px rgba(3,45,96,.08), 0 8px 24px -12px rgba(3,45,96,.22);
   }
   :root[data-theme="dark"]{
-    --bg:#12161C; --surface:#1A2029; --surface-2:#212833;
-    --ink:#E7EAEE; --ink-soft:#9AA4B2; --ink-faint:#69707C;
-    --accent:#7BC2B6; --accent-ink:#0B1512; --accent-soft:#1F3330;
-    --border:#2A313C;
-    --good:#4CC98A; --good-soft:#173226; --good-border:#245A41;
-    --bad:#E2725A; --bad-soft:#33201B; --bad-border:#5C3327;
-    --amber:#E3B34C; --amber-soft:#332A15;
+    --bg:#081627; --surface:#0F2440; --surface-2:#16304F;
+    --ink:#E6F1FC; --ink-soft:#9DB7D6; --ink-faint:#6A87A9;
+    --accent:#1B96FF; --accent-ink:#03234D; --accent-soft:#123A66;
+    --border:#27476E;
+    --good:#45C065; --good-soft:#10331D; --good-border:#1F5C36;
+    --bad:#F88289; --bad-soft:#3A151A; --bad-border:#642430;
+    --amber:#FFB75D; --amber-soft:#38270E;
     --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.6);
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --bg:#12161C; --surface:#1A2029; --surface-2:#212833;
-      --ink:#E7EAEE; --ink-soft:#9AA4B2; --ink-faint:#69707C;
-      --accent:#7BC2B6; --accent-ink:#0B1512; --accent-soft:#1F3330;
-      --border:#2A313C;
-      --good:#4CC98A; --good-soft:#173226; --good-border:#245A41;
-      --bad:#E2725A; --bad-soft:#33201B; --bad-border:#5C3327;
-      --amber:#E3B34C; --amber-soft:#332A15;
+      --bg:#081627; --surface:#0F2440; --surface-2:#16304F;
+      --ink:#E6F1FC; --ink-soft:#9DB7D6; --ink-faint:#6A87A9;
+      --accent:#1B96FF; --accent-ink:#03234D; --accent-soft:#123A66;
+      --border:#27476E;
+      --good:#45C065; --good-soft:#10331D; --good-border:#1F5C36;
+      --bad:#F88289; --bad-soft:#3A151A; --bad-border:#642430;
+      --amber:#FFB75D; --amber-soft:#38270E;
       --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.6);
     }
   }
@@ -78,10 +78,17 @@
   .adx-timer.warn .dot{ background: var(--bad); }
 
   .adx-lang-btn{
-    font-family: var(--font-mono); font-weight:800; font-size:13px; letter-spacing:.05em;
-    padding: 9px 14px; border-radius:10px; border:1px solid var(--border);
-    background: var(--surface); color: var(--accent); cursor:pointer; box-shadow: var(--shadow);
+    display:flex; align-items:center; gap:2px;
+    padding: 3px; border-radius:999px; border:1px solid var(--border);
+    background: var(--surface); cursor:pointer; box-shadow: var(--shadow);
+    font-family: inherit;
   }
+  .adx-lang-btn .seg{
+    padding: 6px 13px; border-radius:999px; font-size:12.5px; font-weight:700;
+    color: var(--ink-faint); transition: background .15s ease, color .15s ease;
+    white-space:nowrap;
+  }
+  .adx-lang-btn .seg.active{ background: var(--accent); color: var(--accent-ink); }
   .adx-lang-btn:hover{ border-color: var(--accent); }
   .adx-lang-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 
@@ -242,7 +249,7 @@
         <span class="sub">Essentials for New Lightning Experience Administrators</span>
       </div>
       <div style="display:flex; gap:10px; align-items:center;">
-        <button class="adx-lang-btn" id="langBtn" title="문제/보기 언어 전환 (한국어 ↔ English)">🇺🇸 EN</button>
+        <button class="adx-lang-btn" id="langBtn" title="문제/보기 언어 전환 (한국어 ↔ English)"><span class="seg active" id="segKo">🇰🇷 한국어</span><span class="seg" id="segEn">🇺🇸 English</span></button>
         <div class="adx-timer adx-hidden" id="timerBox"><span class="dot"></span><span id="timerText">105:00</span></div>
       </div>
     </div>
@@ -258,6 +265,10 @@
         <div class="adx-fact"><div class="n">105<span style="font-size:12px">분</span></div><div class="l">실전 모드 제한시간</div></div>
       </div>
       <div class="adx-modes">
+        <button class="adx-mode-btn" id="startMiniBtn" style="grid-column:1/-1; border-color: var(--accent);">
+          <div class="m-title">미니 스낵 모드 🍪</div>
+          <div class="m-desc">전체 문제 은행(189문항)에서 딱 5문항 무작위. 자투리 시간에 가볍게 — 문제마다 즉시 해설이 나옵니다.</div>
+        </button>
         <button class="adx-mode-btn primary" id="startExamBtn">
           <div class="m-title">전체 모의고사 (실전 모드)</div>
           <div class="m-desc">문제 은행 135문항 중 65문항 무작위 출제 · 105분 타이머 · 정답은 제출 후 한번에 확인합니다. 볼 때마다 문제 구성이 달라집니다.</div>
@@ -270,11 +281,7 @@
           <div class="m-title">심화 모의고사 (고난도)</div>
           <div class="m-desc">시나리오·함정·엣지케이스 중심의 심화 은행 54문항 중 40문항 무작위 출제 · 65분 타이머 · 정답은 제출 후 확인. 기본 실전 모드에서 80% 이상 득점했다면 도전해 보세요.</div>
         </button>
-        <button class="adx-mode-btn" id="startMiniBtn">
-          <div class="m-title">미니 스낵 모드 🍪</div>
-          <div class="m-desc">전체 문제 은행(189문항)에서 딱 5문항 무작위. 자투리 시간에 가볍게 — 문제마다 즉시 해설이 나옵니다.</div>
-        </button>
-        <button class="adx-mode-btn" id="startWrongBtn">
+        <button class="adx-mode-btn" id="startWrongBtn" style="grid-column:1/-1;">
           <div class="m-title">오답노트 복습 📕</div>
           <div class="m-desc" id="wrongDesc">아직 저장된 오답이 없습니다. 어떤 모드에서든 틀린 문제가 자동으로 여기에 쌓입니다.</div>
         </button>
@@ -1064,7 +1071,8 @@
 
   $("langBtn").addEventListener("click", ()=>{
     lang = (lang === "ko") ? "en" : "ko";
-    $("langBtn").textContent = (lang === "ko") ? "🇺🇸 EN" : "🇰🇷 한국어";
+    $("segKo").classList.toggle("active", lang === "ko");
+    $("segEn").classList.toggle("active", lang === "en");
     if(!quizScreen.classList.contains("adx-hidden") && currentItem){
       $("qText").textContent = getQ(currentItem);
       const opts = document.querySelectorAll("#optionsBox .adx-option");
