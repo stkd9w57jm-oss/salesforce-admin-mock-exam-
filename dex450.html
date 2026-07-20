@@ -390,17 +390,17 @@
         </svg>
       </div>
       <div class="adx-intro">
-        <p><b>Based On DEX450(12 Lessons)</b><br>기본 은행 72문항 + 심화 은행 28문항으로 구성되며, 실전 모드는 실제 Platform Developer I 시험 형식(60문항 · 105분)을 따릅니다. 응시할 때마다 문항을 무작위로 뽑아 출제하므로 여러 번 반복해서 볼 수 있으며, 원본 교재에 실린 복습 문제와는 겹치지 않습니다.</p>
+        <p><b>Based On DEX450(12 Lessons)</b><br>기본 은행 100문항 + 심화 은행 40문항으로 구성되며, 실전 모드는 실제 Platform Developer I 시험 형식(60문항 · 105분)을 따릅니다. 응시할 때마다 문항을 무작위로 뽑아 출제하므로 여러 번 반복해서 볼 수 있으며, 원본 교재에 실린 복습 문제와는 겹치지 않습니다.</p>
       </div>
       <div class="adx-facts">
-        <div class="adx-fact"><div class="l">기본 문제 은행</div><div class="n">72</div></div>
-        <div class="adx-fact"><div class="l">심화 문제 은행</div><div class="n">28</div></div>
+        <div class="adx-fact"><div class="l">기본 문제 은행</div><div class="n">100</div></div>
+        <div class="adx-fact"><div class="l">심화 문제 은행</div><div class="n">40</div></div>
         <div class="adx-fact"><div class="l">실전 모드 제한시간</div><div class="n">105<span style="font-size:12px">분</span></div></div>
       </div>
       <div class="adx-modes">
         <button class="adx-mode-btn" id="startMiniBtn" style="border-color: var(--accent);">
           <div class="m-title">미니 스낵 모드</div>
-          <div class="m-desc">전체 문제 은행(100문항)에서 딱 5문항 무작위. 자투리 시간에 가볍게 — 문제마다 즉시 해설이 나옵니다.</div>
+          <div class="m-desc">전체 문제 은행(140문항)에서 딱 5문항 무작위. 자투리 시간에 가볍게 — 문제마다 즉시 해설이 나옵니다.</div>
         </button>
         <button class="adx-mode-btn" id="startPracticeBtn">
           <div class="m-title">레슨별 연습 모드</div>
@@ -413,11 +413,11 @@
         </div>
         <button class="adx-mode-btn primary" id="startExamBtn" style="grid-column:1/-1;">
           <div class="m-title">전체 모의고사 (실전 모드)</div>
-          <div class="m-desc">문제 은행 72문항 중 60문항 무작위 출제(실제 PD1 시험 형식) · 105분 타이머 · 정답은 제출 후 한번에 확인합니다. 볼 때마다 문제 구성이 달라집니다.</div>
+          <div class="m-desc">문제 은행 100문항 중 60문항 무작위 출제(실제 PD1 시험 형식) · 105분 타이머 · 정답은 제출 후 한번에 확인합니다. 볼 때마다 문제 구성이 달라집니다.</div>
         </button>
         <button class="adx-mode-btn advanced" id="startAdvancedBtn" style="grid-column:1/-1;">
           <div class="m-title">심화 모의고사 (고난도)</div>
-          <div class="m-desc">시나리오·함정·엣지케이스 중심의 심화 은행 28문항 중 25문항 무작위 출제 · 45분 타이머 · 정답은 제출 후 확인. 기본 실전 모드에서 80% 이상 득점했다면 도전해 보세요.</div>
+          <div class="m-desc">시나리오·함정·엣지케이스 중심의 심화 은행 40문항 중 25문항 무작위 출제 · 45분 타이머 · 정답은 제출 후 확인. 기본 실전 모드에서 80% 이상 득점했다면 도전해 보세요.</div>
         </button>
         <button class="adx-mode-btn" id="startWrongBtn" style="grid-column:1/-1;">
           <div class="m-title">오답노트 복습 📕</div>
@@ -556,7 +556,35 @@
     {lesson:12, q:"Aura 컴포넌트와 LWC의 포함(containment) 관계는?", choices:["LWC가 Aura를 포함할 수 있다","Aura가 LWC를 포함할 수 있다 (반대는 불가)","서로 포함 불가","서로 자유롭게 포함 가능"], correct:1, explain:"Aura 컴포넌트는 LWC를 포함할 수 있지만, LWC는 Aura를 포함할 수 없습니다. 커스텀 Lightning Application은 Aura로만 만들 수 있습니다."},
     {lesson:12, q:"부모 컴포넌트가 자식 LWC의 속성에 값을 전달하려면 자식 속성에 필요한 것은?", choices:["@track","@wire","@api — 속성을 public으로 만든다","@public"], correct:2, explain:"LWC 속성은 기본 private이며, @api 데코레이터를 붙여야 public이 되어 부모가 값을 전달할 수 있습니다. 데이터는 부모→자식 방향으로만 흐릅니다."},
     {lesson:12, q:"@wire(getRecord, { recordId: '$recordId', ... })에서 $ 접두사의 의미는?", choices:["문자열 상수 표시","해당 값이 변경되면 wire가 자동 재실행되는 반응형(reactive) 바인딩","보안 필터","캐시 비활성화"], correct:1, explain:"$ 접두사는 반응형 바인딩입니다. recordId 값이 바뀌면 wire 서비스가 자동으로 서버를 다시 호출합니다."},
-    {lesson:12, q:"LWC에서 DML을 수행하는 Apex 메서드를 호출하는 올바른 방식은?", choices:["@wire로 연결한다","imperative 호출 — Promise를 반환하며 .then()/.catch()로 처리하고, 필요 시 refreshApex로 wire 데이터를 갱신한다","cacheable=true를 붙여 wire로 호출","HTML에서 직접 호출"], correct:1, explain:"wire는 cacheable=true(데이터 반환 전용, DML 불가)가 필요하므로, DML은 imperative 호출로 수행합니다. 호출은 Promise를 반환하고, refreshApex(this.wiredResult)로 화면을 갱신합니다."}
+    {lesson:12, q:"LWC에서 DML을 수행하는 Apex 메서드를 호출하는 올바른 방식은?", choices:["@wire로 연결한다","imperative 호출 — Promise를 반환하며 .then()/.catch()로 처리하고, 필요 시 refreshApex로 wire 데이터를 갱신한다","cacheable=true를 붙여 wire로 호출","HTML에서 직접 호출"], correct:1, explain:"wire는 cacheable=true(데이터 반환 전용, DML 불가)가 필요하므로, DML은 imperative 호출로 수행합니다. 호출은 Promise를 반환하고, refreshApex(this.wiredResult)로 화면을 갱신합니다."},
+    {lesson:1, q:"샌드박스 템플릿(어떤 오브젝트의 데이터를 복제할지 선택)을 사용할 수 있는 샌드박스 유형은?", choices:["모든 유형","Developer와 Developer Pro","Partial Copy와 Full만","Full만"], correct:2, explain:"샌드박스 템플릿은 Partial Copy와 Full 샌드박스를 생성/새로 고침할 때만 사용할 수 있습니다."},
+    {lesson:2, q:"switch 문에서 하나의 when 절이 여러 값을 처리하게 하려면?", choices:["when을 여러 번 중첩한다","when 'value1','value2' 처럼 쉼표로 나열한다","불가능하다 — 값마다 별도 when 필요","OR 연산자를 쓴다"], correct:1, explain:"switch on 변수 { when 'a','b' {...} when else {...} } 형태로 한 when 절에 여러 값을 쉼표로 나열할 수 있습니다."},
+    {lesson:2, q:"안전 탐색 연산자 ?. 의 동작은?", choices:["null이면 예외를 던진다","왼쪽이 null이면 오른쪽을 평가하지 않고 null을 반환한다 — 명시적 null 체크를 대체","항상 기본값을 반환한다","문자열에만 사용 가능"], correct:1, explain:"a?.b 는 a가 null이면 b를 평가하지 않고 null을 반환합니다. Trigger.oldMap?.get(id) 처럼 insert 시 null인 oldMap 접근에 유용합니다."},
+    {lesson:2, q:"null 병합 연산자 ?? 의 동작은?", choices:["두 값을 합친다","왼쪽 값이 null이 아니면 왼쪽을, null이면 오른쪽을 반환한다","항상 오른쪽을 반환한다","Boolean 전용이다"], correct:1, explain:"a ?? b 는 a가 null이 아니면 a, null이면 b를 반환합니다. 쿼리 결과에 기본값을 줄 때 유용합니다."},
+    {lesson:3, q:"SELECT COUNT() FROM Case 쿼리의 반환 타입은?", choices:["List<Case>","AggregateResult","Integer","Long"], correct:2, explain:"COUNT()는 Integer를 반환합니다. GROUP BY를 쓰면 List<AggregateResult>가 반환되며 ar.get('필드명')으로 값을 읽습니다."},
+    {lesson:3, q:"SOSL FIND 검색어에서 와일드카드를 둘 수 있는 위치는?", choices:["어디든 가능","시작 위치만","중간 또는 끝만 (시작 위치 불가)","와일드카드 미지원"], correct:2, explain:"SOSL 검색어의 와일드카드는 중간이나 끝에만 둘 수 있고 시작 위치에는 둘 수 없습니다."},
+    {lesson:3, q:"Query Editor와 Apex 코드에서 SOSL 검색어 문법의 차이는?", choices:["완전히 동일하다","Query Editor는 중괄호(FIND {Frank}), Apex 블록에서는 작은따옴표(FIND 'Frank')를 쓴다","Apex는 중괄호를 쓴다","Query Editor에서는 SOSL을 실행할 수 없다"], correct:1, explain:"Query Editor에서는 FIND {Frank} 처럼 따옴표 없는 중괄호를, Apex에서는 [FIND 'Frank' IN ...] 처럼 작은따옴표를 사용합니다. SOSL은 CLI에서 실행할 수 없습니다."},
+    {lesson:4, q:"최종 사용자의 저장 동작이 유발한 체인에서 catch되지 않은 DmlException의 메시지는?", choices:["로그에만 남는다","해당 사용자의 UI 화면에 표시된다","관리자에게만 이메일로 전달된다","무시된다"], correct:1, explain:"최종 사용자가 트리거한 체인에서 발생한 예외 메시지는 그 사용자의 UI에 표시됩니다. 친절한 메시지를 위해 addError나 커스텀 예외 처리를 활용합니다."},
+    {lesson:4, q:"update와 delete DML을 실행하기 위해 레코드에 반드시 있어야 하는 것은?", choices:["Name 값","레코드 ID","OwnerId","CreatedDate"], correct:1, explain:"update, delete, undelete는 대상 레코드의 ID가 필요합니다. insert만 ID 없이 실행됩니다."},
+    {lesson:5, q:"샌드박스에서 프로덕션으로 체인지 셋을 보내기 전에 '프로덕션 쪽'에서 해야 하는 일은?", choices:["아웃바운드 셋 생성","배포 연결(Deployment Connection)에서 인바운드 변경을 승인/허용","테스트 실행","프로파일 복제"], correct:1, explain:"배포 연결은 관련 조직 간 자동 생성되지만, 수신(타겟) 조직이 인바운드 변경을 승인해야 체인지 셋을 받을 수 있습니다."},
+    {lesson:5, q:"Scratch 조직 설정(edition, 기능)의 특징은?", choices:["매번 수동으로만 설정 가능","설정 파일로 정의되어 팀과 공유 가능 — 소스 중심 개발과 CI에 적합","프로덕션과 항상 동일","변경 불가"], correct:1, explain:"Scratch 조직 구성은 설정 파일로 정의·공유할 수 있어, 팀 전체가 동일한 환경을 재현하고 CI 파이프라인에서 자동 생성할 수 있습니다."},
+    {lesson:6, q:"커스텀 라벨(Custom Label)의 최대 개수와 Apex 참조 문법은?", choices:["500개, $Label.이름","5,000개, Label.이름","무제한, Label.get()","1,000개, System.Label()"], correct:1, explain:"커스텀 라벨은 최대 5,000개까지 만들 수 있고 Apex에서 Label.이름 으로 참조합니다. 번역 가능해 다국어 오류 메시지에 적합합니다."},
+    {lesson:6, q:"Trigger.operationType이 반환하는 타입과 용도는?", choices:["String — 로그용","System.TriggerOperation enum — switch 문으로 이벤트별 분기에 사용","Integer — 이벤트 코드","Boolean — before 여부"], correct:1, explain:"operationType은 System.TriggerOperation enum을 반환하며, switch on Trigger.operationType { when BEFORE_INSERT {...} } 패턴으로 깔끔하게 분기할 수 있습니다."},
+    {lesson:7, q:"클래스에 생성자를 하나도 정의하지 않으면?", choices:["컴파일 오류","인스턴스 생성 불가","인자 없는 public 기본 생성자가 자동 제공된다","abstract 클래스가 된다"], correct:2, explain:"생성자를 정의하지 않으면 기본 no-arg public 생성자가 자동 제공됩니다. 생성자 오버로딩도 가능합니다."},
+    {lesson:7, q:"두 Apex 클래스 타입 간 캐스팅이 허용되는 조건은?", choices:["아무 클래스나 가능","상속 관계로 연결된 클래스 사이에서만","같은 네임스페이스면 가능","인터페이스가 있으면 무조건 가능"], correct:1, explain:"클래스 타입 간 캐스팅은 상속(extends)이나 구현 관계로 연결된 경우에만 허용됩니다."},
+    {lesson:7, q:"Apex 클래스를 REST 리소스로 노출하는 애노테이션 조합은?", choices:["@AuraEnabled + @HttpGet","@RestResource(클래스) + @HttpGet/@HttpPost 등(static 메서드)","webservice 키워드만","@InvocableMethod"], correct:1, explain:"클래스에 @RestResource를, static 메서드에 @HttpGet/@HttpPost 등을 붙여 커스텀 REST 서비스를 만듭니다. SOAP은 global 클래스 + webservice static 메서드입니다."},
+    {lesson:8, q:"현재 트랜잭션에서 SOQL 쿼리를 몇 번 썼는지와 한도를 코드로 확인하려면?", choices:["System.debug만 가능","Limits.getQueries()(사용량)와 Limits.getLimitQueries()(한도) 쌍을 사용","Setup에서만 확인 가능","확인 불가"], correct:1, explain:"Limits 클래스는 거버너 한도마다 사용량/한도 메서드 쌍(getQueries/getLimitQueries 등)을 제공해 방어적 코딩을 가능하게 합니다."},
+    {lesson:8, q:"EventBus.publish(events)의 반환 타입은?", choices:["void","Boolean","List<Database.SaveResult> — 이벤트별 발행 성공 여부 확인","Integer"], correct:2, explain:"EventBus.publish는 List<Database.SaveResult>를 반환하므로 이벤트별로 발행 성공/실패를 확인할 수 있습니다."},
+    {lesson:9, q:"테스트 메서드 A에서 만든 레코드를 같은 클래스의 테스트 메서드 B에서 조회하면?", choices:["보인다","보이지 않는다 — 메서드 간 격리되며, 공유하려면 @TestSetup을 쓴다","B가 실패한다","커밋 여부에 따라 다르다"], correct:1, explain:"테스트 메서드끼리는 데이터가 격리됩니다. 모든 메서드가 공유할 데이터는 @TestSetup에서 만들어야 합니다."},
+    {lesson:9, q:"자신의 클래스 이름을 'Test'로 지으면 안 되는 이유는?", choices:["예약어라 컴파일 불가","System.Test 클래스(startTest 등)와 충돌해 혼란을 일으키므로 금지 권고","테스트로 오인되어 자동 실행됨","이름 길이 제한"], correct:1, explain:"System.Test 클래스(Test.startTest, Test.loadData 등)와 충돌하므로 자신의 클래스를 Test로 명명하지 말라고 권고됩니다."},
+    {lesson:10, q:"트리거의 배치 처리에 대한 설명으로 옳은 것은?", choices:["배치들이 병렬로 실행된다","배치는 순차적으로 하나씩 처리되며, 배치 안의 레코드 순서는 예측할 수 없다","배치 순서는 알파벳순","한 배치는 500건이다"], correct:1, explain:"배치(최대 200건)는 순차 처리되고 배치 내 레코드 순서는 보장되지 않으므로, 순서에 의존하는 로직을 짜면 안 됩니다."},
+    {lesson:10, q:"대량 레코드 업데이트에서 힙과 DML 한도를 동시에 지키는 패턴은?", choices:["한 건씩 DML","SOQL for 루프의 List 이터레이션(200건 배치)마다 1회 DML 실행","모두 메모리에 올린 후 한 번에","비동기로만 가능"], correct:1, explain:"SOQL for 루프(List 변수)는 200건씩 배치로 돌므로 힙을 아끼고, 각 배치당 1회 DML로 DML 문 수도 통제됩니다."},
+    {lesson:11, q:"멀리 연결된(직접 관계가 없는) 오브젝트의 레코드를 '생성'할 수 있는 도구는?", choices:["수식 필드","롤업 서머리","Flow와 Apex Trigger","검증 규칙"], correct:2, explain:"레코드 생성은 Flow와 트리거만 가능합니다. 수식 필드는 값 표시, 롤업 서머리는 자식 집계만 담당합니다 — 각 도구의 능력 범위를 구분하세요."},
+    {lesson:11, q:"롤업 서머리 필드를 정의할 수 있는 위치는?", choices:["Lookup 관계의 자식","Master-Detail 관계의 master(부모) 오브젝트","아무 오브젝트나","수식 필드 위"], correct:1, explain:"롤업 서머리는 Master-Detail 관계의 master 쪽에만 만들 수 있으며 자식의 COUNT/SUM/MIN/MAX를 집계합니다."},
+    {lesson:12, q:"커스텀 Lightning Application(URL 접근 가능한 최상위 컨테이너)을 만들 수 있는 모델은?", choices:["LWC만","Aura만 — <aura:application extends='force:slds'> 형태로 만들며 LWC 테스트 컨테이너로도 활용","둘 다","Visualforce만"], correct:1, explain:"커스텀 Lightning Application은 Aura로만 만들 수 있습니다. extends='force:slds'로 SLDS를 로드하고 <c:myComponent/>로 LWC를 담아 테스트 하네스로 씁니다."},
+    {lesson:12, q:"LWC를 생성할 수 없는 도구는?", choices:["SFDX CLI","VS Code/IDE","Setup과 개발자 콘솔","셋 다 가능"], correct:2, explain:"Setup과 개발자 콘솔은 LWC 생성/수정을 지원하지 않습니다. CLI(sf lightning generate component --type lwc)나 IDE를 사용해야 합니다."},
+    {lesson:12, q:"lightning-datatable에서 필수인 고유 행 식별 속성은?", choices:["row-id","key-field","unique-key","data-id"], correct:1, explain:"lightning-datatable은 key-field(고유 행 ID), columns(컬럼 정의 배열), data(행 데이터)를 핵심 속성으로 사용하며, 행 선택은 onrowselection 이벤트로 받습니다."},
+    {lesson:12, q:"js-meta.xml에서 isExposed=true의 역할은?", choices:["코드를 오픈소스로 공개","컴포넌트를 App Builder·퀵 액션 등에서 사용할 수 있게 노출","보안 검사 생략","API 버전 고정"], correct:1, explain:"isExposed=true와 targets(lightning__RecordAction 등) 설정으로 컴포넌트가 어디에 배치될 수 있는지를 개발자가 제어합니다."}
   ];
 
   const ADVANCED = [
@@ -587,7 +615,19 @@
     {lesson:11, adv:true, q:"Certification Held의 중복 방지 키(18자 ID + '|' + 18자 ID)를 담는 Unique 텍스트 필드의 길이는?", choices:["36","37","38","40"], correct:1, explain:"18 + 1('|') + 18 = 37자입니다. 대소문자 구분 Unique 필드로 만들면 트리거 경로든 UI 경로든 중복 생성이 차단됩니다."},
     {lesson:11, adv:true, q:"update 트리거에서 Status가 '방금' Complete/Pass로 바뀐 레코드만 골라내려면?", choices:["Trigger.new의 Status만 확인","Trigger.new의 값이 Complete/Pass이면서 Trigger.oldMap의 이전 값은 아니었던 레코드를 필터링","SOQL로 다시 조회","확인할 방법이 없다"], correct:1, explain:"새 값이 조건을 만족하고 이전 값(oldMap)은 만족하지 않았던 레코드만 골라야 '방금 전환된' 레코드를 정확히 잡습니다."},
     {lesson:12, adv:true, q:"App Builder 페이지에 독립적으로 배치된(포함 관계가 없는) 두 LWC가 통신하는 표준 방법은?", choices:["전역 변수 공유","Lightning Message Service 채널로 발행/구독한다","부모 컴포넌트를 강제로 만든다","window.postMessage만 가능"], correct:1, explain:"포함 관계가 없는 컴포넌트 간에는 Lightning Message Service를 사용합니다. Aura 컴포넌트나 Visualforce 페이지와도 통신할 수 있습니다."},
-    {lesson:12, adv:true, q:"자식 LWC가 부모에게 데이터를 전달하는 CustomEvent 패턴으로 옳은 것은?", choices:["부모 속성에 직접 대입한다","new CustomEvent('eventname', { detail: {...} })를 dispatchEvent하고, 부모는 oneventname 속성으로 청취해 event.detail을 읽는다","@api로 자식이 부모를 수정한다","LMS만 가능하다"], correct:1, explain:"페이로드는 CustomEvent 생성자 두 번째 인자의 detail에 담아 dispatchEvent하고, 부모는 on+이벤트명 핸들러에서 event.detail로 읽습니다. 데이터 흐름: 속성은 아래로, 이벤트는 위로."}
+    {lesson:12, adv:true, q:"자식 LWC가 부모에게 데이터를 전달하는 CustomEvent 패턴으로 옳은 것은?", choices:["부모 속성에 직접 대입한다","new CustomEvent('eventname', { detail: {...} })를 dispatchEvent하고, 부모는 oneventname 속성으로 청취해 event.detail을 읽는다","@api로 자식이 부모를 수정한다","LMS만 가능하다"], correct:1, explain:"페이로드는 CustomEvent 생성자 두 번째 인자의 detail에 담아 dispatchEvent하고, 부모는 on+이벤트명 핸들러에서 event.detail로 읽습니다. 데이터 흐름: 속성은 아래로, 이벤트는 위로."},
+    {lesson:2, adv:true, q:"Apex 컬렉션의 크기를 제한하는 실제 기준은?", choices:["요소 개수 10,000개","요소 개수가 아니라 힙(heap) 소비량","List만 1,000개 제한","제한 없음"], correct:1, explain:"컬렉션은 요소 개수가 아니라 힙 크기 한도로 제한됩니다. 대량 데이터는 SOQL for 루프의 배치 처리로 힙을 아껴야 합니다."},
+    {lesson:3, adv:true, q:"개발자 콘솔 Query Editor가 쿼리를 실행하는 API와, 메타데이터 세부 접근에 쓰는 API는?", choices:["SOAP API / Bulk API","REST API / Tooling API","Streaming API / REST API","Metadata API / SOAP API"], correct:1, explain:"Query Editor는 REST API로 실행되며, 세밀한 메타데이터 접근에는 Tooling API를 사용합니다."},
+    {lesson:4, adv:true, q:"null 요소가 포함된 List를 insert 하면?", choices:["null 요소만 건너뛴다","오류가 발생한다 (빈 리스트는 예외 없이 통과하는 것과 대비)","정상 처리된다","자동으로 null이 제거된다"], correct:1, explain:"리스트 안의 null 요소에 대한 DML은 오류를 일으킵니다. 빈 리스트 자체는 예외 없이 통과하는 것과 구분하세요."},
+    {lesson:5, adv:true, q:"Unlocked 패키지의 네임스페이스는?", choices:["필수다","선택적(optional)이다 — Managed는 고유 네임스페이스가 필수인 것과 대비","금지된다","자동 생성된다"], correct:1, explain:"Unlocked 패키지는 네임스페이스가 선택 사항입니다. Managed 패키지는 고유 네임스페이스가 필수이며 1GP(UI) 또는 2GP(CLI)로 만듭니다."},
+    {lesson:6, adv:true, q:"수식 필드와 검증 규칙에서 접근할 수 있는 Custom Settings 유형은?", choices:["List만","Hierarchy만","둘 다","둘 다 불가"], correct:1, explain:"수식 필드와 검증 규칙은 Hierarchy Custom Settings만 접근할 수 있습니다. List 유형은 Apex/Flow에서만 활용됩니다."},
+    {lesson:7, adv:true, q:"Execute Anonymous 블록의 실행 모드는?", choices:["시스템 모드","사용자 모드 — CRED, FLS, 공유를 존중한다 (대부분의 Apex는 시스템 모드인 것과 대비)","관리자 모드","비동기 모드"], correct:1, explain:"Execute Anonymous는 사용자 모드로 실행되어 실행자의 권한을 존중합니다. 반면 대부분의 Apex(트리거, 클래스)는 시스템 모드로 돌므로 보안을 직접 챙겨야 합니다."},
+    {lesson:8, adv:true, q:"플랫폼 이벤트 트리거 구독을 일시중지했다가 재개(resume)하면?", choices:["중지 기간의 이벤트는 무조건 유실된다","중지 기간에 발행된 이벤트를 처리할지 여부를 선택할 수 있다","자동으로 모두 재처리된다","재개가 불가능하다"], correct:1, explain:"트리거 구독은 UI에서 일시중지/재개할 수 있으며, 재개 시 중지 기간에 발행된 이벤트의 처리 여부를 선택합니다."},
+    {lesson:9, adv:true, q:"Test.loadData로 부모-자식 관계 데이터를 함께 로드하는 방법은?", choices:["불가능하다","부모 CSV에 임의의 가짜 Id 컬럼을 두고, 자식 CSV의 외래 키 컬럼이 그 값을 참조하게 한다","자식을 먼저 로드한다","관계는 자동 연결된다"], correct:1, explain:"부모 CSV에 사용자 지정 가짜 Id 컬럼을, 자식 CSV에 그 값을 참조하는 외래 키 컬럼을 두면 Test.loadData가 관계를 연결해 줍니다."},
+    {lesson:10, adv:true, q:"부모-자식 서브쿼리가 가져오는 자식 행들은 행 수 한도에 어떻게 계산되는가?", choices:["계산되지 않는다","전체 조회 행 수 한도에 포함된다 (서브쿼리 '개수' 한도는 3배지만 행 수는 합산)","절반만 계산된다","부모 행만 계산된다"], correct:1, explain:"서브쿼리 개수 한도는 메인 쿼리의 3배지만, 서브쿼리가 가져온 행은 전체 행 수 한도에 그대로 합산됩니다."},
+    {lesson:11, adv:true, q:"후보 Id Set과 자격증 Set 두 개로 만든 SOQL 필터(둘 다 IN)가 반환하는 결과의 문제는?", choices:["행이 누락된다","두 집합의 조합 곱이 되어 실제로 시도하지 않은 조합의 행까지 포함된다 — 코드에서 쌍을 재검증해야 한다","항상 오류가 난다","성능만 느려질 뿐 정확하다"], correct:1, explain:"두 Set을 각각 IN으로 거는 필터는 과도하게 넓어져 무관한 조합까지 반환합니다. 루프에서 후보+자격증 쌍을 다시 확인하는 로직이 필요합니다."},
+    {lesson:12, adv:true, q:"LWC 템플릿 바인딩({property})의 데이터 흐름 방향은?", choices:["양방향","한 방향(JS 클래스 → 템플릿) — 템플릿 입력이 클래스 속성을 자동 갱신하지 않는다","템플릿 → JS만","방향 없음"], correct:1, explain:"LWC 바인딩은 단방향입니다. 속성이 바뀌면 템플릿이 재렌더링되지만, 반대 방향은 이벤트 핸들러로 직접 처리해야 합니다."},
+    {lesson:12, adv:true, q:"wired 함수에서 서버 오류 메시지에 접근하는 경로와, Apex에서 커스텀 오류 메시지를 보내는 방법은?", choices:["result.message / throw DmlException","result.error.body.message / AuraHandledException을 던진다","result.data.error / addError","오류는 접근 불가"], correct:1, explain:"wire 결과의 오류는 result.error.body.message로 읽고, Apex 쪽에서 사용자 친화적 메시지를 보내려면 AuraHandledException을 던집니다."}
   ];
 
   const EN_BASE = [
@@ -662,7 +702,35 @@
     ["What is the containment relationship between Aura components and LWCs?",["An LWC can contain an Aura component","An Aura component can contain an LWC (not the reverse)","They can never contain each other","Both directions are allowed"]],
     ["For a parent to pass a value into a child LWC property, the child property needs:",["@track","@wire","@api - it makes the property public","@public"]],
     ["In @wire(getRecord, { recordId: '$recordId', ... }), what does the $ prefix mean?",["A string constant","Reactive binding - the wire re-executes when the value changes","A security filter","Cache disabled"]],
-    ["What is the correct way to call an Apex method that performs DML from an LWC?",["Wire it with @wire","Call it imperatively - it returns a Promise handled with .then()/.catch(); use refreshApex to refresh wired data afterwards","Wire it with cacheable=true","Call it directly from HTML"]]
+    ["What is the correct way to call an Apex method that performs DML from an LWC?",["Wire it with @wire","Call it imperatively - it returns a Promise handled with .then()/.catch(); use refreshApex to refresh wired data afterwards","Wire it with cacheable=true","Call it directly from HTML"]],
+    ["Which sandbox types can use a sandbox template (choosing which objects' data to replicate)?",["All types","Developer and Developer Pro","Partial Copy and Full only","Full only"]],
+    ["How can one when clause in a switch statement handle multiple values?",["Nest multiple whens","List them with commas: when 'value1','value2'","Impossible - one when per value","Use the OR operator"]],
+    ["How does the safe navigation operator ?. behave?",["Throws on null","If the left side is null, the right side is not evaluated and null is returned - replaces explicit null checks","Always returns a default","Strings only"]],
+    ["How does the null coalescing operator ?? behave?",["Concatenates two values","Returns the left value if not null, otherwise the right","Always returns the right value","Boolean only"]],
+    ["What is the return type of SELECT COUNT() FROM Case?",["List<Case>","AggregateResult","Integer","Long"]],
+    ["Where may wildcards appear in a SOSL FIND term?",["Anywhere","Only at the start","Middle or end only (not at the start)","Wildcards unsupported"]],
+    ["How does SOSL search-term syntax differ between the Query Editor and Apex?",["Identical","Query Editor uses braces (FIND {Frank}); Apex uses single quotes (FIND 'Frank')","Apex uses braces","SOSL can't run in the Query Editor"]],
+    ["Where does the message of an uncaught DmlException surface when an end user's save triggered the chain?",["Only in logs","It is displayed in that user's UI","Emailed to the admin only","It is ignored"]],
+    ["What must a record have before update and delete DML can run on it?",["A Name value","The record ID","OwnerId","CreatedDate"]],
+    ["Before a sandbox can send a change set to production, what must be done on the production side?",["Create the outbound set","Authorize inbound changes on the Deployment Connection","Run tests","Clone profiles"]],
+    ["Which is true of scratch org configuration (edition, features)?",["Manual setup every time","Defined in a shareable config file - ideal for source-driven dev and CI","Always identical to production","Cannot be changed"]],
+    ["What is the custom label limit and the Apex reference syntax?",["500; $Label.name","5,000; Label.name","Unlimited; Label.get()","1,000; System.Label()"]],
+    ["What type does Trigger.operationType return, and what is it for?",["String - for logging","A System.TriggerOperation enum - used with switch to branch per event","Integer event code","Boolean before flag"]],
+    ["What happens if a class defines no constructor?",["Compile error","Instances can't be created","A default no-argument public constructor is provided automatically","It becomes abstract"]],
+    ["When is casting between two Apex class types allowed?",["Between any classes","Only between classes related through inheritance","Whenever they share a namespace","Always if an interface exists"]],
+    ["Which annotation combination exposes an Apex class as a REST resource?",["@AuraEnabled + @HttpGet","@RestResource (class) + @HttpGet/@HttpPost etc. (static methods)","The webservice keyword alone","@InvocableMethod"]],
+    ["How do you check current SOQL usage and its limit in code?",["Only System.debug","Use the Limits class pairs: Limits.getQueries() (usage) and Limits.getLimitQueries() (limit)","Only via Setup","Not possible"]],
+    ["What does EventBus.publish(events) return?",["void","Boolean","List<Database.SaveResult> - per-event publish success","Integer"]],
+    ["Can test method B query records created in test method A of the same class?",["Yes","No - test methods are isolated; use @TestSetup for shared data","B fails","Depends on commit"]],
+    ["Why must you not name your own class 'Test'?",["It is a reserved word","It collides with the System.Test class (startTest, loadData, etc.)","It would auto-run as a test","Name length limits"]],
+    ["Which is true of trigger batch processing?",["Batches run in parallel","Batches process sequentially, one at a time, and record order within a batch is unpredictable","Batches are alphabetical","A batch is 500 records"]],
+    ["Which pattern respects both heap and DML limits for mass updates?",["One DML per record","A SOQL for loop with a List iteration variable (200-record batches) and one DML per batch","Load everything into memory, then one call","Async only"]],
+    ["Which tools can CREATE a record on a distantly related object?",["Formula fields","Roll-up summaries","Flow and Apex triggers","Validation rules"]],
+    ["Where can a roll-up summary field be defined?",["On the child of a lookup","On the master (parent) object of a Master-Detail relationship","On any object","On top of a formula field"]],
+    ["Which model can create a custom Lightning Application (top-level URL-addressable container)?",["LWC only","Aura only - <aura:application extends='force:slds'>; also used as an LWC test harness","Both","Visualforce only"]],
+    ["Which tools canNOT create Lightning Web Components?",["SFDX CLI","VS Code / IDEs","Setup and the Developer Console","All three can"]],
+    ["Which attribute of lightning-datatable uniquely identifies each row?",["row-id","key-field","unique-key","data-id"]],
+    ["What does isExposed=true in js-meta.xml do?",["Open-sources the code","Makes the component available to App Builder, quick actions, etc.","Skips security review","Pins the API version"]]
   ];
 
   const EN_ADV = [
@@ -693,7 +761,19 @@
     ["The Certification Held dedupe key concatenates two 18-char IDs with '|'. What field length is needed?",["36","37","38","40"]],
     ["In an update trigger, how do you select records whose Status JUST changed to Complete/Pass?",["Check only Trigger.new's Status","Filter records where Trigger.new meets the condition AND the Trigger.oldMap version did not","Re-query with SOQL","There is no way"]],
     ["What is the standard way for two independently placed LWCs (no containment) on an App Builder page to communicate?",["Shared global variables","Publish/subscribe over a Lightning Message Service channel","Force a common parent component","Only window.postMessage"]],
-    ["Which correctly describes the CustomEvent pattern for child-to-parent communication in LWC?",["Assign directly to a parent property","dispatchEvent(new CustomEvent('eventname', { detail: {...} })); the parent listens via oneventname and reads event.detail","The child modifies the parent via @api","Only LMS works"]]
+    ["Which correctly describes the CustomEvent pattern for child-to-parent communication in LWC?",["Assign directly to a parent property","dispatchEvent(new CustomEvent('eventname', { detail: {...} })); the parent listens via oneventname and reads event.detail","The child modifies the parent via @api","Only LMS works"]],
+    ["What actually limits the size of an Apex collection?",["A 10,000-element cap","Heap consumption, not element count","Lists cap at 1,000","No limit"]],
+    ["Which API does the Developer Console Query Editor run against, and which API serves fine-grained metadata access?",["SOAP / Bulk","REST API / Tooling API","Streaming / REST","Metadata / SOAP"]],
+    ["What happens when you insert a List containing a null element?",["Null elements are skipped","An error occurs (unlike an empty list, which passes silently)","It processes normally","Nulls are removed automatically"]],
+    ["What is true of an Unlocked package's namespace?",["Required","Optional - unlike Managed packages, where a unique namespace is required","Forbidden","Auto-generated"]],
+    ["Which Custom Settings type can formula fields and validation rules access?",["List only","Hierarchy only","Both","Neither"]],
+    ["In which mode does an Execute Anonymous block run?",["System mode","User mode - it respects CRUD, FLS, and sharing (unlike most Apex, which runs in system mode)","Admin mode","Async mode"]],
+    ["What happens when you resume a suspended platform event trigger subscription?",["Events from the suspension are always lost","You choose whether to process events published while suspended","Everything reprocesses automatically","Resume is impossible"]],
+    ["How does Test.loadData load parent-child related records?",["It can't","Give the parent CSV a fake Id column and have the child CSV's foreign-key column reference those values","Load children first","Relationships connect automatically"]],
+    ["How do child rows fetched by a parent-child subquery count against limits?",["They don't","They count toward the overall row-count limit (while the subquery COUNT limit is 3x the main query limit)","Half count","Only parent rows count"]],
+    ["What is wrong with a SOQL filter built from two Sets (candidate Ids IN ... AND cert names IN ...)?",["Rows go missing","It becomes over-broad - the cross product includes combinations never attempted, so code must re-verify each pair","It always errors","Only slower, never wrong"]],
+    ["What is the data-flow direction of LWC template binding ({property})?",["Two-way","One-way (JS class to template) - template input does not auto-update the class property","Template to JS only","No direction"]],
+    ["How do you read a server error in a wired function, and send a custom error message from Apex?",["result.message / throw DmlException","result.error.body.message / throw an AuraHandledException","result.data.error / addError","Errors are inaccessible"]]
   ];
 
   QUESTIONS.forEach((it, i)=>{ const t = EN_BASE[i]; if(t){ it.qEn = t[0]; it.cEn = t[1]; } });
@@ -755,8 +835,8 @@
     lwcsurface: "LWC 노출: js-meta.xml의 isExposed=true와 targets(lightning__RecordAction 등)로 App Builder·퀵 액션 등에 표시 여부를 개발자가 제어합니다. ScreenAction 타입으로 화면형 퀵 액션을 만듭니다."
   };
 
-  const CB = ("sandboxes metadata sandboxes primitives collections collections collections idtype sobject sobject apexlang soqlbasics soqlwhere soqlreturn soqlreturn soqlforloop bindvars relquery relquery sosl upsert upsert softdelete dml databasemethods databasemethods exceptions deployment deployment packages packages sfdx devopscenter triggers triggers triggers triggerctx triggerctx triggerbatch adderror classes sharingkw sharingkw annotations annotations usermode async ooe ooe ooe transactions platformevents platformevents testing testing testdata testdata startstop testdata runas testdata bulkification bulkification efficiency efficiency formularollup formularollup lwcbasics lwcbasics lwcprops lwcdata lwcdata").split(" ");
-  const CA = ("debugging governor bindvars bindvars relquery exceptions dml databasemethods deployment packages cmt cmt triggers classes sharingkw annotations transactions ooe platformevents testing testing testdata bulkification triggerdesign triggerdesign triggerctx lwcevents lwcevents").split(" ");
+  const CB = ("sandboxes metadata sandboxes primitives collections collections collections idtype sobject sobject apexlang soqlbasics soqlwhere soqlreturn soqlreturn soqlforloop bindvars relquery relquery sosl upsert upsert softdelete dml databasemethods databasemethods exceptions deployment deployment packages packages sfdx devopscenter triggers triggers triggers triggerctx triggerctx triggerbatch adderror classes sharingkw sharingkw annotations annotations usermode async ooe ooe ooe transactions platformevents platformevents testing testing testdata testdata startstop testdata runas testdata bulkification bulkification efficiency efficiency formularollup formularollup lwcbasics lwcbasics lwcprops lwcdata lwcdata sandboxes apexlang apexlang apexlang soqlreturn sosl sosl exceptions dml deployment sfdx adderror triggerctx classes classes annotations governor platformevents testdata testing triggerbatch bulkification formularollup formularollup lwcbasics lwcbasics lwcdata lwcsurface").split(" ");
+  const CA = ("debugging governor bindvars bindvars relquery exceptions dml databasemethods deployment packages cmt cmt triggers classes sharingkw annotations transactions ooe platformevents testing testing testdata bulkification triggerdesign triggerdesign triggerctx lwcevents lwcevents governor soqlbasics exceptions packages customsettings usermode platformevents testdata efficiency triggerdesign lwcprops lwcdata").split(" ");
   QUESTIONS.forEach((it, i)=>{ it.ck = CB[i]; it.qid = "B" + i; });
   ADVANCED.forEach((it, i)=>{ it.ck = CA[i]; it.qid = "A" + i; });
 
