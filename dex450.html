@@ -1,0 +1,1095 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salesforce Certified Platform Developer I Mock Exam (DEX450)</title>
+<style>*{margin:0;padding:0;box-sizing:border-box}html,body{min-height:100%}</style>
+</head>
+<body>
+<style>
+  :root{
+    --bg:#EDF4FB; --surface:#FFFFFF; --surface-2:#F2F8FE;
+    --ink:#032D60; --ink-soft:#54698D; --ink-faint:#8199B5;
+    --accent:#0176D3; --accent-ink:#FFFFFF; --accent-soft:#D8EDFF;
+    --border:#C5D7EA;
+    --good:#2E844A; --good-soft:#EBF7EE; --good-border:#ACD8B9;
+    --bad:#BA0517; --bad-soft:#FDEDEE; --bad-border:#F5B8BE;
+    --amber:#8C4B02; --amber-soft:#FEF1DE;
+    --shadow: 0 1px 2px rgba(3,45,96,.08), 0 8px 24px -12px rgba(3,45,96,.22);
+  }
+  :root[data-theme="dark"]{
+    --bg:#081627; --surface:#0F2440; --surface-2:#16304F;
+    --ink:#E6F1FC; --ink-soft:#9DB7D6; --ink-faint:#6A87A9;
+    --accent:#1B96FF; --accent-ink:#03234D; --accent-soft:#123A66;
+    --border:#27476E;
+    --good:#45C065; --good-soft:#10331D; --good-border:#1F5C36;
+    --bad:#F88289; --bad-soft:#3A151A; --bad-border:#642430;
+    --amber:#FFB75D; --amber-soft:#38270E;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.6);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#081627; --surface:#0F2440; --surface-2:#16304F;
+      --ink:#E6F1FC; --ink-soft:#9DB7D6; --ink-faint:#6A87A9;
+      --accent:#1B96FF; --accent-ink:#03234D; --accent-soft:#123A66;
+      --border:#27476E;
+      --good:#45C065; --good-soft:#10331D; --good-border:#1F5C36;
+      --bad:#F88289; --bad-soft:#3A151A; --bad-border:#642430;
+      --amber:#FFB75D; --amber-soft:#38270E;
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 12px 28px -14px rgba(0,0,0,.6);
+    }
+  }
+
+  .adx-root{
+    --font-body: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    min-height: 100%;
+    padding: 32px 16px 80px;
+    box-sizing: border-box;
+  }
+  .adx-root *{ box-sizing: border-box; }
+  .adx-shell{ max-width: 760px; margin: 0 auto; }
+
+  .adx-masthead{
+    display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+    margin-bottom: 22px; flex-wrap: wrap;
+  }
+  .adx-brand{ display:flex; flex-direction:column; gap:2px; }
+  .adx-brand .code{
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em;
+    color: var(--accent); font-weight: 700; text-transform: uppercase;
+  }
+  .adx-brand h1{ margin:0; font-size: 19px; font-weight: 800; letter-spacing: -.01em; line-height:1.3; max-width: 560px; text-wrap: balance; }
+  .adx-brand .sub{ font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
+
+  .adx-timer{
+    font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+    font-size: 20px; font-weight: 700; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 8px 14px; border-radius: 10px; box-shadow: var(--shadow);
+    display:flex; align-items:center; gap:8px;
+  }
+  .adx-timer.warn{ color: var(--bad); border-color: var(--bad-border); }
+  .adx-timer .dot{ width:7px; height:7px; border-radius:50%; background: var(--good); }
+  .adx-timer.warn .dot{ background: var(--bad); }
+
+  .adx-lang-btn{
+    display:flex; align-items:center; gap:2px;
+    padding: 3px; border-radius:999px; border:1px solid var(--border);
+    background: var(--surface); cursor:pointer; box-shadow: var(--shadow);
+    font-family: inherit;
+  }
+  .adx-lang-btn .seg{
+    padding: 6px 13px; border-radius:999px; font-size:12.5px; font-weight:700;
+    color: var(--ink-faint); transition: background .15s ease, color .15s ease;
+    white-space:nowrap;
+  }
+  .adx-lang-btn .seg.active{ background: var(--accent); color: var(--accent-ink); }
+  .adx-lang-btn:hover{ border-color: var(--accent); }
+  .adx-lang-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
+  .adx-course-nav{
+    display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap;
+  }
+  .adx-course-nav a{
+    text-decoration:none; font-size:12.5px; font-weight:700;
+    padding: 8px 16px; border-radius:999px;
+    border:1px solid var(--border); background: var(--surface); color: var(--ink-soft);
+    transition: border-color .12s ease, background .12s ease;
+  }
+  .adx-course-nav a:hover{ border-color: var(--accent); color: var(--ink); }
+  .adx-course-nav a.active{ background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+  .adx-card{
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; box-shadow: var(--shadow);
+    padding: 28px;
+  }
+
+  /* ---- START SCREEN ---- */
+  .adx-hero{
+    margin: -28px -28px 22px;
+    border-radius: 15px 15px 0 0;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    line-height: 0;
+  }
+  .adx-hero svg{ width:100%; height:auto; display:block; }
+  .adx-intro p{ line-height:1.7; color: var(--ink-soft); font-size: 14.5px; margin: 0 0 14px; }
+  .adx-facts{
+    display:grid; grid-template-columns: repeat(3,1fr); gap:10px; margin: 18px 0 22px;
+  }
+  .adx-fact{
+    background: var(--surface-2); border:1px solid var(--border); border-radius:12px;
+    padding: 12px 14px;
+  }
+  .adx-fact .n{ font-family: var(--font-mono); font-size: 20px; font-weight:800; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .adx-fact .l{ font-size: 11.5px; color: var(--ink-soft); margin-bottom:2px; }
+
+  .adx-modes{ display:grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
+  @media (max-width: 560px){ .adx-modes{ grid-template-columns: 1fr; } .adx-facts{ grid-template-columns: repeat(3,1fr);} }
+
+  .adx-mode-btn{
+    text-align:left; cursor:pointer; border-radius: 14px; padding: 18px;
+    border: 1px solid var(--border); background: var(--surface-2);
+    transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    font-family: inherit; color: var(--ink);
+  }
+  .adx-mode-btn:hover{ border-color: var(--accent); transform: translateY(-1px); }
+  .adx-mode-btn:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+  .adx-mode-btn .m-title{ font-weight: 800; font-size: 15px; margin-bottom: 4px; }
+  .adx-mode-btn .m-desc{ font-size: 12.5px; color: var(--ink-soft); line-height:1.55; }
+  .adx-mode-btn.primary{ background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .adx-mode-btn.primary .m-desc{ color: var(--accent-ink); opacity:.85; }
+  .adx-mode-btn.advanced{ background: var(--amber-soft); border-color: var(--amber); }
+  .adx-mode-btn.advanced:hover{ border-color: var(--amber); }
+  .adx-mode-btn.advanced .m-title{ color: var(--amber); }
+  .adx-mode-btn:disabled{ opacity:.45; cursor:not-allowed; }
+  .adx-mode-btn:disabled:hover{ transform:none; border-color: var(--border); }
+
+  .adx-lesson-picker{
+    display:none; margin-top: 0; padding: 16px;
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px;
+  }
+  .adx-lesson-picker.show{ display:block; }
+  .adx-lesson-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-top:10px; }
+  @media (max-width:560px){ .adx-lesson-grid{ grid-template-columns: repeat(3,1fr);} }
+  .adx-lesson-chip{
+    font-family: var(--font-mono); font-size: 12.5px; text-align:center; padding: 10px 4px;
+    border-radius: 10px; border: 1px solid var(--border); background: var(--surface);
+    cursor:pointer; color: var(--ink-soft); font-weight:700;
+  }
+  .adx-lesson-chip:hover{ border-color: var(--accent); color: var(--ink); }
+  .adx-lesson-chip.active{ background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+  .adx-go-btn{
+    margin-top:14px; width:100%; padding: 13px; border-radius: 12px; border: none;
+    background: var(--accent); color: var(--accent-ink); font-family: inherit;
+    font-weight: 800; font-size: 14.5px; cursor:pointer;
+  }
+  .adx-go-btn:disabled{ opacity:.4; cursor:not-allowed; }
+
+  /* ---- QUIZ SCREEN ---- */
+  .adx-progress-row{ display:flex; align-items:center; gap:14px; margin-bottom:18px; }
+  .adx-progress-track{
+    flex:1; height:6px; background: var(--surface-2); border-radius: 999px; overflow:hidden;
+    border: 1px solid var(--border);
+  }
+  .adx-progress-fill{ height:100%; background: var(--accent); border-radius:999px; transition: width .25s ease; }
+  .adx-progress-label{ font-family: var(--font-mono); font-size:12.5px; color: var(--ink-soft); font-variant-numeric: tabular-nums; white-space:nowrap; }
+
+  .adx-tag{
+    display:inline-block; font-family: var(--font-mono); font-size: 11px; font-weight:700;
+    letter-spacing:.04em; padding: 4px 10px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--accent); margin-bottom: 14px;
+  }
+  .adx-qtext{ font-size: 17px; font-weight: 700; line-height:1.55; margin: 0 0 20px; text-wrap: balance; white-space: pre-line; }
+
+  .adx-options{ display:flex; flex-direction:column; gap:10px; }
+  .adx-option{
+    display:flex; align-items:flex-start; gap:12px; text-align:left;
+    border: 1px solid var(--border); background: var(--surface-2);
+    border-radius: 12px; padding: 13px 15px; cursor:pointer; font-family: inherit;
+    color: var(--ink); font-size: 14px; line-height:1.5; transition: border-color .12s, background .12s;
+  }
+  .adx-option:hover:not(:disabled){ border-color: var(--accent); }
+  .adx-option:focus-visible{ outline: 2px solid var(--accent); outline-offset:2px; }
+  .adx-option .letter{
+    font-family: var(--font-mono); font-weight: 800; font-size:12.5px; color: var(--ink-faint);
+    border: 1px solid var(--border); border-radius:6px; width:22px; height:22px; flex:none;
+    display:flex; align-items:center; justify-content:center; margin-top:1px;
+  }
+  .adx-option.selected{ border-color: var(--accent); background: var(--accent-soft); }
+  .adx-option.correct{ border-color: var(--good-border); background: var(--good-soft); }
+  .adx-option.correct .letter{ background: var(--good); color:#fff; border-color: var(--good); }
+  .adx-option.incorrect{ border-color: var(--bad-border); background: var(--bad-soft); }
+  .adx-option.incorrect .letter{ background: var(--bad); color:#fff; border-color: var(--bad); }
+  .adx-option:disabled{ cursor: default; }
+
+  .adx-explain{
+    margin-top: 16px; padding: 14px 16px; border-radius: 12px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    font-size: 13.5px; line-height: 1.65; color: var(--ink-soft); display:none;
+  }
+  .adx-explain.show{ display:block; }
+  .adx-explain b{ color: var(--ink); }
+
+  .adx-nav-row{ display:flex; justify-content:flex-end; margin-top: 22px; gap:10px; }
+  .adx-btn{
+    font-family: inherit; font-weight: 800; font-size: 14px; padding: 11px 22px;
+    border-radius: 10px; border: 1px solid var(--border); background: var(--surface);
+    color: var(--ink); cursor:pointer;
+  }
+  .adx-btn.primary{ background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .adx-btn:disabled{ opacity:.35; cursor:not-allowed; }
+
+  /* ---- RESULTS ---- */
+  .adx-score-hero{ text-align:center; padding: 10px 0 26px; }
+  .adx-score-hero .big{
+    font-family: var(--font-mono); font-size: 56px; font-weight: 800; color: var(--accent);
+    font-variant-numeric: tabular-nums; line-height:1;
+  }
+  .adx-score-hero .of{ font-size: 14px; color: var(--ink-soft); margin-top: 6px; }
+  .adx-score-hero .verdict{
+    display:inline-block; margin-top:14px; padding: 6px 16px; border-radius:999px;
+    font-weight:800; font-size: 13px; font-family: var(--font-mono);
+  }
+  .adx-score-hero .verdict.pass{ background: var(--good-soft); color: var(--good); border:1px solid var(--good-border); }
+  .adx-score-hero .verdict.fail{ background: var(--bad-soft); color: var(--bad); border:1px solid var(--bad-border); }
+
+  .adx-breakdown{ display:flex; flex-direction:column; gap:9px; margin: 6px 0 24px; }
+  .adx-bd-row{ display:grid; grid-template-columns: 150px 1fr 46px; align-items:center; gap:10px; }
+  .adx-bd-label{ font-size:12.5px; color: var(--ink-soft); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .adx-bd-track{ height:8px; background: var(--surface-2); border:1px solid var(--border); border-radius:999px; overflow:hidden; }
+  .adx-bd-fill{ height:100%; background: var(--accent); }
+  .adx-bd-fill.weak{ background: var(--bad); }
+  .adx-bd-pct{ font-family: var(--font-mono); font-size:12px; text-align:right; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+
+  .adx-review-item{
+    border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px;
+    background: var(--surface-2);
+  }
+  .adx-review-item .rq{ font-size: 13.5px; font-weight:700; margin-bottom:8px; line-height:1.5; white-space: pre-line; }
+  .adx-review-item .ra{ font-size: 12.5px; line-height:1.6; color: var(--ink-soft); }
+  .adx-review-item .ra b.wrong{ color: var(--bad); }
+  .adx-review-item .ra b.right{ color: var(--good); }
+
+  .adx-section-title{ font-size: 13px; font-weight: 800; text-transform:uppercase; letter-spacing:.05em; color: var(--ink-faint); margin: 26px 0 12px; }
+
+  .adx-hidden{ display:none !important; }
+  .adx-footer-actions{ display:flex; gap:10px; margin-top: 10px; }
+</style>
+
+<div class="adx-root">
+  <div class="adx-shell">
+    <div class="adx-course-nav">
+      <a href="https://stkd9w57jm-oss.github.io/salesforce-admin-mock-exam-/">ADX201 · 관리자 (Admin)</a>
+      <a class="active" href="https://stkd9w57jm-oss.github.io/salesforce-admin-mock-exam-/dex450.html">DEX450 · 개발자 (Developer)</a>
+    </div>
+    <div class="adx-masthead">
+      <div class="adx-brand">
+        <span class="code">DEX450</span>
+        <h1>Salesforce Certified Platform Developer I Mock Exam</h1>
+        <span class="sub">Build Pro-Code Applications on the Salesforce Platform</span>
+      </div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <span style="font-size:12.5px; font-weight:700; color:var(--ink-soft); white-space:nowrap;">언어설정</span>
+        <button class="adx-lang-btn" id="langBtn" title="문제/보기 언어 전환 (한국어 ↔ English)"><span class="seg active" id="segKo">한국어 🇰🇷</span><span class="seg" id="segEn">English 🇺🇸</span></button>
+        <div class="adx-timer adx-hidden" id="timerBox"><span class="dot"></span><span id="timerText">105:00</span></div>
+      </div>
+    </div>
+
+    <!-- START SCREEN -->
+    <div class="adx-card" id="startScreen">
+      <div class="adx-hero" aria-hidden="true">
+        <svg viewBox="0 0 800 210" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice" role="img">
+          <defs>
+            <linearGradient id="thSky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#7EC3FF"/>
+              <stop offset="1" stop-color="#EAF6FF"/>
+            </linearGradient>
+          </defs>
+          <rect width="800" height="210" fill="url(#thSky)"/>
+          <circle cx="700" cy="44" r="34" fill="#FFD75E" opacity=".3"/>
+          <circle cx="700" cy="44" r="26" fill="#FFD75E"/>
+          <g fill="#FFFFFF" opacity=".92">
+            <ellipse cx="140" cy="46" rx="40" ry="12"/>
+            <ellipse cx="175" cy="54" rx="30" ry="10"/>
+            <ellipse cx="500" cy="34" rx="44" ry="12"/>
+            <ellipse cx="537" cy="42" rx="30" ry="10"/>
+          </g>
+          <g stroke="#3E6FA8" stroke-width="2.5" fill="none" stroke-linecap="round">
+            <path d="M300,52 q7,-8 14,0 q7,-8 14,0"/>
+            <path d="M615,74 q6,-7 12,0 q6,-7 12,0"/>
+          </g>
+          <polygon points="-20,168 120,58 260,168" fill="#4C7FB8"/>
+          <polygon points="120,58 98,78 142,78" fill="#FFFFFF"/>
+          <polygon points="150,168 310,36 470,168" fill="#33639E"/>
+          <polygon points="310,36 282,64 338,64" fill="#FFFFFF"/>
+          <polygon points="400,168 540,66 680,168" fill="#4C7FB8"/>
+          <polygon points="540,66 518,86 562,86" fill="#FFFFFF"/>
+          <polygon points="580,168 720,52 830,150 830,168" fill="#33639E"/>
+          <polygon points="720,52 696,76 744,76" fill="#FFFFFF"/>
+          <g transform="translate(180,110)">
+            <ellipse cx="0" cy="0" rx="9" ry="6" fill="#F4F0E6"/>
+            <circle cx="9" cy="-5" r="4.5" fill="#F4F0E6"/>
+            <path d="M10,-9 q3,-4 6,-3" stroke="#C9B88A" stroke-width="1.6" fill="none"/>
+            <rect x="-6" y="4" width="2.4" height="7" fill="#D8D2C2"/>
+            <rect x="3" y="4" width="2.4" height="7" fill="#D8D2C2"/>
+          </g>
+          <path d="M0,210 L0,152 Q200,112 400,150 T800,142 L800,210 Z" fill="#63A968"/>
+          <path d="M0,210 L0,176 Q250,146 500,176 T800,168 L800,210 Z" fill="#4E8F55"/>
+          <path d="M448,210 L512,210 Q496,186 488,168 Q483,156 480,146 L472,146 Q470,158 464,172 Q456,190 448,210 Z" fill="#EAD9AE"/>
+          <ellipse cx="478" cy="158" rx="2.5" ry="1.6" fill="#D9C48F"/>
+          <ellipse cx="472" cy="176" rx="3" ry="1.8" fill="#D9C48F"/>
+          <ellipse cx="484" cy="192" rx="3.4" ry="2" fill="#D9C48F"/>
+          <g>
+            <polygon points="86,118 64,160 108,160" fill="#2E6B45"/>
+            <polygon points="86,102 68,138 104,138" fill="#357A4F"/>
+            <rect x="82" y="160" width="8" height="14" fill="#7A4E2D"/>
+            <polygon points="40,132 24,164 56,164" fill="#2E6B45"/>
+            <rect x="37" y="164" width="6" height="11" fill="#7A4E2D"/>
+          </g>
+          <g>
+            <polygon points="702,120 678,166 726,166" fill="#2E6B45"/>
+            <polygon points="702,102 682,142 722,142" fill="#357A4F"/>
+            <rect x="698" y="166" width="8" height="15" fill="#7A4E2D"/>
+            <polygon points="756,136 740,168 772,168" fill="#2E6B45"/>
+            <rect x="753" y="168" width="6" height="11" fill="#7A4E2D"/>
+          </g>
+          <g transform="translate(430,130)">
+            <ellipse cx="0" cy="58" rx="24" ry="5" fill="#3E6F44" opacity=".5"/>
+            <ellipse cx="0" cy="32" rx="19" ry="22" fill="#F2C98A"/>
+            <ellipse cx="0" cy="38" rx="11" ry="13" fill="#FBE9CC"/>
+            <ellipse cx="-21" cy="30" rx="5" ry="10" fill="#F2C98A" transform="rotate(14 -21 30)"/>
+            <circle cx="0" cy="2" r="17" fill="#F2C98A"/>
+            <path d="M-14,-10 q-4,-9 3,-11 q5,-1 6,6" fill="#5B4632"/>
+            <path d="M14,-10 q4,-9 -3,-11 q-5,-1 -6,6" fill="#5B4632"/>
+            <ellipse cx="-7" cy="0" rx="6" ry="4.6" fill="#5B4632"/>
+            <ellipse cx="7" cy="0" rx="6" ry="4.6" fill="#5B4632"/>
+            <circle cx="-6.4" cy="-0.4" r="1.9" fill="#FFFFFF"/>
+            <circle cx="6.4" cy="-0.4" r="1.9" fill="#FFFFFF"/>
+            <ellipse cx="0" cy="9" rx="7.4" ry="5" fill="#FBE9CC"/>
+            <ellipse cx="0" cy="6.4" rx="2.4" ry="1.8" fill="#5B4632"/>
+            <path d="M-3.4,10.4 Q0,13.4 3.4,10.4" stroke="#5B4632" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <rect x="-16" y="16" width="6" height="20" rx="3" fill="#2E6B45"/>
+            <rect x="10" y="16" width="6" height="20" rx="3" fill="#2E6B45"/>
+            <ellipse cx="-9" cy="56" rx="6.4" ry="4.6" fill="#5B4632"/>
+            <ellipse cx="9" cy="56" rx="6.4" ry="4.6" fill="#5B4632"/>
+            <line x1="24" y1="12" x2="24" y2="42" stroke="#7A4E2D" stroke-width="2.6" stroke-linecap="round"/>
+            <polygon points="25,12 44,17.5 25,23" fill="#0176D3"/>
+            <ellipse cx="24" cy="30" rx="5" ry="9" fill="#F2C98A" transform="rotate(-12 24 30)"/>
+          </g>
+          <g transform="translate(560,158)">
+            <ellipse cx="0" cy="26" rx="13" ry="4" fill="#3E6F44" opacity=".5"/>
+            <ellipse cx="0" cy="14" rx="11" ry="12" fill="#8A5A3B"/>
+            <ellipse cx="0" cy="17" rx="6.4" ry="7" fill="#B98A63"/>
+            <circle cx="0" cy="-2" r="9.6" fill="#8A5A3B"/>
+            <circle cx="-8" cy="-9" r="3.6" fill="#8A5A3B"/>
+            <circle cx="8" cy="-9" r="3.6" fill="#8A5A3B"/>
+            <circle cx="-8" cy="-9" r="1.7" fill="#B98A63"/>
+            <circle cx="8" cy="-9" r="1.7" fill="#B98A63"/>
+            <circle cx="-3.4" cy="-3.4" r="1.5" fill="#3A2416"/>
+            <circle cx="3.4" cy="-3.4" r="1.5" fill="#3A2416"/>
+            <ellipse cx="0" cy="1.4" rx="4" ry="3" fill="#B98A63"/>
+            <ellipse cx="0" cy="0" rx="1.7" ry="1.3" fill="#3A2416"/>
+            <ellipse cx="-6" cy="25" rx="4" ry="3" fill="#6E4227"/>
+            <ellipse cx="6" cy="25" rx="4" ry="3" fill="#6E4227"/>
+          </g>
+          <g transform="translate(120,172)">
+            <ellipse cx="0" cy="10" rx="9" ry="3" fill="#3E6F44" opacity=".5"/>
+            <ellipse cx="0" cy="2" rx="9" ry="7" fill="#7FA05B"/>
+            <circle cx="8" cy="0" r="4.4" fill="#CBE2A8"/>
+            <circle cx="9.6" cy="-1" r="1.1" fill="#3A4A28"/>
+            <ellipse cx="-3" cy="9" rx="2.6" ry="1.8" fill="#5C7A3E"/>
+            <ellipse cx="4" cy="9" rx="2.6" ry="1.8" fill="#5C7A3E"/>
+          </g>
+        </svg>
+      </div>
+      <div class="adx-intro">
+        <p><b>Based On DEX450(12 Lessons)</b><br>기본 은행 72문항 + 심화 은행 28문항으로 구성되며, 실전 모드는 실제 Platform Developer I 시험 형식(60문항 · 105분)을 따릅니다. 응시할 때마다 문항을 무작위로 뽑아 출제하므로 여러 번 반복해서 볼 수 있으며, 원본 교재에 실린 복습 문제와는 겹치지 않습니다.</p>
+      </div>
+      <div class="adx-facts">
+        <div class="adx-fact"><div class="l">기본 문제 은행</div><div class="n">72</div></div>
+        <div class="adx-fact"><div class="l">심화 문제 은행</div><div class="n">28</div></div>
+        <div class="adx-fact"><div class="l">실전 모드 제한시간</div><div class="n">105<span style="font-size:12px">분</span></div></div>
+      </div>
+      <div class="adx-modes">
+        <button class="adx-mode-btn" id="startMiniBtn" style="border-color: var(--accent);">
+          <div class="m-title">미니 스낵 모드</div>
+          <div class="m-desc">전체 문제 은행(100문항)에서 딱 5문항 무작위. 자투리 시간에 가볍게 — 문제마다 즉시 해설이 나옵니다.</div>
+        </button>
+        <button class="adx-mode-btn" id="startPracticeBtn">
+          <div class="m-title">레슨별 연습 모드</div>
+          <div class="m-desc">원하는 레슨을 선택해 풀어보세요. 문제마다 즉시 정답과 해설을 확인할 수 있습니다. (기본+심화 문항 모두 포함)</div>
+        </button>
+        <div class="adx-lesson-picker" id="lessonPicker" style="grid-column:1/-1;">
+          <div class="adx-section-title" style="margin-top:0;">레슨 선택 (복수 선택 가능)</div>
+          <div class="adx-lesson-grid" id="lessonGrid"></div>
+          <button class="adx-go-btn" id="goPracticeBtn" disabled>선택한 레슨으로 시작</button>
+        </div>
+        <button class="adx-mode-btn primary" id="startExamBtn" style="grid-column:1/-1;">
+          <div class="m-title">전체 모의고사 (실전 모드)</div>
+          <div class="m-desc">문제 은행 72문항 중 60문항 무작위 출제(실제 PD1 시험 형식) · 105분 타이머 · 정답은 제출 후 한번에 확인합니다. 볼 때마다 문제 구성이 달라집니다.</div>
+        </button>
+        <button class="adx-mode-btn advanced" id="startAdvancedBtn" style="grid-column:1/-1;">
+          <div class="m-title">심화 모의고사 (고난도)</div>
+          <div class="m-desc">시나리오·함정·엣지케이스 중심의 심화 은행 28문항 중 25문항 무작위 출제 · 45분 타이머 · 정답은 제출 후 확인. 기본 실전 모드에서 80% 이상 득점했다면 도전해 보세요.</div>
+        </button>
+        <button class="adx-mode-btn" id="startWrongBtn" style="grid-column:1/-1;">
+          <div class="m-title">오답노트 복습 📕</div>
+          <div class="m-desc" id="wrongDesc">아직 저장된 오답이 없습니다. 어떤 모드에서든 틀린 문제가 자동으로 여기에 쌓입니다.</div>
+        </button>
+      </div>
+      <div id="wrongActions" style="text-align:right; margin-top:10px; display:none;">
+        <button class="adx-btn" id="clearWrongBtn" style="font-size:12px; padding:8px 14px;">오답 기록 비우기</button>
+      </div>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div class="adx-card adx-hidden" id="quizScreen">
+      <div class="adx-progress-row">
+        <div class="adx-progress-track"><div class="adx-progress-fill" id="progressFill" style="width:0%"></div></div>
+        <div class="adx-progress-label" id="progressLabel">1 / 65</div>
+      </div>
+      <div class="adx-tag" id="lessonTag">LESSON 1</div>
+      <p class="adx-qtext" id="qText"></p>
+      <div class="adx-options" id="optionsBox"></div>
+      <div class="adx-explain" id="explainBox"></div>
+      <div class="adx-nav-row">
+        <button class="adx-btn adx-hidden" id="revealBtn" style="margin-right:auto;">정답·해설 보기</button>
+        <button class="adx-btn" id="skipBtn">건너뛰기</button>
+        <button class="adx-btn primary" id="nextBtn" disabled>다음</button>
+      </div>
+    </div>
+
+    <!-- RESULTS SCREEN -->
+    <div class="adx-card adx-hidden" id="resultsScreen">
+      <div class="adx-score-hero">
+        <div class="big" id="scoreBig">0%</div>
+        <div class="of" id="scoreOf">0 / 0 정답</div>
+        <div class="verdict" id="scoreVerdict">-</div>
+      </div>
+      <div class="adx-section-title">레슨별 정답률</div>
+      <div class="adx-breakdown" id="breakdownBox"></div>
+      <div class="adx-section-title">오답 노트</div>
+      <div id="reviewBox"></div>
+      <div class="adx-footer-actions">
+        <button class="adx-btn primary" id="restartBtn" style="flex:1">다시 풀기</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const LESSON_NAMES = {
+    1:"Welcome to AW Computing", 2:"Apex Coding", 3:"SOQL & SOSL",
+    4:"DML", 5:"Deployment", 6:"Apex Trigger Essentials",
+    7:"Apex Class Essentials", 8:"Order of Execution & Platform Events", 9:"Apex Testing",
+    10:"Efficient Apex Design", 11:"Trigger Design Strategies", 12:"Lightning Web Components"
+  };
+
+  const QUESTIONS = [
+    {lesson:1, q:"AW Computing의 개발자가 프로덕션 조직에서 직접 Apex 코드를 수정하려 한다. 가능한가?", choices:["가능하다 — 관리자 권한만 있으면 된다","불가능하다 — 샌드박스 등 개발 환경에서 작성 후 배포해야 한다 (트라이얼 프로덕션은 예외)","주말 점검 시간에만 가능하다","클래스는 가능하지만 트리거는 불가능하다"], correct:1, explain:"프로덕션에서는 코드를 직접 수정할 수 없습니다(트라이얼 프로덕션 예외). 샌드박스에서 개발·테스트 후 배포하는 것이 원칙입니다."},
+    {lesson:1, q:"조직 간 배포(Deployment)로 옮겨지는 것은?", choices:["레코드 데이터","메타데이터","사용자 로그인 이력","디버그 로그"], correct:1, explain:"배포는 메타데이터(앱의 모양·기능 정의)를 옮기는 것이며, 레코드 데이터는 옮기지 않습니다."},
+    {lesson:1, q:"성능·부하 테스트와 릴리스 직전 스테이징에 적합한 샌드박스 유형과 그 새로 고침(Refresh) 주기는?", choices:["Developer — 매일 가능","Partial Copy — 5일 간격","Full — 29일 이상 간격","Developer Pro — 7일 간격"], correct:2, explain:"Full 샌드박스는 프로덕션과 동일한 데이터·용량을 복제하며 새로 고침은 29일 이상 간격으로만 가능합니다."},
+
+    {lesson:2, q:"Apex에서 선언만 하고 값을 대입하지 않은 Integer 변수의 값은?", choices:["0","빈 문자열","null","컴파일 오류가 발생한다"], correct:2, explain:"Apex는 타입과 무관하게 모든 변수를 null로 초기화합니다."},
+    {lesson:2, q:"Set에 이미 존재하는 값을 add() 하면 어떻게 되는가?", choices:["예외가 발생한다","중복 값이 그대로 추가된다","예외 없이 무시된다 (Set은 중복을 허용하지 않음)","기존 값이 교체되며 경고가 남는다"], correct:2, explain:"Set은 중복을 허용하지 않지만, 중복 add 시 예외를 던지지 않고 조용히 무시합니다."},
+    {lesson:2, q:"Map 컬렉션에 대한 설명으로 옳은 것은?", choices:["키와 값 모두 중복될 수 없다","키는 고유해야 하고, 값은 중복될 수 있다","값은 고유해야 하고, 키는 중복될 수 있다","순서가 보장되는 인덱스 컬렉션이다"], correct:1, explain:"Map은 고유한 키가 각각 하나의 값에 매핑되는 구조입니다. 값은 중복될 수 있습니다. put/get/containsKey 메서드를 사용합니다."},
+    {lesson:2, q:"Apex의 배열(Array)에 대한 설명으로 옳은 것은?", choices:["Java와 동일한 배열 타입이 있다","배열은 없지만 배열 표기법(대괄호 인덱스)은 List에 사용할 수 있다","배열과 List가 별도 타입으로 공존한다","배열 표기법 자체가 지원되지 않는다"], correct:1, explain:"Apex에는 배열이 없습니다. 다만 list[1] 같은 배열 표기법을 List에 사용할 수 있습니다."},
+    {lesson:2, q:"리포트에서 복사한 레코드 ID로 Apex 코드를 작성하려 한다. 주의할 점은?", choices:["리포트 ID는 18자 케이스세이프 형식이다","리포트 ID는 15자 대소문자 구분 형식이며, 18자가 필요하면 CASESAFEID() 수식 등을 사용한다","리포트에서는 ID를 얻을 수 없다","15자와 18자는 완전히 다른 레코드를 가리킨다"], correct:1, explain:"리포트(및 Classic 일부 화면)는 15자 대소문자 구분 ID를, URL·API·Apex는 18자 케이스세이프 ID를 사용합니다. CASESAFEID 수식으로 18자를 얻을 수 있습니다."},
+    {lesson:2, q:"두 sObject 변수 a와 b에 대해 a == b 가 true가 되는 조건은?", choices:["같은 메모리 인스턴스를 참조할 때만","모든 필드 값이 서로 같을 때","Id 필드만 같으면 된다","sObject에는 == 연산이 불가능하다"], correct:1, explain:"sObject 간 == 는 모든 필드가 같은지를 비교합니다. 동일 인스턴스 참조 여부는 === 로 비교합니다."},
+    {lesson:2, q:"Apex 클래스가 참조 중인 커스텀 필드에 대해 플랫폼이 변경을 차단하는 항목은?", choices:["필드 라벨","API 이름과 데이터 타입 둘 다","도움말 텍스트","필드 설명"], correct:1, explain:"플랫폼은 Apex와 설정 정의 간 의존성을 추적하므로, 코드가 참조하는 필드는 API 이름도 데이터 타입도 변경할 수 없습니다."},
+    {lesson:2, q:"Execute Anonymous로 실행한 코드의 특징은?", choices:["컴파일 후 조직에 클래스로 저장된다","컴파일·실행되지만 저장되지는 않는다","실행 없이 문법 검사만 한다","트리거로 자동 등록된다"], correct:1, explain:"Execute Anonymous 코드는 컴파일되어 실행되지만 메타데이터로 저장되지 않습니다. 또한 사용자 모드(User Mode)로 실행됩니다."},
+
+    {lesson:3, q:"SOQL에는 SELECT * 가 없다. 모든 필드를 조회하는 대체 문법은?", choices:["SELECT ALL","FIELDS(ALL)","GET *","SELECT EVERYTHING"], correct:1, explain:"FIELDS(ALL), FIELDS(STANDARD), FIELDS(CUSTOM) 함수가 SELECT * 를 대체합니다."},
+    {lesson:3, q:"LIKE 연산자에서 와일드카드 % 와 _ 의 차이는?", choices:["% = 1문자, _ = 0문자 이상","% = 0문자 이상, _ = 정확히 1문자","둘 다 동일하게 동작한다","_ 는 숫자에만 매칭된다"], correct:1, explain:"% 는 0개 이상의 문자와, _ 는 정확히 1개의 문자와 매칭됩니다."},
+    {lesson:3, q:"단일 sObject 변수에 할당하는 SOQL이 0행을 반환하면?", choices:["변수에 null이 대입된다","System.QueryException이 발생한다","빈 sObject가 생성된다","자동으로 재시도된다"], correct:1, explain:"단일 sObject 할당 쿼리는 0행이면 'List has no rows...' QueryException을, 2행 이상이면 'more than 1 row' 예외를 던집니다. 행 수가 보장되지 않으면 List로 받으세요."},
+    {lesson:3, q:"SELECT 절에 Id를 명시하지 않은 쿼리 결과에서 record.Id를 읽으면?", choices:["예외가 발생한다","null이 반환된다","정상적으로 Id가 반환된다 — Id는 항상 반환되는 필드다","컴파일 오류가 난다"], correct:2, explain:"Id는 SELECT에 없어도 항상 반환됩니다. 반면 다른 필드는 선택하지 않으면 읽을 때 예외가 발생합니다(대입은 가능)."},
+    {lesson:3, q:"SOQL for 루프의 이터레이션 변수를 List<Contact>로 선언하고 403건이 조회되면 루프 본문은 몇 번 실행되는가?", choices:["1번","3번 (200+200+3건 배치)","403번","203번"], correct:1, explain:"List 이터레이션 변수를 쓰면 200건씩 배치로 순회하므로 403건이면 3회 실행됩니다. SELECT 문은 1번만 카운트됩니다."},
+    {lesson:3, q:"SOQL에서 바인드 변수(:var)를 사용할 수 있는 절의 조합은?", choices:["SELECT, FROM","WHERE, LIMIT, OFFSET","GROUP BY, HAVING","FROM, ORDER BY"], correct:1, explain:"바인드 변수는 WHERE, LIMIT, OFFSET 절에서 지원됩니다. SELECT나 FROM에는 사용할 수 없습니다."},
+    {lesson:3, q:"Certification Attempt에서 커스텀 부모 오브젝트 Certification Element의 Name을 가져오는 올바른 자식→부모 표기는?", choices:["certAttempt.Certification_Element__c.Name","certAttempt.Certification_Element__r.Name","certAttempt.Certification_Element.Name","certAttempt.Parent.Name"], correct:1, explain:"__c 필드는 외래 키 Id이고, 부모 sObject 참조는 __r 로 접근합니다. 자식→부모는 최대 5단계 조상까지 가능합니다."},
+    {lesson:3, q:"부모→자식 쿼리에서 커스텀 자식 관계의 기본 관계 이름은 무엇으로 만들어지는가?", choices:["자식 오브젝트 API명 + __c","자식 오브젝트의 복수 라벨 + __r (예: Course_Deliveries__r)","부모 오브젝트명 + Child","임의로 자동 생성된 GUID"], correct:1, explain:"커스텀 자식 관계 이름의 기본값은 자식 오브젝트의 복수 라벨에 __r 을 붙인 형태이며, 중첩 SELECT는 5단계까지 가능합니다."},
+    {lesson:3, q:"SOSL 검색의 반환 타입은?", choices:["List<sObject>","Map<Id, sObject>","List<List<sObject>> — RETURNING 절 순서대로의 리스트들","AggregateResult"], correct:2, explain:"SOSL은 List<List<sObject>>를 반환하며, 바깥 리스트의 순서는 RETURNING 절에 나열한 오브젝트 순서와 같습니다."},
+
+    {lesson:4, q:"upsert가 기존 레코드와 매칭하는 기준은?", choices:["레코드 이름","Salesforce ID 또는 External ID 필드","생성일","소유자"], correct:1, explain:"update는 Salesforce ID로만 매칭하지만, upsert는 Salesforce ID 또는 External ID 필드로 매칭할 수 있습니다(예: upsert contacts External_Id__c;)."},
+    {lesson:4, q:"upsert에서 External ID로 매칭했더니 일치 레코드가 2건 이상이면?", choices:["첫 번째 레코드가 업데이트된다","모두 업데이트된다","오류가 발생하고 해당 레코드는 삽입도 업데이트도 되지 않는다","새 레코드로 삽입된다"], correct:2, explain:"External ID 매칭 결과가 여러 건이면 오류가 발생하며 해당 레코드는 처리되지 않습니다. 0건이면 insert, 1건이면 update됩니다."},
+    {lesson:4, q:"delete 후 Recycle Bin에 있는 레코드를 SOQL로 조회하려면?", choices:["WHERE IsDeleted = true 만 붙이면 된다","쿼리 끝에 ALL ROWS 키워드를 붙인다","삭제된 레코드는 어떤 방법으로도 조회 불가","FIELDS(DELETED)를 사용한다"], correct:1, explain:"delete는 소프트 삭제(IsDeleted=true)이며 기본 15일간 Recycle Bin에 보관됩니다. ALL ROWS 키워드로 삭제된 행까지 조회할 수 있습니다."},
+    {lesson:4, q:"insert DML이 성공하면 삽입에 사용한 sObject 변수는?", choices:["변화 없다","레코드 ID가 자동으로 채워진다","null로 초기화된다","읽기 전용이 된다"], correct:1, explain:"insert 성공 후 sObject 변수에는 생성된 레코드의 ID가 자동으로 채워집니다."},
+    {lesson:4, q:"Database.insert(records, false)의 동작은?", choices:["첫 실패에서 전체 롤백된다","실패 레코드는 기록만 되고 예외는 발생하지 않으며, 성공 레코드는 저장된다(부분 성공)","항상 예외를 던진다","false는 트리거 실행 여부를 의미한다"], correct:1, explain:"AllOrNone 파라미터를 false로 주면 부분 성공이 허용되어 실패해도 예외가 발생하지 않습니다. 결과는 Database.SaveResult 리스트로 확인합니다."},
+    {lesson:4, q:"Database.SaveResult에서 실패한 레코드를 판별하는 메서드는?", choices:["getStatus()","isSuccess()가 false인지 확인하고 getErrors()로 원인을 읽는다","hasFailed()","getException()"], correct:1, explain:"SaveResult의 isSuccess()로 성공 여부를, getErrors()로 오류 목록(Database.Error)을, getId()로 생성된 18자 ID(실패 시 null)를 확인합니다."},
+    {lesson:4, q:"커스텀 예외 클래스를 만들 때 반드시 지켜야 하는 규칙은?", choices:["global로 선언해야 한다","내장 Exception을 상속하고 클래스 이름이 'Exception'으로 끝나야 한다","반드시 인터페이스를 구현해야 한다","이름이 'Custom'으로 시작해야 한다"], correct:1, explain:"커스텀 예외는 Exception을 상속해야 하며 클래스명이 반드시 Exception으로 끝나야 합니다."},
+
+    {lesson:5, q:"체인지 셋으로 Apex 코드를 배포할 때 단위 테스트 요구사항은 어디에 적용되는가?", choices:["소스 조직에만","타겟 조직에만","소스와 타겟 양쪽 조직 모두","테스트는 선택 사항이다"], correct:2, explain:"Apex 코드는 소스와 타겟 양쪽 조직 모두에서 단위 테스트 요구사항(커버리지 등)을 충족해야 합니다."},
+    {lesson:5, q:"인바운드 체인지 셋 배포의 트랜잭션 특성은?", choices:["컴포넌트를 골라서 부분 배포할 수 있다","all-or-nothing — 전체가 성공하거나 전체가 실패한다","실패한 컴포넌트만 자동 재시도된다","배포 후 컴포넌트별 롤백이 가능하다"], correct:1, explain:"인바운드 체인지 셋 배포는 all-or-nothing 트랜잭션입니다. 일부 컴포넌트만 선택해 배포할 수 없습니다."},
+    {lesson:5, q:"AppExchange에 판매할 앱으로, 소스 코드 보호(IP)와 버전 업그레이드, 고유 네임스페이스가 필요하다. 적합한 패키지 유형은?", choices:["Unmanaged Package","Managed Package","Unlocked Package","Change Set"], correct:1, explain:"Managed Package는 파트너/AppExchange용으로 IP 보호(실행만 가능, 열람 불가), 버전 관리, 고유 네임스페이스를 제공합니다."},
+    {lesson:5, q:"사내 비즈니스 앱 배포용으로, 설치 조직에서 컴포넌트 수정이 가능하고 버전 관리도 되는 패키지 유형은?", choices:["Unmanaged Package","Managed Package","Unlocked Package (SFDX CLI 2GP로만 생성)","1GP Managed Package"], correct:2, explain:"Unlocked Package는 SFDX CLI(2GP)로만 만들며, 설치 조직에서 수정 가능하고 버전 관리가 되어 사내 앱에 권장됩니다."},
+    {lesson:5, q:"Scratch 조직을 만들기 위한 전제 조건은?", choices:["Full 샌드박스","Dev Hub (프로덕션 또는 Developer Edition 조직에서 활성화)","AppExchange 계정","DevOps Center 설치"], correct:1, explain:"Scratch 조직은 SFDX CLI로 생성하는 임시 조직으로, 개수·상태를 추적하는 Dev Hub가 반드시 필요합니다."},
+    {lesson:5, q:"Salesforce DevOps Center가 초기 버전에서 요구하는 소스 관리 시스템은?", choices:["Bitbucket","GitLab","GitHub","SVN"], correct:2, explain:"DevOps Center는 소스 관리 시스템이 필수이며 초기에는 GitHub만 지원합니다. 2세대 관리 패키지로 설치되고 Classic에서는 사용할 수 없습니다."},
+
+    {lesson:6, q:"DML 없이 트리거링 레코드 자신의 필드 값을 수정하려면 어떤 타이밍의 트리거를 써야 하는가?", choices:["after — Id에 접근할 수 있으므로","before — 저장 전이므로 Trigger.new의 값이 쓰기 가능하다","둘 다 가능하다","트리거에서는 불가능하다"], correct:1, explain:"before 트리거에서 Trigger.new는 쓰기 가능하므로 DML 없이 값 수정이 반영됩니다. after 트리거에서는 읽기 전용입니다."},
+    {lesson:6, q:"undelete 이벤트에 대해 사용 가능한 트리거 타이밍은?", choices:["before만","after만","before와 after 둘 다","undelete 트리거는 없다"], correct:1, explain:"undelete는 after만 지원합니다. before undelete 이벤트는 존재하지 않습니다."},
+    {lesson:6, q:"upsert DML에 대응하는 별도의 트리거 이벤트가 없는 이유는?", choices:["upsert는 트리거를 우회하기 때문","upsert는 insert 또는 update로 분해되어 각각의 트리거가 실행되기 때문","upsert 트리거는 유료 기능이라서","after 트리거만 실행되기 때문"], correct:1, explain:"upsert는 레코드별로 insert 또는 update로 처리되어 해당 이벤트의 트리거가 실행됩니다. merge는 update와 delete로 처리됩니다."},
+    {lesson:6, q:"before insert 트리거에서 사용할 수 없는 컨텍스트 변수는?", choices:["Trigger.new","Trigger.newMap","Trigger.isBefore","Trigger.size"], correct:1, explain:"before insert 시점에는 레코드에 아직 Id가 없어 Trigger.newMap(Id→레코드 맵)을 사용할 수 없습니다. newMap은 before update, after insert/update/undelete에서 사용 가능합니다."},
+    {lesson:6, q:"update 트리거에서 이전 값과 새 값을 비교할 때 권장되는 방법은?", choices:["Trigger.old와 Trigger.new를 같은 인덱스로 비교","Trigger.oldMap.get(rec.Id)로 이전 버전을 조회해 비교","이전 값은 SOQL로 다시 조회","비교할 방법이 없다"], correct:1, explain:"Trigger.old와 Trigger.new의 순서가 같다는 보장이 없으므로, Id 기반의 Trigger.oldMap.get()으로 비교해야 안전합니다."},
+    {lesson:6, q:"단일 DML로 300건을 업데이트하면 해당 오브젝트의 트리거는 몇 번 실행되는가?", choices:["1번","2번 (200건 + 100건 배치)","3번","300번"], correct:1, explain:"트리거는 최대 200건씩 암묵적으로 배치 처리됩니다. 300건이면 200+100으로 두 번 실행됩니다."},
+    {lesson:6, q:"검증 실패 메시지를 특정 필드 옆에 표시하려면?", choices:["record.addError('msg')","record.Field__c.addError('msg')","throw new DmlException('msg')","System.debug('msg')"], correct:1, explain:"sObject.addError()는 페이지 수준에, sObject.Field.addError()는 해당 필드 옆에 오류를 표시하며 둘 다 DML을 차단합니다."},
+
+    {lesson:7, q:"Apex에서 접근 제한자를 생략하면 적용되는 기본값은?", choices:["public","global","private","protected"], correct:2, explain:"Apex의 기본 접근 제한자는 private입니다. 멤버는 해당 클래스 안에서만 접근 가능합니다."},
+    {lesson:7, q:"Apex 버전 67 이상에서 sharing 키워드를 생략하고 클래스를 선언하면?", choices:["without sharing으로 동작한다","with sharing이 기본 적용된다","컴파일 오류가 난다","inherited sharing이 적용된다"], correct:1, explain:"v67부터 sharing 키워드 생략 시 기본값이 with sharing입니다(이전 버전은 without)."},
+    {lesson:7, q:"호출한 코드의 sharing 모드를 그대로 따라가게 하는 클래스 선언은?", choices:["with sharing","without sharing","inherited sharing","dynamic sharing"], correct:2, explain:"inherited sharing은 호출자의 sharing 컨텍스트를 상속합니다. 재사용 유틸리티 클래스에 적합합니다."},
+    {lesson:7, q:"@InvocableMethod의 규칙으로 옳은 것은?", choices:["클래스당 여러 개 선언 가능하다","인스턴스 메서드여야 한다","클래스당 1개만 가능하며 static이고, 입출력은 단일 List 타입이어야 한다","반환 타입은 반드시 void다"], correct:2, explain:"@InvocableMethod는 클래스당 1개, static이어야 하며 입력/출력은 단일 List 타입이어야 합니다. Flow·프롬프트 템플릿·에이전트 액션에서 호출할 수 있습니다."},
+    {lesson:7, q:"@Future 메서드의 요건은?", choices:["인스턴스 메서드 + String 반환","static + void 반환, 콜아웃이 필요하면 @Future(callout=true)","global 클래스에만 선언 가능","반드시 List를 반환"], correct:1, explain:"@Future 메서드는 static이고 void를 반환해야 하며, 웹 서비스 콜아웃에는 callout=true 속성이 필요합니다."},
+    {lesson:7, q:"사용자가 접근할 수 없는 필드를 예외 없이 조용히 제거하며 조회하려면?", choices:["WITH USER_MODE 절","Security.stripInaccessible(AccessType.READABLE, records)","try-catch로 감싼다","WITH SECURITY_ENFORCED만 가능"], correct:1, explain:"stripInaccessible은 FLS를 통과하지 못한 필드를 예외 없이 제거합니다. 반면 WITH USER_MODE는 접근 불가 필드가 있으면 예외를 던집니다."},
+    {lesson:7, q:"future 메서드에서 다른 future 메서드를 호출해야 하는 상황의 해결책은?", choices:["가능하므로 그냥 호출한다","Queueable Apex로 전환한다 — 잡 체이닝이 허용된다","Batch Apex만 가능하다","동기 호출로 바꾼다"], correct:1, explain:"future에서 future 호출은 불가합니다. Queueable은 잡 체이닝을 지원하므로 이런 시나리오에 적합합니다."},
+
+    {lesson:8, q:"레코드 저장 시 before 단계에서 레코드 트리거 플로우와 Apex 트리거의 실행 순서는?", choices:["Apex before 트리거 → before-save 플로우","before-save 레코드 트리거 플로우 → Apex before 트리거","동시에 실행된다","순서는 매번 무작위다"], correct:1, explain:"실행 순서상 before-save 레코드 트리거 플로우가 먼저, 그다음 before Apex 트리거가 실행됩니다."},
+    {lesson:8, q:"워크플로우 규칙의 필드 업데이트가 발생하면?", choices:["아무 트리거도 다시 실행되지 않는다","before/after update 트리거가 다시 실행되지만 커스텀 검증 규칙은 재실행되지 않는다","커스텀 검증 규칙까지 모두 재실행된다","트랜잭션이 즉시 커밋된다"], correct:1, explain:"워크플로우 필드 업데이트 시 update 트리거들이 재실행되며, 시스템 검증 대부분은 다시 돌지만 커스텀 검증 규칙은 재실행되지 않습니다."},
+    {lesson:8, q:"실행 순서에서 데이터베이스 커밋과 이메일 발송의 관계는?", choices:["이메일이 커밋보다 먼저 발송된다","커밋은 모든 단계 후 마지막에 한 번 일어나고, 이메일 등 post-commit 로직은 커밋 후 실행된다","커밋은 각 단계마다 일어난다","이메일은 실행 순서와 무관하다"], correct:1, explain:"중간 단계의 저장은 커밋이 아니며, 커밋은 끝에 한 번 일어납니다. 이메일·비동기 Apex·플랫폼 이벤트 발송 등은 커밋 이후의 post-commit 로직입니다."},
+    {lesson:8, q:"트리거 재귀(무한 반복)를 방지하는 데 흔히 사용하는 것은?", choices:["글로벌 변수","static 변수 — 트랜잭션 범위에서 유지되므로 실행 여부를 기억할 수 있다","레코드에 플래그 필드 추가만이 유일한 방법","트리거를 비활성화"], correct:1, explain:"static 변수는 트랜잭션이 끝날 때까지 유지되고 모든 참조가 같은 인스턴스를 보므로, 트리거 재귀 식별·제한에 흔히 사용됩니다."},
+    {lesson:8, q:"플랫폼 이벤트의 API명 접미사와 Apex 구독 트리거로 지원되는 타이밍은?", choices:["__c / before insert","__e / after insert만","__mdt / after update","__e / before와 after 모두"], correct:1, explain:"플랫폼 이벤트 API명은 __e로 끝나고, 구독 Apex 트리거는 after insert만 지원됩니다. 이벤트는 insert만 가능하며 SOQL/SOSL로 조회할 수 없습니다."},
+    {lesson:8, q:"트랜잭션이 실패해도 오류 로그를 남기고 싶다. 플랫폼 이벤트의 어떤 설정이 필요한가?", choices:["Publish After Commit","Publish Immediately — 발행 호출 시점에 즉시 발행되어 롤백과 무관하게 살아남는다","Auto Publish","트랜잭션 실패 시 이벤트는 무조건 사라진다"], correct:1, explain:"Publish Immediately는 트랜잭션 커밋과 무관하게 발행 시점에 즉시 발행되므로, 실패(롤백)하는 트랜잭션의 오류 로깅에 적합합니다."},
+
+    {lesson:9, q:"프로덕션 배포를 위한 Apex 테스트 커버리지 요구사항은?", choices:["클래스마다 90% 이상","조직 전체 75% 이상 + 모든 트리거에 일부라도 커버리지","50% 이상이면 충분","커버리지 요구는 없다"], correct:1, explain:"조직 전체 커버리지 75% 이상, 그리고 모든 Apex 트리거는 일부라도 커버리지가 있어야 하며, 모든 테스트가 예외 없이 통과해야 합니다."},
+    {lesson:9, q:"테스트 메서드의 올바른 시그니처는?", choices:["public Integer로 선언","@isTest 애노테이션 + static + void 반환 + 인자 없음","반드시 testMethod 키워드만 사용","인스턴스 메서드로 선언"], correct:1, explain:"테스트 메서드는 @isTest가 붙은 static void 메서드이며 인자를 받지 않습니다. 클래스와 메서드는 private 권장입니다."},
+    {lesson:9, q:"한 테스트 클래스의 모든 테스트 메서드가 공유할 데이터를 한 번만 만들려면?", choices:["각 메서드에서 반복 생성","@TestSetup 메서드에서 생성 — 다른 테스트 메서드보다 먼저 1회 실행된다","seeAllData=true로 실제 데이터 사용","static 블록에서 생성"], correct:1, explain:"@TestSetup 메서드는 클래스의 다른 테스트 메서드보다 먼저 실행되어 공용 테스트 데이터를 제공합니다."},
+    {lesson:9, q:"기본 설정에서 테스트 메서드가 볼 수 있는 조직 데이터는?", choices:["모든 데이터","표준/커스텀 오브젝트 데이터는 안 보이고, 셋업 오브젝트(User, Profile 등) 데이터는 보인다","아무 데이터도 안 보인다","커스텀 오브젝트만 보인다"], correct:1, explain:"기본적으로 테스트는 표준·커스텀 데이터를 보지 못하며 셋업 오브젝트 데이터만 봅니다. seeAllData=true를 쓰면 실제 데이터가 보이지만 @TestSetup은 지원되지 않습니다."},
+    {lesson:9, q:"Test.startTest()와 Test.stopTest()의 효과 두 가지는?", choices:["코드 커버리지를 2배로 계산 + 로그 삭제","새로운 거버너 한도 세트 제공 + 비동기 처리를 stopTest 시점에 강제 완료","테스트 격리 해제 + 데이터 커밋","실행 속도 향상만"], correct:1, explain:"startTest/stopTest 사이는 새 거버너 한도로 측정되며, stopTest 시점에 @future 등 비동기 처리가 강제 완료되어 결과를 동기적으로 검증할 수 있습니다."},
+    {lesson:9, q:"Test.loadData()가 데이터를 읽어오는 소스는?", choices:["외부 REST API","Static Resource로 업로드한 CSV 파일 (첫 줄은 컬럼명)","프로덕션 데이터베이스","엑셀 파일 직접 업로드"], correct:1, explain:"Test.loadData(sObjectType, 'ResourceName')는 Static Resource CSV에서 테스트 레코드를 생성합니다. 프로덕션 배포 시 해당 리소스가 존재해야 합니다."},
+    {lesson:9, q:"System.runAs(user)의 용도로 옳은 것은?", choices:["프로덕션 데이터 접근","특정 사용자 컨텍스트로 보안을 강제 + Mixed DML 오류 우회","거버너 한도 해제","테스트 속도 향상"], correct:1, explain:"runAs는 지정 사용자의 권한·공유로 코드를 실행하며, 셋업 오브젝트와 일반 오브젝트를 한 트랜잭션에서 DML할 때 나는 Mixed DML 오류의 우회로도 사용됩니다."},
+    {lesson:9, q:"테스트 안에서 SOSL 검색을 실행하면 기본 결과는?", choices:["실제 조직 데이터가 검색된다","빈 결과가 반환되며, Test.setFixedSearchResults()로 결과를 지정할 수 있다","예외가 발생한다","최근 100건이 반환된다"], correct:1, explain:"테스트의 SOSL은 기본적으로 빈 결과를 반환합니다. Test.setFixedSearchResults(ids)로 반환할 레코드를 지정합니다."},
+
+    {lesson:10, q:"'Too many SOQL queries' 오류의 근본 원인과 해결책은?", choices:["쿼리가 느려서 — 인덱스 추가","루프 안에서 쿼리 실행 — 루프 밖에서 Set<Id>를 모아 IN 절로 단일 쿼리","오브젝트가 많아서 — 오브젝트 통합","해결 불가"], correct:1, explain:"루프 안 SOQL이 전형적 원인입니다. 루프에서 Id를 Set으로 모은 뒤 WHERE Id IN :ids 단일 쿼리로 바꾸는 것이 표준 벌크화 패턴입니다."},
+    {lesson:10, q:"루프 안 DML로 인한 한도 초과를 해결하는 방법은?", choices:["DML마다 sleep 삽입","수정할 레코드를 List에 모아 루프 밖에서 단일 DML 실행","레코드를 하나씩 다른 트랜잭션으로 분리","한도 상향 요청"], correct:1, explain:"레코드를 컬렉션에 모아 루프 밖에서 한 번의 DML로 처리합니다. 대량이면 SOQL for 루프의 200건 배치당 1회 DML 패턴을 씁니다."},
+    {lesson:10, q:"부모-자식 서브쿼리의 개수 한도는 메인 쿼리 한도와 어떤 관계인가?", choices:["같다","메인 쿼리 한도의 3배","무제한","메인 쿼리의 절반"], correct:1, explain:"서브쿼리 개수 한도는 메인 쿼리 한도의 3배입니다. 단, 서브쿼리가 가져오는 행 수는 전체 행 수 한도에 포함됩니다."},
+    {lesson:10, q:"SOQL 성능을 높이는 인덱스된 필드가 아닌 것은?", choices:["레코드 Id","Name","External ID로 지정한 필드","일반 텍스트 커스텀 필드"], correct:3, explain:"Id, Name, External ID 지정 필드, lookup/master-detail 필드는 인덱스되어 있어 WHERE 절 성능에 유리합니다. 일반 텍스트 필드는 기본적으로 인덱스되지 않습니다."},
+
+    {lesson:11, q:"수식 필드와 롤업 서머리 필드의 값 저장 방식 차이는?", choices:["둘 다 저장된다","수식은 접근 시 계산되어 저장되지 않고, 롤업은 자식 저장 시 계산되어 저장되며 부모의 자동화를 트리거한다","롤업은 저장되지 않는다","둘 다 저장되지 않는다"], correct:1, explain:"수식 필드는 조회 시점 계산(비저장)이라 리포트 필터 등에 주의가 필요하고, 롤업 서머리는 값이 저장되며 부모 레코드의 자동화까지 트리거합니다."},
+    {lesson:11, q:"트리거에서 조부모(부모의 부모) 레코드의 필드 값이 필요하다. 쿼리를 줄이는 노코드 대안은?", choices:["방법이 없다 — 쿼리 필수","자식 오브젝트에 교차 오브젝트 수식 필드를 만들어 조부모 값을 노출한다 (최대 10단계)","롤업 서머리로 조부모 값을 내린다","워크플로우로 복사한다"], correct:1, explain:"교차 오브젝트 수식은 최대 10단계 관계의 부모 데이터를 참조할 수 있어, 트리거의 추가 쿼리를 수식 필드 하나로 대체할 수 있습니다. 코드 전에 노코드 옵션을 먼저 검토하세요."},
+
+    {lesson:12, q:"LWC 컴포넌트 이름 규칙으로 옳은 것은?", choices:["폴더는 PascalCase, 템플릿 참조는 camelCase","폴더/파일은 camelCase, 다른 컴포넌트 템플릿에서는 kebab-case로 참조 (예: <c-techs-certs-held>)","모두 대문자","자유 형식"], correct:1, explain:"LWC 폴더·파일·속성은 camelCase, JS 클래스는 PascalCase, 템플릿 참조는 c- 네임스페이스의 kebab-case이며 닫는 태그가 필요합니다."},
+    {lesson:12, q:"Aura 컴포넌트와 LWC의 포함(containment) 관계는?", choices:["LWC가 Aura를 포함할 수 있다","Aura가 LWC를 포함할 수 있다 (반대는 불가)","서로 포함 불가","서로 자유롭게 포함 가능"], correct:1, explain:"Aura 컴포넌트는 LWC를 포함할 수 있지만, LWC는 Aura를 포함할 수 없습니다. 커스텀 Lightning Application은 Aura로만 만들 수 있습니다."},
+    {lesson:12, q:"부모 컴포넌트가 자식 LWC의 속성에 값을 전달하려면 자식 속성에 필요한 것은?", choices:["@track","@wire","@api — 속성을 public으로 만든다","@public"], correct:2, explain:"LWC 속성은 기본 private이며, @api 데코레이터를 붙여야 public이 되어 부모가 값을 전달할 수 있습니다. 데이터는 부모→자식 방향으로만 흐릅니다."},
+    {lesson:12, q:"@wire(getRecord, { recordId: '$recordId', ... })에서 $ 접두사의 의미는?", choices:["문자열 상수 표시","해당 값이 변경되면 wire가 자동 재실행되는 반응형(reactive) 바인딩","보안 필터","캐시 비활성화"], correct:1, explain:"$ 접두사는 반응형 바인딩입니다. recordId 값이 바뀌면 wire 서비스가 자동으로 서버를 다시 호출합니다."},
+    {lesson:12, q:"LWC에서 DML을 수행하는 Apex 메서드를 호출하는 올바른 방식은?", choices:["@wire로 연결한다","imperative 호출 — Promise를 반환하며 .then()/.catch()로 처리하고, 필요 시 refreshApex로 wire 데이터를 갱신한다","cacheable=true를 붙여 wire로 호출","HTML에서 직접 호출"], correct:1, explain:"wire는 cacheable=true(데이터 반환 전용, DML 불가)가 필요하므로, DML은 imperative 호출로 수행합니다. 호출은 Promise를 반환하고, refreshApex(this.wiredResult)로 화면을 갱신합니다."}
+  ];
+
+  const ADVANCED = [
+    {lesson:2, adv:true, q:"Replay Debugger에서 브레이크포인트로는 수정된 컬렉션의 변경 내용이 보이지 않고, 큰 리스트는 'too large to display'로 표시된다. 해결책은?", choices:["로그 레벨을 낮춘다","체크포인트(checkpoint)를 사용한다 — 힙 덤프를 캡처해 컬렉션 내용까지 보여준다","System.debug만 사용한다","브레이크포인트를 두 개 설정한다"], correct:1, explain:"브레이크포인트는 일부 변수 상태를 못 보여주지만, 체크포인트는 힙 덤프를 떠서 로컬·static·트리거 컨텍스트 변수의 풍부한 정보를 보여줍니다."},
+    {lesson:2, adv:true, q:"거버너 한도 초과로 발생한 LimitException을 try-catch로 잡아 처리할 수 있는가?", choices:["catch(LimitException e)로 잡을 수 있다","잡을 수 없다 — 처리 불가능한 예외이며 트랜잭션이 종료되고 이전 DB 작업은 롤백된다","finally 블록에서만 처리 가능","관리자 권한이면 가능"], correct:1, explain:"거버너 한도 초과 예외는 catch할 수 없는 예외입니다. 트랜잭션이 즉시 종료되고 이전 데이터베이스 작업이 롤백됩니다. Limits 클래스로 사전 방어 코딩을 해야 합니다."},
+    {lesson:3, adv:true, q:"인라인(대괄호) SOQL의 LAST_N_DAYS: 날짜 리터럴에 바인드 변수를 쓰면?", choices:["정상 동작한다","오류가 발생한다 — 문자열로 쿼리를 조립해 Database.query()로 우회해야 한다","자동으로 0으로 처리된다","경고만 출력된다"], correct:1, explain:"LAST_N_DAYS: 안에는 바인드 변수를 쓸 수 없습니다. 문자열로 동적 쿼리를 만들어 Database.query()로 실행하는 것이 우회 방법입니다."},
+    {lesson:3, adv:true, q:"Database.query()로 실행하는 동적 SOQL의 문법 오류는 언제 드러나는가?", choices:["저장(컴파일) 시점","런타임 — 실행되기 전까지는 발견되지 않는다","배포 시점","린터가 사전 감지"], correct:1, explain:"동적 SOQL은 문자열이므로 컴파일 검사를 받지 않고, 문법 오류가 런타임에야 드러납니다. 인라인 SOQL은 컴파일 시 검증됩니다."},
+    {lesson:3, adv:true, q:"부모→자식 중첩 서브쿼리는 SELECT 절에서 몇 단계까지 가능한가?", choices:["1단계","3단계","5단계","무제한"], correct:2, explain:"부모→자식 중첩 쿼리는 SELECT 절에서 5단계까지, 자식→부모 점 표기는 조상 5단계까지 가능합니다."},
+    {lesson:4, adv:true, q:"빈 List<Contact>를 insert 하면?", choices:["DmlException 발생","예외 없이 정상 통과한다","LimitException 발생","null pointer 예외 발생"], correct:1, explain:"빈 리스트 insert는 예외를 일으키지 않습니다. 반면 리스트 안에 null 요소가 있으면 오류가 발생합니다."},
+    {lesson:4, adv:true, q:"merge DML의 제약으로 옳은 것은?", choices:["모든 오브젝트에 사용 가능","최대 3개의 레코드를 하나로 병합하며, 소수의 표준 오브젝트에만 적용된다","최대 10개까지 병합 가능","커스텀 오브젝트 전용이다"], correct:1, explain:"merge는 최대 3개 레코드를 하나로 합치며 Account, Contact, Lead 등 일부 표준 오브젝트에서만 지원됩니다."},
+    {lesson:4, adv:true, q:"standalone insert 문과 Database.insert(records, false)의 실패 시 동작 차이는?", choices:["둘 다 예외를 던진다","standalone은 DmlException을 던지고 전체가 실패하지만, Database 메서드(AllOrNone=false)는 예외 없이 SaveResult에 실패를 기록하고 성공분은 저장한다","Database 메서드가 항상 빠르다","standalone은 부분 성공을 지원한다"], correct:1, explain:"standalone DML은 all-or-nothing이며 실패 시 DmlException을 던집니다. Database.insert(..., false)는 부분 성공을 허용하고 예외 대신 SaveResult로 결과를 알려줍니다."},
+    {lesson:5, adv:true, q:"업로드를 마친 아웃바운드 체인지 셋에 컴포넌트를 추가하려면?", choices:["업로드된 셋을 열어 추가한다","업로드 후에는 수정 불가 — 복제(clone)해서 추가 후 다시 업로드한다","타겟 조직에서 추가한다","Salesforce 지원에 요청한다"], correct:1, explain:"업로드된 체인지 셋은 수정할 수 없습니다. 복제해서 컴포넌트를 추가한 뒤 새로 업로드해야 합니다."},
+    {lesson:5, adv:true, q:"샌드박스에서 프로덕션으로의 마이그레이션에 Unmanaged 패키지를 쓰지 말라는 이유는?", choices:["설치가 느려서","업그레이드가 불가능하고, 관련 조직 간 이동에는 체인지 셋이 적합하기 때문","프로덕션에 설치 자체가 안 되므로","라이선스 비용 때문"], correct:1, explain:"Unmanaged 패키지는 업그레이드할 수 없고 오픈소스/템플릿 배포용입니다. 연결된 조직 간 마이그레이션에는 체인지 셋을 사용합니다."},
+    {lesson:6, adv:true, q:"트리거 킬 스위치의 설정 '데이터'까지 배포에 포함하고 싶다. Custom Settings 대신 Custom Metadata Type을 쓰는 이유는?", choices:["CMT가 더 저렴해서","Custom Settings는 정의만 배포되지만 CMT는 정의와 레코드 데이터가 모두 배포되기 때문","CMT는 UI가 예뻐서","Custom Settings는 Apex에서 못 읽으므로"], correct:1, explain:"Custom Metadata Type은 정의+데이터 모두 배포·패키징 가능하지만, Custom Settings는 정의만 배포되고 데이터는 수동 재생성해야 합니다."},
+    {lesson:6, adv:true, q:"Trigger_Switch__mdt.getInstance('Course_Delivery_Trigger') 호출의 거버너 한도 소비는?", choices:["SOQL 쿼리 1회로 카운트된다","캐시에서 읽으므로 SOQL 카운트를 소비하지 않는다","DML 1회로 카운트된다","힙 한도를 2배 소비한다"], correct:1, explain:"Custom Metadata Type의 getInstance()는 캐시된 데이터를 읽어 SOQL 거버너 한도를 소비하지 않습니다. Custom Settings도 동일하게 캐시 기반입니다."},
+    {lesson:6, adv:true, q:"Cascade Delete로 함께 삭제되는 자식 레코드의 delete 트리거는?", choices:["항상 실행된다","실행되지 않는다 — 일부 벌크 작업은 트리거를 실행하지 않는다","before delete만 실행된다","after delete만 실행된다"], correct:1, explain:"Cascade Delete 같은 일부 대량 작업은 트리거를 실행하지 않습니다. 자식 정리 로직을 트리거에만 의존하면 구멍이 생길 수 있습니다."},
+    {lesson:7, adv:true, q:"커스텀 SOAP 웹 서비스 메서드를 노출하기 위한 요건은?", choices:["@RestResource만 붙이면 된다","클래스는 global, 메서드는 webservice 키워드 + static이어야 한다","private 클래스로도 가능","@AuraEnabled를 붙인다"], correct:1, explain:"SOAP 웹 서비스는 global 클래스에 webservice 키워드가 붙은 static 메서드로 노출합니다. REST는 @RestResource + @HttpGet/@HttpPost 등을 사용합니다."},
+    {lesson:7, adv:true, q:"사용자가 110개 Account 중 50개에만 접근 가능하다. with sharing 클래스의 SOQL이 반환하는 개수는?", choices:["110개","50개","0개","권한 오류 발생"], correct:1, explain:"with sharing은 실행 사용자의 레코드 접근(공유)을 존중하므로 50개만 반환합니다. without sharing이라면 110개 모두 반환합니다."},
+    {lesson:7, adv:true, q:"@AuraEnabled(cacheable=true) 메서드 안에서 DML을 수행하면?", choices:["정상 동작한다","불가 — cacheable 메서드는 데이터 반환만 가능하며 DML이 필요하면 cacheable 없이 imperative로 호출해야 한다","캐시가 두 배로 늘어난다","자동으로 비동기 처리된다"], correct:1, explain:"cacheable=true 메서드는 DML을 수행할 수 없습니다(데이터 반환 전용). DML은 별도의 @AuraEnabled 메서드를 imperative 방식으로 호출합니다."},
+    {lesson:8, adv:true, q:"after 트리거가 삽입한 레코드의 트리거에서 처리되지 않은 예외가 발생하면 원래 트랜잭션은?", choices:["원래 레코드는 저장된다","전체 데이터베이스 변경이 롤백되고 이후 실행 순서 단계가 중단된다","해당 레코드만 실패한다","예외가 자동으로 무시된다"], correct:1, explain:"트랜잭션 어디서든 처리되지 않은 예외가 나면 전체 DB 변경이 롤백됩니다. 트랜잭션 시작 시점에 암묵적 세이브포인트가 유지됩니다."},
+    {lesson:8, adv:true, q:"자식 레코드 저장이 롤업 서머리로 부모를 갱신하면 부모에서도 전체 실행 순서가 다시 돈다. 커밋은 몇 번 일어나는가?", choices:["부모/자식 각각 1번씩","마지막에 단 1번 — 커밋과 post-commit 로직은 트랜잭션 끝에 한 번만 실행된다","단계마다 커밋","롤업은 커밋을 유발하지 않는다"], correct:1, explain:"부모로 캐스케이드될 때마다 실행 순서가 재시작되지만, 커밋과 post-commit(이메일 등)은 현재 트랜잭션의 마지막에 딱 한 번 실행됩니다."},
+    {lesson:8, adv:true, q:"플랫폼 이벤트 메시지에 대한 설명으로 옳은 것은?", choices:["update와 delete가 가능하다","insert만 가능하고, UI에서 볼 수 없으며, SOQL/SOSL로 조회할 수 없다","리포트로 조회할 수 있다","레코드처럼 Recycle Bin에 들어간다"], correct:1, explain:"플랫폼 이벤트는 레코드가 아닌 이벤트 메시지로, 발행(insert)만 가능하고 조회·수정·삭제가 불가능합니다. EventBus.publish()로 발행합니다."},
+    {lesson:9, adv:true, q:"75% 커버리지를 달성한 클래스를 살짝 수정하면 커버리지는?", choices:["유지된다","0으로 리셋된다 — 해당 테스트를 다시 실행해야 커버리지가 다시 계산된다","자동으로 재계산된다","5%만 감소한다"], correct:1, explain:"클래스를 어떤 식으로든 수정하면 그 클래스의 커버리지는 0이 되며, 테스트를 재실행해야 다시 집계됩니다."},
+    {lesson:9, adv:true, q:"다른 클래스의 private 메서드를 테스트에서 직접 호출하고 싶다. 올바른 방법은?", choices:["public으로 바꾼다","해당 멤버에 @TestVisible 애노테이션을 붙인다","리플렉션을 사용한다","불가능하다"], correct:1, explain:"@TestVisible을 붙이면 프로덕션 코드의 접근 제한은 유지하면서 테스트 클래스에서만 private/protected 멤버에 접근할 수 있습니다."},
+    {lesson:9, adv:true, q:"Apex 테스트 모범 사례에 어긋나는 것은?", choices:["유효/무효/벌크 데이터를 모두 테스트","클래스와 테스트 클래스를 1:1로 유지","레코드 Id와 ProfileId를 하드코딩","@TestSetup이 참조하는 Static Resource를 프로덕션에도 배포"], correct:2, explain:"Id는 조직마다 다르므로 하드코딩하면 배포 후 실패합니다. Profile 등은 쿼리로 조회해야 합니다."},
+    {lesson:10, adv:true, q:"update 트리거에서 처리 대상을 '관심 필드가 실제로 변경된 레코드'로만 줄이는 방법은?", choices:["모든 레코드를 처리한다","Trigger.oldMap의 이전 값과 비교해 달라진 레코드만 골라낸다","LIMIT 1을 쓴다","별도 플래그 오브젝트를 만든다"], correct:1, explain:"Trigger.oldMap.get(rec.Id)의 이전 값과 비교해 실제 변경된 레코드만 컬렉션에 담아 처리하면 쿼리·DML 대상이 줄어 한도를 아낄 수 있습니다."},
+    {lesson:10, adv:true, q:"한 오브젝트에 트리거를 여러 개 만들면 생기는 문제는?", choices:["컴파일 오류","트리거 간 실행 순서가 보장되지 않는다 — 그래서 'one trigger per object' 원칙을 따른다","성능이 2배 빨라진다","마지막 트리거만 실행된다"], correct:1, explain:"동일 오브젝트의 여러 트리거는 실행 순서를 제어할 수 없습니다. 오브젝트당 트리거 1개 + 핸들러 클래스로 로직을 분리하는 것이 표준 설계입니다."},
+    {lesson:11, adv:true, q:"Certification Held의 중복 방지 키(18자 ID + '|' + 18자 ID)를 담는 Unique 텍스트 필드의 길이는?", choices:["36","37","38","40"], correct:1, explain:"18 + 1('|') + 18 = 37자입니다. 대소문자 구분 Unique 필드로 만들면 트리거 경로든 UI 경로든 중복 생성이 차단됩니다."},
+    {lesson:11, adv:true, q:"update 트리거에서 Status가 '방금' Complete/Pass로 바뀐 레코드만 골라내려면?", choices:["Trigger.new의 Status만 확인","Trigger.new의 값이 Complete/Pass이면서 Trigger.oldMap의 이전 값은 아니었던 레코드를 필터링","SOQL로 다시 조회","확인할 방법이 없다"], correct:1, explain:"새 값이 조건을 만족하고 이전 값(oldMap)은 만족하지 않았던 레코드만 골라야 '방금 전환된' 레코드를 정확히 잡습니다."},
+    {lesson:12, adv:true, q:"App Builder 페이지에 독립적으로 배치된(포함 관계가 없는) 두 LWC가 통신하는 표준 방법은?", choices:["전역 변수 공유","Lightning Message Service 채널로 발행/구독한다","부모 컴포넌트를 강제로 만든다","window.postMessage만 가능"], correct:1, explain:"포함 관계가 없는 컴포넌트 간에는 Lightning Message Service를 사용합니다. Aura 컴포넌트나 Visualforce 페이지와도 통신할 수 있습니다."},
+    {lesson:12, adv:true, q:"자식 LWC가 부모에게 데이터를 전달하는 CustomEvent 패턴으로 옳은 것은?", choices:["부모 속성에 직접 대입한다","new CustomEvent('eventname', { detail: {...} })를 dispatchEvent하고, 부모는 oneventname 속성으로 청취해 event.detail을 읽는다","@api로 자식이 부모를 수정한다","LMS만 가능하다"], correct:1, explain:"페이로드는 CustomEvent 생성자 두 번째 인자의 detail에 담아 dispatchEvent하고, 부모는 on+이벤트명 핸들러에서 event.detail로 읽습니다. 데이터 흐름: 속성은 아래로, 이벤트는 위로."}
+  ];
+
+  const EN_BASE = [
+    ["A developer at AW Computing wants to edit Apex code directly in production. Is this possible?",["Yes - with admin permission","No - code must be written in a sandbox or other dev environment and deployed (trial production orgs are the exception)","Only during weekend maintenance windows","Classes yes, triggers no"]],
+    ["What does a deployment move between orgs?",["Record data","Metadata","User login history","Debug logs"]],
+    ["Which sandbox type suits performance/load testing and staging, and what is its refresh interval?",["Developer - daily","Partial Copy - every 5 days","Full - 29+ day interval","Developer Pro - every 7 days"]],
+    ["What is the value of an Integer variable declared but never assigned in Apex?",["0","Empty string","null","Compile error"]],
+    ["What happens when you add() a value that already exists in a Set?",["An exception is thrown","The duplicate is added","It is silently ignored - Sets do not allow duplicates","The old value is replaced with a warning"]],
+    ["Which statement about the Map collection is correct?",["Neither keys nor values may repeat","Keys must be unique; values may repeat","Values must be unique; keys may repeat","It is an ordered, indexed collection"]],
+    ["Which statement about arrays in Apex is correct?",["Apex has Java-style array types","There are no arrays, but array notation (bracket index) works on Lists","Arrays and Lists coexist as separate types","Array notation is not supported at all"]],
+    ["You copied a record ID from a report to use in Apex. What should you watch for?",["Report IDs are 18-character case-safe","Report IDs are 15-character case-sensitive; use CASESAFEID() or similar to get the 18-character form","IDs cannot be obtained from reports","15- and 18-char IDs point to different records"]],
+    ["For two sObject variables a and b, when is a == b true?",["Only when they reference the same instance","When all field values are equal","When only the Id matches","== cannot be used on sObjects"]],
+    ["Which changes does the platform block on a custom field referenced by an Apex class?",["Field label","Both the API name and the data type","Help text","Field description"]],
+    ["Which is true of code run via Execute Anonymous?",["It is saved as a class after compiling","It is compiled and executed but not saved","Only syntax-checked, never run","It is auto-registered as a trigger"]],
+    ["SOQL has no SELECT *. What is the substitute syntax to fetch all fields?",["SELECT ALL","FIELDS(ALL)","GET *","SELECT EVERYTHING"]],
+    ["In LIKE, what is the difference between the % and _ wildcards?",["% = one char, _ = zero or more","% = zero or more chars, _ = exactly one char","They behave identically","_ matches digits only"]],
+    ["What happens when a SOQL query assigned to a single sObject variable returns zero rows?",["The variable is set to null","A System.QueryException is thrown","An empty sObject is created","The query retries automatically"]],
+    ["A query's SELECT clause omits Id. Reading record.Id afterwards will:",["Throw an exception","Return null","Work fine - Id is always returned","Fail to compile"]],
+    ["A SOQL for loop uses a List<Contact> iteration variable and the query returns 403 rows. How many times does the loop body run?",["Once","Three times (batches of 200+200+3)","403 times","203 times"]],
+    ["In which set of SOQL clauses are bind variables (:var) supported?",["SELECT, FROM","WHERE, LIMIT, OFFSET","GROUP BY, HAVING","FROM, ORDER BY"]],
+    ["Which child-to-parent notation correctly gets the custom parent Certification Element's Name from a Certification Attempt?",["certAttempt.Certification_Element__c.Name","certAttempt.Certification_Element__r.Name","certAttempt.Certification_Element.Name","certAttempt.Parent.Name"]],
+    ["How is the default relationship name of a custom child relationship formed for parent-to-child queries?",["Child object API name + __c","The child object's plural label + __r (e.g., Course_Deliveries__r)","Parent object name + Child","A random GUID"]],
+    ["What is the return type of a SOSL search?",["List<sObject>","Map<Id, sObject>","List<List<sObject>> - lists in the order of the RETURNING clause","AggregateResult"]],
+    ["What does upsert use to match existing records?",["Record name","The Salesforce ID or an External ID field","Created date","Owner"]],
+    ["During upsert, an External ID matches two or more records. What happens?",["The first match is updated","All matches are updated","An error occurs and that record is neither inserted nor updated","A new record is inserted"]],
+    ["How do you query records that are in the Recycle Bin after a delete?",["Just add WHERE IsDeleted = true","Append the ALL ROWS keyword to the query","Deleted records can never be queried","Use FIELDS(DELETED)"]],
+    ["After a successful insert, the sObject variable used in the DML:",["Is unchanged","Is automatically populated with the new record ID","Is reset to null","Becomes read-only"]],
+    ["What does Database.insert(records, false) do?",["Rolls everything back on the first failure","Records failures without raising an exception and saves the successes (partial success)","Always throws an exception","false controls whether triggers fire"]],
+    ["Which method identifies failed records in a Database.SaveResult?",["getStatus()","Check isSuccess() is false, then read getErrors()","hasFailed()","getException()"]],
+    ["Which rule must a custom exception class follow?",["Must be declared global","Must extend Exception and have a class name ending with 'Exception'","Must implement an interface","Must start with 'Custom'"]],
+    ["When deploying Apex via change sets, where must unit test requirements be met?",["Source org only","Target org only","Both source and target orgs","Tests are optional"]],
+    ["What is the transactional behavior of deploying an inbound change set?",["Components can be cherry-picked","All-or-nothing - the whole set succeeds or fails together","Failed components retry automatically","Per-component rollback after deploy"]],
+    ["You need an AppExchange app with IP protection, upgrades, and a unique namespace. Which package type?",["Unmanaged Package","Managed Package","Unlocked Package","Change Set"]],
+    ["Which package type is recommended for internal apps, is editable in the installed org, supports versions, and is created only via the SFDX CLI (2GP)?",["Unmanaged Package","Managed Package","Unlocked Package (2GP CLI only)","1GP Managed Package"]],
+    ["What is the prerequisite for creating scratch orgs?",["A Full sandbox","A Dev Hub (enabled in production or a Developer Edition org)","An AppExchange account","DevOps Center installed"]],
+    ["Which source control system does Salesforce DevOps Center initially require?",["Bitbucket","GitLab","GitHub","SVN"]],
+    ["To modify field values on the triggering records without extra DML, which trigger timing must you use?",["after - because the Id is available","before - Trigger.new is writable before the save","Either works","Not possible in triggers"]],
+    ["Which trigger timing is available for the undelete event?",["before only","after only","Both before and after","There is no undelete trigger"]],
+    ["Why is there no separate upsert trigger event?",["Upsert bypasses triggers","Upsert resolves into insert or update, firing those events; merge resolves into update + delete","Upsert triggers are a paid feature","Only after triggers run"]],
+    ["Which context variable is NOT available in a before insert trigger?",["Trigger.new","Trigger.newMap","Trigger.isBefore","Trigger.size"]],
+    ["What is the recommended way to compare old and new values in an update trigger?",["Compare Trigger.old and Trigger.new by index","Look up the prior version with Trigger.oldMap.get(rec.Id)","Re-query the old values with SOQL","There is no way to compare"]],
+    ["A single DML updates 300 records. How many times does the object's trigger run?",["Once","Twice (batches of 200 + 100)","Three times","300 times"]],
+    ["How do you display a validation failure message next to a specific field?",["record.addError('msg')","record.Field__c.addError('msg')","throw new DmlException('msg')","System.debug('msg')"]],
+    ["What is the default access modifier in Apex when omitted?",["public","global","private","protected"]],
+    ["In Apex API version 67+, what happens if a class omits the sharing keyword?",["It behaves as without sharing","with sharing is applied by default","Compile error","inherited sharing is applied"]],
+    ["Which class declaration makes the class follow the caller's sharing mode?",["with sharing","without sharing","inherited sharing","dynamic sharing"]],
+    ["Which rule applies to @InvocableMethod?",["Multiple per class allowed","Must be an instance method","Only one per class, static, and input/output must be a single List type","Must return void"]],
+    ["What are the requirements of an @Future method?",["Instance method returning String","static and void; use @Future(callout=true) for web service callouts","Only allowed in global classes","Must return a List"]],
+    ["How do you query while silently removing fields the user cannot access, without exceptions?",["The WITH USER_MODE clause","Security.stripInaccessible(AccessType.READABLE, records)","Wrap in try-catch","Only WITH SECURITY_ENFORCED"]],
+    ["A future method needs to call another future method. The fix is:",["Just call it - it works","Switch to Queueable Apex, which supports job chaining","Only Batch Apex can help","Make the call synchronous"]],
+    ["In the before phase of the save order, what runs first?",["Before Apex triggers, then before-save flows","Before-save record-triggered flows, then before Apex triggers","They run simultaneously","The order is random"]],
+    ["When a workflow rule performs a field update:",["No triggers run again","Before and after update triggers run again, but custom validation rules do NOT re-run","All custom validations re-run too","The transaction commits immediately"]],
+    ["What is the relationship between database commit and email sending in the order of execution?",["Emails are sent before commit","Commit happens once at the very end; emails and other post-commit logic run after the commit","Commit happens at every step","Emails are unrelated to the order of execution"]],
+    ["What is commonly used to detect and limit trigger recursion?",["Global variables","A static variable - it lives for the whole transaction, so all references share its state","Only a flag field on the record","Deactivating the trigger"]],
+    ["What is the platform event API name suffix, and which Apex trigger timing can subscribe?",["__c / before insert","__e / after insert only","__mdt / after update","__e / both before and after"]],
+    ["You need error logs to survive a failed (rolled-back) transaction. Which platform event setting enables this?",["Publish After Commit","Publish Immediately - the event is published when the call executes, regardless of rollback","Auto Publish","Events always vanish if the transaction fails"]],
+    ["What are the Apex test coverage requirements for production deployment?",["90% per class","75% org-wide overall, plus some coverage for every trigger","50% is enough","No coverage requirements"]],
+    ["What is the correct signature of a test method?",["public Integer","@isTest annotation + static + void + no parameters","Only the testMethod keyword","An instance method"]],
+    ["How do you create data once that all test methods in a class can share?",["Recreate it in every method","Create it in a @TestSetup method - it runs before any other method in the class","Use seeAllData=true","Create it in a static block"]],
+    ["By default, which org data can a test method see?",["All data","No standard/custom object data, but setup object data (User, Profile, etc.) is visible","No data at all","Custom objects only"]],
+    ["What two effects do Test.startTest()/Test.stopTest() have?",["Double the coverage + clear logs","Provide a fresh set of governor limits + force async processing to complete at stopTest","Disable isolation + commit data","Only faster execution"]],
+    ["Where does Test.loadData() read records from?",["An external REST API","A CSV uploaded as a Static Resource (first line = column names)","The production database","A directly uploaded Excel file"]],
+    ["What is System.runAs(user) used for?",["Accessing production data","Enforcing a specific user's context/security + working around Mixed DML errors","Lifting governor limits","Speeding up tests"]],
+    ["What does a SOSL search return inside a test by default?",["Real org data","An empty result set - use Test.setFixedSearchResults() to stub results","An exception","The 100 most recent records"]],
+    ["What is the root cause and fix for 'Too many SOQL queries'?",["Slow query - add an index","A query inside a loop - collect Ids into a Set and run one query with an IN clause outside the loop","Too many objects - consolidate","No fix exists"]],
+    ["How do you fix DML limit errors caused by DML in a loop?",["Insert sleeps between DML calls","Collect records into a List and execute a single DML outside the loop","Split each record into its own transaction","Request a limit increase"]],
+    ["How does the parent-child subquery limit relate to the main query limit?",["They are the same","Subqueries get 3x the main query limit","Unlimited","Half of the main limit"]],
+    ["Which of these fields is NOT indexed for SOQL performance?",["Record Id","Name","A field marked External ID","A plain custom text field"]],
+    ["How do formula fields and roll-up summary fields differ in value storage?",["Both are stored","Formulas compute on access and are not stored; roll-ups compute on child save, ARE stored, and trigger parent automation","Roll-ups are not stored","Neither is stored"]],
+    ["A trigger needs a grandparent record's field. What no-code option removes the extra query?",["None - a query is required","A cross-object formula field on the child exposing the grandparent value (up to 10 relationships)","A roll-up summary pushing the value down","Copy it with workflow"]],
+    ["Which LWC naming rule is correct?",["Folder PascalCase, template reference camelCase","Folder/files camelCase; referenced from other templates in kebab-case (e.g., <c-techs-certs-held>)","All uppercase","Free-form"]],
+    ["What is the containment relationship between Aura components and LWCs?",["An LWC can contain an Aura component","An Aura component can contain an LWC (not the reverse)","They can never contain each other","Both directions are allowed"]],
+    ["For a parent to pass a value into a child LWC property, the child property needs:",["@track","@wire","@api - it makes the property public","@public"]],
+    ["In @wire(getRecord, { recordId: '$recordId', ... }), what does the $ prefix mean?",["A string constant","Reactive binding - the wire re-executes when the value changes","A security filter","Cache disabled"]],
+    ["What is the correct way to call an Apex method that performs DML from an LWC?",["Wire it with @wire","Call it imperatively - it returns a Promise handled with .then()/.catch(); use refreshApex to refresh wired data afterwards","Wire it with cacheable=true","Call it directly from HTML"]]
+  ];
+
+  const EN_ADV = [
+    ["In the Replay Debugger, a breakpoint doesn't show changes to a modified collection and large lists show 'too large to display'. The fix?",["Lower the log level","Use a checkpoint - it captures a heap dump revealing collection contents","Rely on System.debug only","Set two breakpoints"]],
+    ["Can a LimitException from exceeding a governor limit be caught with try-catch?",["Yes, with catch(LimitException e)","No - it is an unhandleable exception; the transaction terminates and prior DB work is rolled back","Only in a finally block","Yes, with admin permission"]],
+    ["What happens when you use a bind variable with the LAST_N_DAYS: date literal in inline (bracketed) SOQL?",["It works normally","An error occurs - build the query string and use Database.query() instead","It is treated as zero","Only a warning is printed"]],
+    ["When do syntax errors in dynamic SOQL run via Database.query() surface?",["At save (compile) time","At run time - not until the string executes","At deploy time","A linter catches them beforehand"]],
+    ["How many levels of parent-to-child nested subqueries are allowed in a SELECT clause?",["1","3","5","Unlimited"]],
+    ["What happens when you insert an empty List<Contact>?",["A DmlException","No exception - it passes silently","A LimitException","A null pointer error"]],
+    ["Which constraint applies to the merge DML statement?",["Works on every object","Combines up to 3 records into one and applies only to a few standard objects","Merges up to 10 records","Custom objects only"]],
+    ["How do a standalone insert statement and Database.insert(records, false) differ on failure?",["Both throw exceptions","Standalone throws a DmlException and everything fails; the Database method (AllOrNone=false) records failures in SaveResults without an exception and saves the successes","The Database method is just faster","Standalone supports partial success"]],
+    ["How do you add a component to an outbound change set that has already been uploaded?",["Open the uploaded set and add it","Uploaded sets cannot be modified - clone it, add the component, and upload again","Add it in the target org","Ask Salesforce Support"]],
+    ["Why should you NOT use an unmanaged package to migrate from sandbox to production?",["Installation is slow","It cannot be upgraded, and change sets are the right tool between related orgs","It cannot be installed in production at all","Licensing costs"]],
+    ["Why choose a Custom Metadata Type over Custom Settings for a trigger kill switch whose data must deploy too?",["CMTs are cheaper","Custom Settings deploy only their definition; CMTs deploy both definition AND record data","CMTs have a nicer UI","Custom Settings can't be read from Apex"]],
+    ["What governor cost does Trigger_Switch__mdt.getInstance('Course_Delivery_Trigger') incur?",["Counts as one SOQL query","None against SOQL limits - it reads from the cache","Counts as one DML","Doubles heap usage"]],
+    ["Do delete triggers fire for child records removed by Cascade Delete?",["Always","No - some bulk operations do not fire triggers","Only before delete fires","Only after delete fires"]],
+    ["What is required to expose a custom SOAP web service method?",["Just @RestResource","A global class with a static method using the webservice keyword","A private class works","Add @AuraEnabled"]],
+    ["A user can access 50 of 110 Accounts. How many does a SOQL query in a with sharing class return?",["110","50","0","A permission error"]],
+    ["What happens if you perform DML inside an @AuraEnabled(cacheable=true) method?",["It works fine","Not allowed - cacheable methods may only return data; use a separate imperative (non-cacheable) method for DML","The cache doubles","It becomes asynchronous automatically"]],
+    ["An after trigger inserts a record whose own trigger throws an unhandled exception. The original transaction:",["Keeps the original record","Is fully rolled back and no further order-of-execution steps run","Fails only that one record","Silently ignores the exception"]],
+    ["A child save updates its parent via roll-up summary, restarting the order of execution on the parent. How many commits occur?",["One per record","Exactly one, at the very end - commit and post-commit logic run once per transaction","One per step","Roll-ups never cause commits"]],
+    ["Which statement about platform event messages is correct?",["They support update and delete","They are insert-only, invisible in the UI, and cannot be queried via SOQL/SOSL","They can be reported on","They go to the Recycle Bin"]],
+    ["A class with 75%+ coverage is modified slightly. Its coverage now:",["Stays the same","Resets to zero - rerun its tests to recompute","Recalculates automatically","Drops by only 5%"]],
+    ["How can a test directly call another class's private method?",["Make it public","Annotate the member with @TestVisible","Use reflection","It's impossible"]],
+    ["Which practice violates Apex testing best practices?",["Testing valid, invalid, and bulk data","Keeping a 1:1 class-to-test-class mapping","Hardcoding record Ids and Profile Ids","Deploying the Static Resource referenced by @TestSetup to production"]],
+    ["In an update trigger, how do you narrow processing to records whose relevant field actually changed?",["Process every record","Compare each record with its prior version from Trigger.oldMap and keep only the changed ones","Use LIMIT 1","Create a separate flag object"]],
+    ["What problem arises from having multiple triggers on one object?",["Compile error","Their execution order is not guaranteed - hence the 'one trigger per object' principle","Performance doubles","Only the last trigger runs"]],
+    ["The Certification Held dedupe key concatenates two 18-char IDs with '|'. What field length is needed?",["36","37","38","40"]],
+    ["In an update trigger, how do you select records whose Status JUST changed to Complete/Pass?",["Check only Trigger.new's Status","Filter records where Trigger.new meets the condition AND the Trigger.oldMap version did not","Re-query with SOQL","There is no way"]],
+    ["What is the standard way for two independently placed LWCs (no containment) on an App Builder page to communicate?",["Shared global variables","Publish/subscribe over a Lightning Message Service channel","Force a common parent component","Only window.postMessage"]],
+    ["Which correctly describes the CustomEvent pattern for child-to-parent communication in LWC?",["Assign directly to a parent property","dispatchEvent(new CustomEvent('eventname', { detail: {...} })); the parent listens via oneventname and reads event.detail","The child modifies the parent via @api","Only LMS works"]]
+  ];
+
+  QUESTIONS.forEach((it, i)=>{ const t = EN_BASE[i]; if(t){ it.qEn = t[0]; it.cEn = t[1]; } });
+  ADVANCED.forEach((it, i)=>{ const t = EN_ADV[i]; if(t){ it.qEn = t[0]; it.cEn = t[1]; } });
+
+  // 개념 사전: 해설 앞에 붙는 배경 개념 설명
+  const CONCEPTS = {
+    sandboxes: "샌드박스는 프로덕션의 복제 환경입니다. Developer/Developer Pro는 메타데이터만(용량 차이), Partial Copy는 메타데이터+샘플 데이터(5GB/오브젝트당 1만 건, 샌드박스 템플릿 사용), Full은 프로덕션과 동일(새로 고침 29일+, 성능 테스트·스테이징용)입니다. 프로덕션에서는 코드를 직접 수정할 수 없습니다(트라이얼 예외).",
+    metadata: "메타데이터는 앱의 모양·기능을 정의하는 설정(클래스, 트리거, 오브젝트, LWC 등)이고, 데이터는 레코드입니다. 배포는 메타데이터를 옮기는 것이며 Metadata API가 XML로 노출합니다. 배포된 메타데이터는 병합이 아니라 덮어쓰기됩니다.",
+    apexlang: "Apex는 세일즈포스의 클라우드 기반 객체지향 언어로, 데이터 접근에 특화되어 있고 멀티테넌트 환경을 위해 설계되었습니다. 모든 코드는 클래스 또는 트리거로 저장되며, Execute Anonymous 코드는 컴파일·실행되지만 저장되지 않고 사용자 모드로 동작합니다.",
+    primitives: "Apex 기본 타입: Blob, Boolean, Date, Datetime, Decimal, Double, ID, Integer, Long, String, Time. 모든 변수는 타입과 무관하게 null로 초기화되며, 기본 타입은 값으로 전달(pass by value)됩니다.",
+    collections: "Apex 컬렉션 3종: List(순서 있음, 인덱스 접근, 중복 허용), Set(순서 없음, 중복은 예외 없이 무시), Map(고유 키→값, put/get/containsKey). Apex에 배열은 없지만 배열 표기법은 List에 사용할 수 있습니다.",
+    idtype: "레코드 ID는 15자 대소문자 구분 형식과 18자 케이스세이프 형식이 있습니다. URL·API·Apex·목록 보기는 18자, 리포트(및 Classic 일부 화면)는 15자를 사용하며, 수식 CASESAFEID(id)로 18자를 얻습니다.",
+    sobject: "sObject는 플랫폼 DB에 저장 가능한 모든 오브젝트의 상위 타입입니다. 커스텀 오브젝트/필드 API명은 __c로 끝납니다. sObject 간 ==는 모든 필드 비교, ===는 동일 인스턴스 참조 비교입니다. 플랫폼은 코드-설정 의존성을 추적해, 코드가 참조하는 필드의 API명·타입 변경을 차단합니다.",
+    debugging: "디버깅 도구: 브레이크포인트는 특정 라인에서 멈춰 변수를 확인하지만 일부 컬렉션 변경·대형 리스트는 못 보여줍니다. 체크포인트는 힙 덤프를 캡처해 로컬·static·트리거 컨텍스트 변수의 상세 정보를 제공합니다. Replay Debugger는 Apex Code FINEST 로그 레벨이 필요합니다.",
+    governor: "거버너 한도는 멀티테넌트 자원 보호를 위한 트랜잭션당 엄격한 제한(쿼리 수, DML 수, 힙, CPU 시간 등)입니다. 초과 시 catch 불가능한 예외로 트랜잭션이 종료되고 이전 DB 작업이 롤백됩니다. Limits 클래스(getQueries/getLimitQueries 등)로 방어적 코딩이 가능합니다.",
+    soqlbasics: "SOQL은 SQL과 달리 쿼리 전용이며 SELECT *가 없고(FIELDS(ALL/STANDARD/CUSTOM)로 대체) 조인 대신 관계 쿼리를 쓰며 거버너 한도의 적용을 받습니다.",
+    soqlwhere: "WHERE 연산자: =, !=, 비교, LIKE(%=0자 이상, _=정확히 1자), IN/NOT IN, INCLUDES/EXCLUDES(다중선택 피크리스트), AND/OR/NOT. 날짜는 YYYY-MM-DD(따옴표 없음), 날짜 리터럴(LAST_N_DAYS:365 등)도 지원됩니다.",
+    soqlreturn: "쿼리 반환: 보통 List<sObject>. 단일 sObject로 받으면 0행 또는 2행 이상에서 System.QueryException이 발생하므로 행 수가 보장될 때만 사용합니다. Id는 SELECT에 없어도 항상 반환되고, 그 외 필드는 선택하지 않으면 읽을 때 예외가 납니다.",
+    soqlforloop: "SOQL for 루프는 쿼리를 for문에 내장해 내부적으로 배치 처리하므로 힙을 아낍니다. 이터레이션 변수를 List로 선언하면 200건씩 순회하며(403건→3회), SELECT 문은 1회만 카운트됩니다.",
+    bindvars: "바인드 변수(:var)는 WHERE, LIMIT, OFFSET 절에서 지원됩니다. 동적 SOQL은 Database.query(문자열)로 실행하며 문법 오류가 런타임에야 드러나고, LAST_N_DAYS: 등 날짜 리터럴에 바인드 변수를 쓸 수 없는 제약의 우회로도 사용됩니다.",
+    relquery: "관계 쿼리: 자식→부모는 점 표기(커스텀은 __r, 예: Course__r.Name)로 조상 5단계까지, 부모→자식은 중첩 SELECT(커스텀 관계 기본 이름 = 자식 복수 라벨+__r)로 5단계까지 가능합니다. __c 필드는 외래 키 Id, __r은 sObject 참조입니다.",
+    sosl: "SOSL은 여러 오브젝트의 텍스트·이메일·전화 필드를 동시에 검색합니다: FIND '검색어' IN ALL FIELDS RETURNING Object1, Object2. 반환 타입은 List<List<sObject>>이며 바깥 리스트는 RETURNING 순서를 따릅니다. 어디에 있는지 모르는 데이터를 찾을 때 SOSL, 위치를 알 때는 SOQL을 씁니다.",
+    dml: "DML 명령: insert, update, upsert, delete, undelete, merge(최대 3건 병합, 일부 표준 오브젝트 전용). insert 성공 시 sObject 변수에 ID가 자동으로 채워지고, update/delete/undelete는 레코드 ID가 필요합니다.",
+    upsert: "upsert는 Salesforce ID 또는 External ID 필드로 매칭합니다(upsert records Ext_Id__c;). 매칭 0건→insert, 1건→update, 2건 이상→오류(해당 레코드는 처리되지 않음). update는 Salesforce ID로만 매칭합니다.",
+    softdelete: "delete는 소프트 삭제로 IsDeleted=true가 되고 기본 15일간 Recycle Bin에 보관됩니다. undelete로 복원할 수 있고, 쿼리 끝에 ALL ROWS를 붙이면 삭제된 행까지 조회됩니다.",
+    databasemethods: "DML 두 가지 스타일: standalone 문(insert records;)은 all-or-nothing으로 실패 시 DmlException을 던집니다. Database 클래스 메서드에 AllOrNone=false를 주면(Database.insert(records, false)) 부분 성공이 허용되고 예외 없이 Database.SaveResult(isSuccess/getId/getErrors)로 결과를 확인합니다.",
+    exceptions: "예외 처리: try/catch(DmlException e)/finally 패턴. 빈 리스트 DML은 예외가 없지만 null 요소는 오류입니다. 커스텀 예외는 Exception을 상속하고 이름이 반드시 Exception으로 끝나야 합니다.",
+    deployment: "체인지 셋은 연결된 조직 간 메타데이터 배포 도구입니다. 업로드 후엔 수정 불가(복제 필요), 인바운드 배포는 all-or-nothing, Apex는 소스·타겟 모두 테스트 요구 충족, 컴포넌트 삭제 불가, 이름 변경은 새 컴포넌트로 인식됩니다.",
+    packages: "패키지 3종: Unmanaged(오픈소스/템플릿용, 설치 후 수정 가능, 업그레이드 불가), Managed(AppExchange 파트너용, IP 보호, 버전 관리, 고유 네임스페이스), Unlocked(CLI 2GP 전용, 설치 조직에서 수정 가능, 버전 관리, 사내 앱 권장).",
+    sfdx: "Salesforce DX는 소스 중심 개발 모델입니다. Scratch 조직은 CLI로 만드는 임시 조직으로 Dev Hub(프로덕션 또는 DE 조직)가 필수이며, 소스 추적으로 push/pull(Scratch·Developer·Developer Pro 샌드박스 지원)을 사용합니다.",
+    devopscenter: "DevOps Center는 체인지 셋의 현대적 대안인 변경·릴리스 관리 도구입니다. 2세대 관리 패키지로 설치하고, 소스 관리(초기 GitHub만)가 필수이며, work item 브랜치→통합→UAT→main의 파이프라인으로 배포합니다. Classic 미지원.",
+    triggers: "트리거는 sObject의 DML 이벤트 때 자동 실행되는 코드입니다. before(저장 전: 검증·트리거 레코드 수정)와 after(저장 후: Id 등 시스템 필드 접근·관련 레코드 변경)가 있고, undelete는 after만 지원합니다. upsert는 insert/update로, merge는 update+delete로 분해되며, Cascade Delete 같은 일부 벌크 작업은 트리거를 실행하지 않습니다.",
+    triggerctx: "트리거 컨텍스트 변수: Trigger.new/newMap(새 버전; newMap은 before update와 after insert/update/undelete에서), Trigger.old/oldMap(이전 버전; update/delete에서), isInsert/isUpdate/isBefore/isAfter, operationType(switch 분기용 enum), size. before 단계의 Trigger.new만 쓰기 가능하며, old/new 비교는 순서 보장이 없는 리스트 대신 oldMap.get(Id)로 합니다.",
+    triggerbatch: "트리거는 한 번의 DML 데이터를 최대 200건씩 암묵적으로 배치 처리합니다(300건→2회 실행). 배치 내 레코드 순서는 예측할 수 없으므로 항상 벌크 기준으로 설계해야 합니다.",
+    adderror: "addError()는 해당 레코드의 DML을 차단하며 오류를 표시합니다. sObject.addError()는 페이지 수준, sObject.Field.addError()는 필드 옆에 표시됩니다. 커스텀 라벨(Label.이름, 최대 5,000개)과 함께 쓰면 다국어 오류 메시지가 가능합니다.",
+    customsettings: "Custom Settings는 캐시에 노출되어 SOQL 없이(거버너 소비 없이) 읽는 설정 데이터입니다. List(조직 공통)와 Hierarchy(조직/프로필/사용자 계층, 수식·검증 규칙에서는 Hierarchy만 접근 가능) 두 종류가 있으며, 정의만 배포되고 데이터는 배포되지 않습니다.",
+    cmt: "Custom Metadata Type(__mdt)은 커스터마이징 가능한 애플리케이션 메타데이터로, 정의와 레코드 데이터가 모두 배포·패키징됩니다. getInstance()로 캐시에서 읽어 SOQL 한도를 소비하지 않으며, 테스트에서도 기본적으로 데이터가 보입니다. 트리거 킬 스위치 구현에 적합합니다.",
+    classes: "접근 제한자: private(기본값, 클래스 내부), protected(내부 클래스·상속 클래스), public(네임스페이스 내), global(모든 곳 — 비동기 Apex·웹 서비스용). SOAP 웹 서비스는 global 클래스 + webservice static 메서드, REST는 @RestResource + @HttpGet/@HttpPost로 노출합니다. 상속은 virtual/abstract 클래스로 열어줍니다.",
+    sharingkw: "sharing 키워드: with sharing(실행 사용자의 레코드 공유 존중), without sharing(무시하고 전체 접근), inherited sharing(호출자 모드 상속). Apex v67부터 생략 시 기본값이 with sharing입니다. 대부분의 Apex는 시스템 모드로 실행되므로 sharing 키워드가 레코드 가시성을 좌우합니다.",
+    annotations: "주요 애노테이션: @Future(static void, 비동기; callout=true로 콜아웃), @InvocableMethod(클래스당 1개, static, 입출력은 단일 List — Flow·프롬프트 템플릿·에이전트에서 호출), @AuraEnabled(LWC 노출; cacheable=true는 wire 필수 조건이며 DML 불가), @RestResource, @isTest/@TestSetup/@TestVisible.",
+    usermode: "Apex는 기본 시스템 모드라 CRUD/FLS를 우회할 수 있어 개발자가 보안을 챙겨야 합니다. 방법: SOQL의 WITH USER_MODE(위반 시 예외), DML의 as user/AccessLevel.USER_MODE, Security.stripInaccessible(예외 없이 접근 불가 필드 제거), Describe 메서드(isCreateable 등)로 사전 확인.",
+    async: "비동기 Apex: @Future(단순 비동기, future→future 호출 불가), Queueable(잡 체이닝 가능), Batch Apex(최대 5천만 건, Database.Batchable), Scheduled Apex(Schedulable). 비동기는 별도 트랜잭션에서 확장된 거버너 한도로 실행됩니다.",
+    ooe: "저장 실행 순서: 레코드 로드→시스템 검증(UI 요청 시)→before-save 플로우→before Apex 트리거→시스템+커스텀 검증→저장(커밋 아님)→after Apex 트리거→워크플로우(필드 업데이트 시 update 트리거 재실행, 커스텀 검증은 재실행 안 됨)→프로세스/after-save 플로우→롤업 서머리 부모 캐스케이드(부모마다 실행 순서 재시작)→기준 공유 평가→커밋(마지막 1회)→post-commit(이메일, 비동기, 플랫폼 이벤트 등).",
+    transactions: "Apex 트랜잭션은 진입점부터 커밋까지의 작업 단위이며, 처리되지 않은 예외가 나면 전체가 롤백됩니다(시작 시 암묵적 세이브포인트). static 변수는 트랜잭션 범위에서 유지되어 트리거 재귀 제어에 흔히 사용됩니다.",
+    platformevents: "플랫폼 이벤트(__e)는 이벤트 버스 기반 발행-구독 아키텍처입니다. insert만 가능하고 UI 표시·SOQL/SOSL 조회가 불가하며, Apex 구독 트리거는 after insert만 지원합니다. EventBus.publish()로 발행하고, Publish Immediately는 트랜잭션 롤백과 무관하게 발행되어(vs Publish After Commit) 오류 로깅에 적합합니다.",
+    testing: "테스트 요구사항: 조직 전체 커버리지 75% 이상 + 모든 트리거에 일부 커버리지 + 모든 테스트가 예외 없이 통과. 테스트 메서드는 @isTest static void 무인자이며, 클래스 수정 시 커버리지는 0으로 리셋됩니다. @TestVisible로 다른 클래스의 private 멤버 접근이 가능합니다.",
+    testdata: "테스트 데이터: 기본적으로 표준·커스텀 데이터는 보이지 않고 셋업 오브젝트만 보입니다. seeAllData=true는 실제 데이터를 보여주지만 @TestSetup을 지원하지 않습니다. @TestSetup은 다른 메서드보다 먼저 1회 실행되어 공용 데이터를 만들고, Test.loadData는 Static Resource CSV에서 레코드를 생성합니다. 테스트 데이터는 롤백되며, Id 하드코딩은 금물입니다. 테스트의 SOSL은 기본 빈 결과라 Test.setFixedSearchResults로 지정합니다.",
+    startstop: "Test.startTest()/stopTest()는 실제 검증 구간을 표시하며 두 가지 효과가 있습니다: 새 거버너 한도 세트 제공, 그리고 stopTest 시점에 @future 등 비동기 처리를 강제 완료시켜 결과를 동기적으로 assert할 수 있게 합니다.",
+    runas: "System.runAs(user){}는 블록 안 코드를 지정 사용자의 권한·공유로 실행합니다. 셋업 오브젝트(User 등)와 일반 오브젝트를 한 트랜잭션에서 DML할 때 발생하는 Mixed DML 오류의 우회책이기도 합니다. 검증은 System.assert 계열 또는 새 Assert 클래스(areEqual, isTrue, fail 등)를 사용합니다.",
+    bulkification: "벌크화 표준 패턴: 루프에서 Set<Id>를 모으고 → 루프 밖에서 WHERE Id IN :ids 단일 쿼리 → Map<Id, sObject>로 결과 매핑 → 수정 레코드를 List에 모아 단일 DML. 쿼리와 DML을 루프 안에 두는 것이 'Too many SOQL queries/DML' 오류의 전형적 원인입니다.",
+    efficiency: "쿼리 효율: 필요한 부모 필드는 점 표기로 한 쿼리에 포함하고, Trigger.oldMap으로 데이터셋을 줄이며, 인덱스 필드(Id, Name, External ID, lookup/MD)를 WHERE에 활용합니다. 서브쿼리 개수 한도는 메인 쿼리의 3배이지만 행 수는 전체 한도에 포함됩니다.",
+    triggerdesign: "트리거 설계 원칙: 오브젝트당 트리거 1개(여러 개면 실행 순서 보장 안 됨), 비즈니스 로직은 핸들러 클래스로 분리(트리거는 분기만), switch on Trigger.operationType으로 깔끔한 분기, 항상 200건 배치 기준 설계. 중복 방지는 Unique 필드 키(예: 18자ID+구분자+18자ID=37자)로 트리거·UI 양쪽을 차단할 수 있습니다.",
+    formularollup: "수식 필드는 접근 시 계산되어 저장되지 않고(리포트 필터 주의) 최대 10단계 부모(조부모 포함)를 참조할 수 있습니다. 롤업 서머리(COUNT/SUM/MIN/MAX)는 자식 저장 시 계산·저장되며 부모의 자동화를 트리거합니다. 코드 전에 이런 노코드 옵션으로 쿼리를 줄이는 것이 모범 사례입니다.",
+    lwcbasics: "LWC는 웹 표준 기반 모델(2019)로 Aura(2014)보다 최신입니다. 번들 = .html/.js/.js-meta.xml(+css/svg). 이름은 폴더·파일 camelCase, 클래스 PascalCase, 템플릿 참조는 c- 접두 kebab-case. Aura는 LWC를 포함할 수 있지만 LWC는 Aura를 포함할 수 없고, 커스텀 Lightning Application은 Aura로만 만듭니다. Setup·개발자 콘솔에서는 LWC를 만들 수 없어 CLI/IDE가 필요합니다.",
+    lwcprops: "LWC 속성은 기본 private이며 @api로 public이 됩니다. 템플릿 바인딩({property})은 반응형이고, 데이터는 부모→자식으로 속성을 통해 흐릅니다(부모 템플릿에서 kebab-case 속성으로 전달). 반대 방향은 이벤트를 사용합니다.",
+    lwcevents: "자식→부모: CustomEvent — 페이로드는 생성자 2번째 인자의 detail에 담아 dispatchEvent하고, 부모는 on+이벤트명으로 청취해 event.detail을 읽습니다. 포함 관계가 없는 컴포넌트 간에는 Lightning Message Service(발행/구독, Aura·VF와도 통신)를 사용합니다.",
+    lwcdata: "LWC 데이터 접근: @wire는 UI API 함수(사용자 모드 — FLS·공유 존중) 또는 @AuraEnabled(cacheable=true) Apex(시스템 모드 — 보안 직접 처리)를 연결하며, '$prop' 접두사로 반응형이 됩니다. DML은 wire 불가 — imperative 호출(Promise, .then/.catch)로 수행하고 refreshApex(저장해둔 wire result)로 갱신합니다.",
+    lwcsurface: "LWC 노출: js-meta.xml의 isExposed=true와 targets(lightning__RecordAction 등)로 App Builder·퀵 액션 등에 표시 여부를 개발자가 제어합니다. ScreenAction 타입으로 화면형 퀵 액션을 만듭니다."
+  };
+
+  const CB = ("sandboxes metadata sandboxes primitives collections collections collections idtype sobject sobject apexlang soqlbasics soqlwhere soqlreturn soqlreturn soqlforloop bindvars relquery relquery sosl upsert upsert softdelete dml databasemethods databasemethods exceptions deployment deployment packages packages sfdx devopscenter triggers triggers triggers triggerctx triggerctx triggerbatch adderror classes sharingkw sharingkw annotations annotations usermode async ooe ooe ooe transactions platformevents platformevents testing testing testdata testdata startstop testdata runas testdata bulkification bulkification efficiency efficiency formularollup formularollup lwcbasics lwcbasics lwcprops lwcdata lwcdata").split(" ");
+  const CA = ("debugging governor bindvars bindvars relquery exceptions dml databasemethods deployment packages cmt cmt triggers classes sharingkw annotations transactions ooe platformevents testing testing testdata bulkification triggerdesign triggerdesign triggerctx lwcevents lwcevents").split(" ");
+  QUESTIONS.forEach((it, i)=>{ it.ck = CB[i]; it.qid = "B" + i; });
+  ADVANCED.forEach((it, i)=>{ it.ck = CA[i]; it.qid = "A" + i; });
+
+
+  // ---- state ----
+  let mode = null; // 'exam' | 'practice'
+  let lang = "ko"; // 'ko' | 'en'
+  let currentItem = null;
+  let pool = [];
+  let idx = 0;
+
+  // (a) (b) (c) 항목이 있는 텍스트를 줄바꿈으로 정리
+  function fmtListText(s){ return s.replace(/\s*\(([abcd])\)\s*/g, "\n($1) "); }
+  function fmtListHtml(s){ return s.replace(/\s*\(([abcd])\)\s*/g, "<br>($1) "); }
+  function getQ(item){
+    const s = (lang === "en" && item.qEn) ? item.qEn : item.q;
+    return fmtListText(s);
+  }
+  function getC(item, i){ return (lang === "en" && item.cEn) ? item.cEn[i] : item.choices[i]; }
+  function fullExplain(item){
+    const c = CONCEPTS[item.ck];
+    return fmtListHtml((c ? c + "<br><br>" : "") + item.explain);
+  }
+
+  // ---- 오답노트: localStorage에 틀린 문제를 영구 저장 ----
+  const WRONG_KEY = "dex450_wrongs";
+  function loadWrongs(){
+    try{ return JSON.parse(localStorage.getItem(WRONG_KEY)) || {}; }catch(e){ return {}; }
+  }
+  function saveWrongs(w){
+    try{ localStorage.setItem(WRONG_KEY, JSON.stringify(w)); }catch(e){}
+  }
+  function wrongItems(){
+    const w = loadWrongs();
+    return QUESTIONS.concat(ADVANCED).filter(it => w[it.qid]);
+  }
+  function recordResult(item, correct){
+    const w = loadWrongs();
+    if(correct){
+      if(w[item.qid]){ delete w[item.qid]; saveWrongs(w); }
+    } else {
+      const e = w[item.qid] || {w:0};
+      e.w++; e.t = Date.now();
+      w[item.qid] = e;
+      saveWrongs(w);
+    }
+    updateWrongBadge();
+  }
+  function updateWrongBadge(){
+    const n = wrongItems().length;
+    $("startWrongBtn").disabled = (n === 0);
+    $("wrongDesc").textContent = n > 0
+      ? ("저장된 오답 " + n + "문항. 다시 맞히면 목록에서 자동으로 사라집니다. 기록은 이 브라우저에 계속 보관됩니다.")
+      : "아직 저장된 오답이 없습니다. 어떤 모드에서든 틀린 문제가 자동으로 여기에 쌓입니다.";
+    $("wrongActions").style.display = n > 0 ? "block" : "none";
+  }
+  let selectedLessons = new Set();
+  let answers = []; // {lesson, correctIdx, chosenIdx, correct}
+  let timerInterval = null;
+  let secondsLeft = 105*60;
+
+  const $ = (id) => document.getElementById(id);
+  const startScreen = $("startScreen"), quizScreen = $("quizScreen"), resultsScreen = $("resultsScreen");
+
+  // build lesson picker chips
+  const lessonGrid = $("lessonGrid");
+  Object.keys(LESSON_NAMES).forEach(n=>{
+    const chip = document.createElement("div");
+    chip.className = "adx-lesson-chip";
+    chip.textContent = "L" + n;
+    chip.title = LESSON_NAMES[n];
+    chip.addEventListener("click", ()=>{
+      const num = parseInt(n,10);
+      if(selectedLessons.has(num)){ selectedLessons.delete(num); chip.classList.remove("active"); }
+      else { selectedLessons.add(num); chip.classList.add("active"); }
+      $("goPracticeBtn").disabled = selectedLessons.size === 0;
+    });
+    lessonGrid.appendChild(chip);
+  });
+
+  $("startExamBtn").addEventListener("click", ()=>{
+    mode = "exam";
+    pool = shuffle([...QUESTIONS]).slice(0, 60);
+    beginQuiz(true, 105);
+  });
+
+  $("startAdvancedBtn").addEventListener("click", ()=>{
+    mode = "exam";
+    pool = shuffle([...ADVANCED]).slice(0, 25);
+    beginQuiz(true, 45);
+  });
+
+  $("startMiniBtn").addEventListener("click", ()=>{
+    mode = "practice";
+    pool = shuffle(QUESTIONS.concat(ADVANCED)).slice(0, 5);
+    beginQuiz(false);
+  });
+
+  $("startWrongBtn").addEventListener("click", ()=>{
+    const items = wrongItems();
+    if(items.length === 0) return;
+    mode = "practice";
+    pool = shuffle(items.slice());
+    beginQuiz(false);
+  });
+
+  let clearArmed = false;
+  $("clearWrongBtn").addEventListener("click", ()=>{
+    if(!clearArmed){
+      clearArmed = true;
+      $("clearWrongBtn").textContent = "정말 비울까요? 한 번 더 클릭";
+      setTimeout(()=>{ clearArmed = false; $("clearWrongBtn").textContent = "오답 기록 비우기"; }, 3000);
+      return;
+    }
+    clearArmed = false;
+    $("clearWrongBtn").textContent = "오답 기록 비우기";
+    saveWrongs({});
+    updateWrongBadge();
+  });
+
+  $("startPracticeBtn").addEventListener("click", ()=>{
+    $("lessonPicker").classList.toggle("show");
+  });
+
+  $("goPracticeBtn").addEventListener("click", ()=>{
+    mode = "practice";
+    pool = QUESTIONS.concat(ADVANCED).filter(q=>selectedLessons.has(q.lesson));
+    beginQuiz(false);
+  });
+
+  function shuffle(arr){
+    for(let i=arr.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]] = [arr[j],arr[i]];
+    }
+    return arr;
+  }
+
+  function beginQuiz(withTimer, minutes){
+    idx = 0; answers = [];
+    if(timerInterval) clearInterval(timerInterval);
+    startScreen.classList.add("adx-hidden");
+    resultsScreen.classList.add("adx-hidden");
+    quizScreen.classList.remove("adx-hidden");
+    if(withTimer){
+      const mins = minutes || 105;
+      secondsLeft = mins*60;
+      $("timerText").textContent = String(mins).padStart(2,"0") + ":00";
+      $("timerBox").classList.remove("warn");
+      $("timerBox").classList.remove("adx-hidden");
+      timerInterval = setInterval(tickTimer, 1000);
+    } else {
+      $("timerBox").classList.add("adx-hidden");
+    }
+    renderQuestion();
+  }
+
+  function tickTimer(){
+    secondsLeft--;
+    const m = Math.floor(secondsLeft/60), s = secondsLeft%60;
+    $("timerText").textContent = String(m).padStart(2,"0") + ":" + String(s).padStart(2,"0");
+    $("timerBox").classList.toggle("warn", secondsLeft <= 300);
+    if(secondsLeft <= 0){
+      clearInterval(timerInterval);
+      finishQuiz();
+    }
+  }
+
+  function renderQuestion(){
+    const item = pool[idx];
+    currentItem = item;
+    $("lessonTag").textContent = (item.adv ? "심화 · " : "") + "LESSON " + item.lesson + " · " + LESSON_NAMES[item.lesson];
+    $("qText").textContent = getQ(item);
+    $("progressLabel").textContent = (idx+1) + " / " + pool.length;
+    $("progressFill").style.width = (((idx)/pool.length)*100) + "%";
+    const box = $("optionsBox");
+    box.innerHTML = "";
+    const letters = ["A","B","C","D"];
+    item.choices.forEach((choice, i)=>{
+      const btn = document.createElement("button");
+      btn.className = "adx-option";
+      btn.innerHTML = '<span class="letter">'+letters[i]+'</span><span></span>';
+      btn.lastElementChild.textContent = getC(item, i);
+      btn.addEventListener("click", ()=> selectAnswer(i));
+      box.appendChild(btn);
+    });
+    $("explainBox").classList.remove("show");
+    $("explainBox").innerHTML = "";
+    $("revealBtn").classList.add("adx-hidden");
+    $("nextBtn").disabled = true;
+    $("skipBtn").classList.remove("adx-hidden");
+    $("skipBtn").disabled = false;
+  }
+
+  function selectAnswer(i){
+    const item = pool[idx];
+    const opts = document.querySelectorAll("#optionsBox .adx-option");
+    opts.forEach(o=>o.disabled = true);
+    $("skipBtn").disabled = true;
+
+    const isCorrect = i === item.correct;
+    answers.push({item:item, lesson:item.lesson, q:item.q, choices:item.choices, correctIdx:item.correct, chosenIdx:i, correct:isCorrect, explain:item.explain});
+    recordResult(item, isCorrect);
+
+    if(mode === "practice"){
+      opts[i].classList.add(isCorrect ? "correct" : "incorrect");
+      if(!isCorrect) opts[item.correct].classList.add("correct");
+      const ex = $("explainBox");
+      ex.innerHTML = '<b>'+(isCorrect?"정답입니다.":"오답입니다.")+'</b><br><br>' + fullExplain(item);
+      ex.classList.add("show");
+    } else {
+      opts[i].classList.add("selected");
+      $("revealBtn").classList.remove("adx-hidden");
+    }
+    $("nextBtn").disabled = false;
+  }
+
+  $("revealBtn").addEventListener("click", ()=>{
+    const a = answers[answers.length - 1];
+    if(!a) return;
+    const opts = document.querySelectorAll("#optionsBox .adx-option");
+    if(a.chosenIdx >= 0){
+      opts[a.chosenIdx].classList.remove("selected");
+      opts[a.chosenIdx].classList.add(a.correct ? "correct" : "incorrect");
+    }
+    if(!a.correct) opts[a.correctIdx].classList.add("correct");
+    const ex = $("explainBox");
+    ex.innerHTML = '<b>'+(a.correct?"정답입니다.":"오답입니다.")+'</b><br><br>' + fullExplain(a.item);
+    ex.classList.add("show");
+    $("revealBtn").classList.add("adx-hidden");
+  });
+
+  $("langBtn").addEventListener("click", ()=>{
+    lang = (lang === "ko") ? "en" : "ko";
+    $("segKo").classList.toggle("active", lang === "ko");
+    $("segEn").classList.toggle("active", lang === "en");
+    if(!quizScreen.classList.contains("adx-hidden") && currentItem){
+      $("qText").textContent = getQ(currentItem);
+      const opts = document.querySelectorAll("#optionsBox .adx-option");
+      opts.forEach((btn, i)=>{ btn.lastElementChild.textContent = getC(currentItem, i); });
+    }
+  });
+
+  $("skipBtn").addEventListener("click", ()=>{
+    const item = pool[idx];
+    answers.push({item:item, lesson:item.lesson, q:item.q, choices:item.choices, correctIdx:item.correct, chosenIdx:-1, correct:false, explain:item.explain});
+    recordResult(item, false);
+    advance();
+  });
+
+  $("nextBtn").addEventListener("click", advance);
+
+  function advance(){
+    idx++;
+    if(idx >= pool.length){
+      finishQuiz();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function finishQuiz(){
+    if(timerInterval) clearInterval(timerInterval);
+    quizScreen.classList.add("adx-hidden");
+    resultsScreen.classList.remove("adx-hidden");
+
+    const total = answers.length;
+    const correctCount = answers.filter(a=>a.correct).length;
+    const pct = total ? Math.round((correctCount/total)*100) : 0;
+
+    $("scoreBig").textContent = pct + "%";
+    $("scoreOf").textContent = correctCount + " / " + total + " 정답";
+    const verdict = $("scoreVerdict");
+    if(pct >= 68){
+      verdict.textContent = "합격 추정 범위";
+      verdict.className = "verdict pass";
+    } else {
+      verdict.textContent = "추가 학습 필요";
+      verdict.className = "verdict fail";
+    }
+
+    // breakdown by lesson
+    const byLesson = {};
+    answers.forEach(a=>{
+      byLesson[a.lesson] = byLesson[a.lesson] || {correct:0, total:0};
+      byLesson[a.lesson].total++;
+      if(a.correct) byLesson[a.lesson].correct++;
+    });
+    const bd = $("breakdownBox");
+    bd.innerHTML = "";
+    Object.keys(byLesson).sort((a,b)=>a-b).forEach(n=>{
+      const d = byLesson[n];
+      const p = Math.round((d.correct/d.total)*100);
+      const row = document.createElement("div");
+      row.className = "adx-bd-row";
+      row.innerHTML = '<div class="adx-bd-label">L'+n+' · '+LESSON_NAMES[n]+'</div>'+
+        '<div class="adx-bd-track"><div class="adx-bd-fill'+(p<60?' weak':'')+'" style="width:'+p+'%"></div></div>'+
+        '<div class="adx-bd-pct">'+p+'%</div>';
+      bd.appendChild(row);
+    });
+
+    // review wrong
+    const rb = $("reviewBox");
+    rb.innerHTML = "";
+    const wrong = answers.filter(a=>!a.correct);
+    if(wrong.length === 0){
+      rb.innerHTML = '<p style="font-size:13.5px;color:var(--ink-soft)">오답이 없습니다. 완벽합니다!</p>';
+    } else {
+      const letters = ["A","B","C","D"];
+      wrong.forEach(a=>{
+        const div = document.createElement("div");
+        div.className = "adx-review-item";
+        const chosenText = a.chosenIdx >= 0 ? letters[a.chosenIdx]+". "+getC(a.item, a.chosenIdx) : "(건너뜀)";
+        const correctText = letters[a.correctIdx]+". "+getC(a.item, a.correctIdx);
+        div.innerHTML = '<div class="rq">[L'+a.lesson+'] '+getQ(a.item)+'</div>'+
+          '<div class="ra">내 답: <b class="wrong">'+chosenText+'</b><br>정답: <b class="right">'+correctText+'</b><br><br>'+fullExplain(a.item)+'</div>';
+        rb.appendChild(div);
+      });
+    }
+  }
+
+  $("restartBtn").addEventListener("click", ()=>{
+    resultsScreen.classList.add("adx-hidden");
+    startScreen.classList.remove("adx-hidden");
+    selectedLessons.clear();
+    document.querySelectorAll(".adx-lesson-chip").forEach(c=>c.classList.remove("active"));
+    $("goPracticeBtn").disabled = true;
+    $("lessonPicker").classList.remove("show");
+    updateWrongBadge();
+  });
+
+  updateWrongBadge();
+})();
+</script>
+</body>
+</html>

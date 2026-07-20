@@ -92,6 +92,18 @@
   .adx-lang-btn:hover{ border-color: var(--accent); }
   .adx-lang-btn:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 
+  .adx-course-nav{
+    display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap;
+  }
+  .adx-course-nav a{
+    text-decoration:none; font-size:12.5px; font-weight:700;
+    padding: 8px 16px; border-radius:999px;
+    border:1px solid var(--border); background: var(--surface); color: var(--ink-soft);
+    transition: border-color .12s ease, background .12s ease;
+  }
+  .adx-course-nav a:hover{ border-color: var(--accent); color: var(--ink); }
+  .adx-course-nav a.active{ background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
   .adx-card{
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 16px; box-shadow: var(--shadow);
@@ -116,7 +128,7 @@
     padding: 12px 14px;
   }
   .adx-fact .n{ font-family: var(--font-mono); font-size: 20px; font-weight:800; color: var(--accent); font-variant-numeric: tabular-nums; }
-  .adx-fact .l{ font-size: 11.5px; color: var(--ink-soft); margin-top:2px; }
+  .adx-fact .l{ font-size: 11.5px; color: var(--ink-soft); margin-bottom:2px; }
 
   .adx-modes{ display:grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 8px; }
   @media (max-width: 560px){ .adx-modes{ grid-template-columns: 1fr; } .adx-facts{ grid-template-columns: repeat(3,1fr);} }
@@ -139,7 +151,10 @@
   .adx-mode-btn:disabled{ opacity:.45; cursor:not-allowed; }
   .adx-mode-btn:disabled:hover{ transform:none; border-color: var(--border); }
 
-  .adx-lesson-picker{ display:none; margin-top: 16px; }
+  .adx-lesson-picker{
+    display:none; margin-top: 0; padding: 16px;
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px;
+  }
   .adx-lesson-picker.show{ display:block; }
   .adx-lesson-grid{ display:grid; grid-template-columns: repeat(4,1fr); gap: 8px; margin-top:10px; }
   @media (max-width:560px){ .adx-lesson-grid{ grid-template-columns: repeat(3,1fr);} }
@@ -250,6 +265,10 @@
 
 <div class="adx-root">
   <div class="adx-shell">
+    <div class="adx-course-nav">
+      <a class="active" href="https://stkd9w57jm-oss.github.io/salesforce-admin-mock-exam-/">ADX201 · 관리자 (Admin)</a>
+      <a href="https://stkd9w57jm-oss.github.io/salesforce-admin-mock-exam-/dex450.html">DEX450 · 개발자 (Developer)</a>
+    </div>
     <div class="adx-masthead">
       <div class="adx-brand">
         <span class="code">ADX201</span>
@@ -374,9 +393,9 @@
         <p><b>Based On ADX201(12 Lessons)</b><br>기본 은행 135문항 + 심화 은행 54문항으로 구성되며, 실전·심화 모드 모두 응시할 때마다 문항을 무작위로 뽑아 출제하므로 여러 번 반복해서 볼 수 있습니다. 원본 교재에 실린 레슨별 복습 문제와는 겹치지 않습니다.</p>
       </div>
       <div class="adx-facts">
-        <div class="adx-fact"><div class="n">135</div><div class="l">기본 문제 은행</div></div>
-        <div class="adx-fact"><div class="n">54</div><div class="l">심화 문제 은행</div></div>
-        <div class="adx-fact"><div class="n">105<span style="font-size:12px">분</span></div><div class="l">실전 모드 제한시간</div></div>
+        <div class="adx-fact"><div class="l">기본 문제 은행</div><div class="n">135</div></div>
+        <div class="adx-fact"><div class="l">심화 문제 은행</div><div class="n">54</div></div>
+        <div class="adx-fact"><div class="l">실전 모드 제한시간</div><div class="n">105<span style="font-size:12px">분</span></div></div>
       </div>
       <div class="adx-modes">
         <button class="adx-mode-btn" id="startMiniBtn" style="border-color: var(--accent);">
@@ -387,6 +406,11 @@
           <div class="m-title">레슨별 연습 모드</div>
           <div class="m-desc">원하는 레슨을 선택해 풀어보세요. 문제마다 즉시 정답과 해설을 확인할 수 있습니다. (기본+심화 문항 모두 포함)</div>
         </button>
+        <div class="adx-lesson-picker" id="lessonPicker" style="grid-column:1/-1;">
+          <div class="adx-section-title" style="margin-top:0;">레슨 선택 (복수 선택 가능)</div>
+          <div class="adx-lesson-grid" id="lessonGrid"></div>
+          <button class="adx-go-btn" id="goPracticeBtn" disabled>선택한 레슨으로 시작</button>
+        </div>
         <button class="adx-mode-btn primary" id="startExamBtn" style="grid-column:1/-1;">
           <div class="m-title">전체 모의고사 (실전 모드)</div>
           <div class="m-desc">문제 은행 135문항 중 65문항 무작위 출제 · 105분 타이머 · 정답은 제출 후 한번에 확인합니다. 볼 때마다 문제 구성이 달라집니다.</div>
@@ -402,11 +426,6 @@
       </div>
       <div id="wrongActions" style="text-align:right; margin-top:10px; display:none;">
         <button class="adx-btn" id="clearWrongBtn" style="font-size:12px; padding:8px 14px;">오답 기록 비우기</button>
-      </div>
-      <div class="adx-lesson-picker" id="lessonPicker">
-        <div class="adx-section-title" style="margin-top:4px;">레슨 선택 (복수 선택 가능)</div>
-        <div class="adx-lesson-grid" id="lessonGrid"></div>
-        <button class="adx-go-btn" id="goPracticeBtn" disabled>선택한 레슨으로 시작</button>
       </div>
     </div>
 
